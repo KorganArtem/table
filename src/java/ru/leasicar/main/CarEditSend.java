@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ru.leasicar.usercontrol;
+package ru.leasicar.main;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author korgan
  */
-@WebServlet(name = "UserManage", urlPatterns = {"/UserManage"})
-public class UserManage extends HttpServlet {
+@WebServlet(name = "CarEditSend", urlPatterns = {"/CES"})
+public class CarEditSend extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,15 +34,11 @@ public class UserManage extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet UserManage</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet UserManage at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            out.println("<!DOCTYPE html>");/*carNumber='+carNumber+'&carModel='+carModel+'&carVIN='+carVIN
+                            +'&carTransmission='+carTransmission+'&carYear='+carYear
+                            +'&carCost='+carCost+'&carGlanasId='+carGlanasId+'&carId='+carId,*/
+            System.out.println(request.getParameter("id"+""));
+            request.getParameter("id");
         }
     }
 

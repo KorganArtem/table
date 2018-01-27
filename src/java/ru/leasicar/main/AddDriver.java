@@ -15,7 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import ru.leasicar.usercontrol.AccessControl;
+import ru.leasicar.authorization.AccessControl;
 
 /**
  *
@@ -62,11 +62,18 @@ public class AddDriver extends HttpServlet {
                 out.println("<div class='formItem'><label>Номер машины</label><br><input type='text' id='driver_carnumber' /></div>"); 
                 out.println("<div class='formItem'><label>Лимит</label><br><input type='text' id='driver_limit' /></div>");  
                 out.println("<div class='formItem'><label>Номер телефона</label><br><input type='text' id='driver_phone_number' /></div>");    
-                out.println("<div class='formItem'><label>Суточная Аренда</label><br><input type='text' id='driver_day_rent' /></div>");               
+                out.println("<div class='formItem'><label>Суточная Аренда</label><br><input type='text' id='driver_day_rent' /></div>");     
+                out.println("<div class='formItem'><label>График</label><br><select id='driver_schedule'>"
+                        + "<option value='0'>Без выходных</option>"
+                        + "<option value='11'>10/1</option>"
+                        + "</select></div>");              
                 out.println("<div class='formItem'><br><input type='button' id='driver_add' value='Добавить' /></div>");
                 out.println("</form></div>");
-                out.println("<div id='clickBox'></div>");
-                out.println("<div id='listDriver'></div>");
+                out.println("<div id='clickBox'><input id='carListButton' type='button' value='Car list'/><input id='driverListButton' type='button' disabled='true' value='Driver list'/></div>");
+                out.println("<div id='mainContainer'>"
+                        + "<div id='listDriver'></div>"
+                        + "<div id='carList'></div>"
+                        + "</div>");
                 out.println("<div id='editDriver'></div>");
                 out.println("<div id='takePay'>"
                         + "<form class='takePayForm'>"
@@ -86,7 +93,11 @@ public class AddDriver extends HttpServlet {
                         + "</select>"
                         + "<input type='button' id='takePayButton' value='Принять'/>"
                         + "</form></div>");
-                out.println("</div></body>");
+                out.println("</div><div id='modal_form'><!-- Сaмo oкнo --> \n" +
+                            "      <span id='modal_close'>X</span> <!-- Кнoпкa зaкрыть --> \n" +
+                            "      <!-- Тут любoе сoдержимoе -->\n" +
+                            "</div>\n" +
+                            "<div id='overlay'></div</body>");
                 out.println("<script src='js/main.js'></script>");
                 out.println("<script>listDriverShow()</script>");
                 out.println("</html>"); 

@@ -47,12 +47,13 @@ public class WorkerSQL {
             String name, 
             String lastname, 
             String phone,
-            String dayRent) throws SQLException{
+            String dayRent,
+            String schedule) throws SQLException{
         Statement st = con.createStatement();
         st.execute("INSERT INTO `drivers` (`driver_lastname`, `driver_firstname`, "
                 + "`driver_callsign`, `driver_carnumber`, `driver_limit`, `driver_phone_number`, "
-                + "`driver_day_rent`, `driver_current_debt`, `driverStartDate`) "
-                + "VALUES ('"+lastname+"', '"+name+"', '"+callsign+"', '"+carnumber+"', '"+limit+"', '"+phone+"', "+dayRent+", 0, CURRENT_DATE())  ");
+                + "`driver_day_rent`, `driver_current_debt`, `driverStartDate`, `driverDayOffPeriod`) "
+                + "VALUES ('"+lastname+"', '"+name+"', '"+callsign+"', '"+carnumber+"', '"+limit+"', '"+phone+"', "+dayRent+", 0, CURRENT_DATE(), "+schedule+")  ");
     }
     public Map listDriver() throws SQLException{
         Statement st = con.createStatement();
@@ -209,6 +210,7 @@ public class WorkerSQL {
             rowDriver.put("driver_day_rent", rs.getString("driver_day_rent"));
             rowDriver.put("driver_limit", rs.getString("driver_limit"));
             rowDriver.put("driver_phone_number", rs.getString("driver_phone_number"));
+            rowDriver.put("driverDayOffPeriod", rs.getString("driverDayOffPeriod"));
         }
         return rowDriver;
     }
@@ -226,9 +228,10 @@ public class WorkerSQL {
             String carnumber, 
             String callsign, 
             String name, 
-            String lastname, String phone, String rentPay) throws SQLException{
+            String lastname, String phone, String rentPay, String driver_schedule) throws SQLException{
+        System.out.println(rentPay);
         Statement st = con.createStatement();
-        st.execute("UPDATE `drivers` SET `driver_day_rent`='"+rentPay+"' `driver_lastname`='"+lastname+"', `driver_firstname`='"+name+"', "
+        st.execute("UPDATE `drivers` SET `driverDayOffPeriod`="+driver_schedule+", `driver_day_rent`="+rentPay+", `driver_lastname`='"+lastname+"', `driver_firstname`='"+name+"', "
                 + "`driver_callsign`='"+callsign+"', `driver_carnumber`='"+carnumber+"', `driver_limit`='"+limit+"', `driver_phone_number`='"+phone+"' WHERE driver_id="+driverId);
     }
     public Map getPayList(int driverId) throws SQLException{
@@ -260,5 +263,40 @@ public class WorkerSQL {
         Statement stDelDriver = con.createStatement();
         stDelDriver.execute("UPDATE drivers SET `driver_deleted`=1, `driverEndDate`=CURRENT_DATE() WHERE `driver_id`="+driverId);
         stDelDriver.close();
+    }
+
+    public Map carList() throws SQLException {
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery("SELECT *  FROM `cars`");
+        Map listDriver = new HashMap<String, HashMap>();
+        while(rs.next()){
+            Map rowDriver = new HashMap<String, HashMap>();
+            rowDriver.put("id", rs.getString("id"));
+            rowDriver.put("number", rs.getString("number"));
+            rowDriver.put("model", rs.getString("model"));
+            rowDriver.put("VIN", rs.getString("VIN"));
+            rowDriver.put("transmission", rs.getString("transmission"));
+            rowDriver.put("year", rs.getString("year"));
+            rowDriver.put("cost", rs.getString("cost"));
+            rowDriver.put("glanasId", rs.getString("glanasId"));
+            listDriver.put(rs.getString("id"), rowDriver);
+        }
+        return listDriver;
+    }
+    public Map getCarData(int id) throws SQLException{
+        Map carData = new HashMap<String, HashMap>();
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery("SELECT *  FROM `cars` WHERE `id`="+id);
+        if(rs.next()){
+            carData.put("id", rs.getString("id"));
+            carData.put("number", rs.getString("number"));
+            carData.put("model", rs.getString("model"));
+            carData.put("VIN", rs.getString("VIN"));
+            carData.put("transmission", rs.getString("transmission"));
+            carData.put("year", rs.getString("year"));
+            carData.put("cost", rs.getString("cost"));
+            carData.put("glanasId", rs.getString("glanasId"));
+        }
+        return carData;
     }
 }

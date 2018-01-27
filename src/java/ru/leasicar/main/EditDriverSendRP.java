@@ -15,7 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import ru.leasicar.usercontrol.AccessControl;
+import ru.leasicar.authorization.AccessControl;
 import ru.leasicar.workerSql.WorkerSQL;
 
 /**
@@ -46,7 +46,8 @@ public class EditDriverSendRP extends HttpServlet {
                 int driverId = Integer.parseInt(request.getParameter("driver_id"));
                 WorkerSQL wsql = new WorkerSQL();
                 wsql.getEditDataDriver(driverId, request.getParameter("limit"), request.getParameter("carnumber"), 
-                        request.getParameter("callsign"), request.getParameter("name"), request.getParameter("lastname"), request.getParameter("phone"));
+                        request.getParameter("callsign"), request.getParameter("name"), request.getParameter("lastname"), request.getParameter("phone"), request.getParameter("dayRent"), 
+                        request.getParameter("schedule")); //dayRent
             }
             else{
                 out.println("notpermit");

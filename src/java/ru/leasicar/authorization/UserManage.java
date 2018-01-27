@@ -1,29 +1,24 @@
-package ru.leasicar.main;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package ru.leasicar.authorization;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import ru.leasicar.authorization.AccessControl;
 
 /**
  *
  * @author korgan
  */
-@WebServlet(urlPatterns = {"/MainScreen"})
-public class MainScreen extends HttpServlet {
+@WebServlet(name = "UserManage", urlPatterns = {"/UserManage"})
+public class UserManage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,27 +30,19 @@ public class MainScreen extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ClassNotFoundException, SQLException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        AccessControl ac = new AccessControl();
-        if(ac.isLogIn(request.getSession().getId())){
-            try (PrintWriter out = response.getWriter()) {
-                /* TODO output your page here. You may use following sample code. */
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet MainScreen</title>");            
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h1>Servlet MainScreen at " + request.getContextPath() + "</h1>");
-                out.println("</body>");
-                out.println("</html>");
-            }
-        }
-        else{
-            System.out.println("Go to login Page!");
-            request.getRequestDispatcher("/").forward(request, response);
-            return;
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet UserManage</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet UserManage at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -71,13 +58,7 @@ public class MainScreen extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -91,13 +72,7 @@ public class MainScreen extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

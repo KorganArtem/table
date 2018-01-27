@@ -1,14 +1,15 @@
-package ru.leasicar.main;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package ru.leasicar.main;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -17,13 +18,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ru.leasicar.authorization.AccessControl;
+import ru.leasicar.workerSql.WorkerSQL;
 
 /**
  *
  * @author korgan
  */
-@WebServlet(urlPatterns = {"/MainScreen"})
-public class MainScreen extends HttpServlet {
+@WebServlet(name = "CarList", urlPatterns = {"/CL"})
+public class CarList extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,25 +39,42 @@ public class MainScreen extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        AccessControl ac = new AccessControl();
-        if(ac.isLogIn(request.getSession().getId())){
-            try (PrintWriter out = response.getWriter()) {
-                /* TODO output your page here. You may use following sample code. */
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet MainScreen</title>");            
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h1>Servlet MainScreen at " + request.getContextPath() + "</h1>");
-                out.println("</body>");
-                out.println("</html>");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            AccessControl ac = new AccessControl();
+            if(ac.isLogIn(request.getSession().getId())){
+                    out.println("<table id='listDriverTabel' class='listDriver'>");
+                    ///////////////////////////////////////////////////////////////
+                    boolean delete = ac.checkPermission(ac.getUserId(request.getSession().getId()), "deletDriver");
+                    String colDel="";
+                    if(delete)
+                        colDel="<td></td>";
+                    ///////////////////////////////////////////////////////////////
+                    WorkerSQL wsql = new WorkerSQL();
+                    Map carList = wsql.carList();
+                    Iterator<Map.Entry<String, Map>> entries = carList.entrySet().iterator();
+                    out.println("<thead><tr><td>Гос. Номер</td><td>Модель</td><td>VIN</td><td>Год выпуска</td>"
+                            + "<td>КПП</td><td>Стоимость Аренды</td></tr></thead>");
+                    while (entries.hasNext()) {
+                        Map.Entry<String, Map> entry = entries.next();
+                        Map carData = entry.getValue();
+                        out.println("<tr><td class='edit' onClick='editShow("+carData.get("id")+")'>"+
+                        carData.get("number")+"</td>"+
+                        "<td>"+carData.get("model")+"</td>"+
+                        "<td>"+carData.get("VIN")+"</td>"+
+                        "<td>"+carData.get("year")+"</td>"+
+                        "<td>"+carData.get("transmission")+"</td>"+
+                        "<td>"+carData.get("cost")+"</td></tr>");
+                    }
+                    out.println("</table>");
+                    //wsql.addAccrual();
+                    wsql.con.close();
+                }
+            else{
+                System.out.println("Go to login Page!");
+                request.getRequestDispatcher("/").forward(request, response);
+                return;
             }
-        }
-        else{
-            System.out.println("Go to login Page!");
-            request.getRequestDispatcher("/").forward(request, response);
-            return;
         }
     }
 
@@ -74,9 +93,9 @@ public class MainScreen extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CarList.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CarList.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -94,9 +113,9 @@ public class MainScreen extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CarList.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CarList.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -37,10 +37,12 @@ public class DriverAdd extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
+            System.out.println("schedule  "+request.getParameter("schedule"));
             try{
                 WorkerSQL wsql = new WorkerSQL();
                 wsql.writeDriver(request.getParameter("limit"), request.getParameter("carnumber"), 
-                        request.getParameter("callsign"), request.getParameter("name"), request.getParameter("lastname"), request.getParameter("phone"), request.getParameter("dayRent"));
+                        request.getParameter("callsign"), request.getParameter("name"), request.getParameter("lastname"), request.getParameter("phone"), 
+                        request.getParameter("dayRent"), request.getParameter("schedule"));
                 wsql.con.close();
             }
             catch(ClassNotFoundException | SQLException ex){

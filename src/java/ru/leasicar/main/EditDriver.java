@@ -16,7 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import ru.leasicar.usercontrol.AccessControl;
+import ru.leasicar.authorization.AccessControl;
 import ru.leasicar.workerSql.WorkerSQL;
 
 /**
@@ -55,7 +55,8 @@ public class EditDriver extends HttpServlet {
                 out.println("<div class='formItem'><label>Номер телефона</label><br><input type='text' id='driver_phone_number' value='"+dataDriver.get("driver_phone_number")+"' /></div>"); 
                 if(ac.checkPermission(ac.getUserId(request.getSession().getId()), "editRent")){     
                     out.println("<div class='formItem'><label>Аренда</label><br><input type='text' id='driver_day_rent' value='"+dataDriver.get("driver_day_rent")+"' /></div>"); 
-                    editClick =  "onClick='editDriverSendRP("+dataDriver.get("driver_id")+")'";                
+                    editClick =  "onClick='editDriverSendRP("+dataDriver.get("driver_id")+")'"; 
+                    out.println("<div class='formItem'><label>График</label><br><select id='driver_schedule'>"+getOptions((String)dataDriver.get("driverDayOffPeriod"))+ "</select></div>");
                 }
                 out.println("<div class='formItem'><br><input type='button' "+editClick+" value='Изменить' />");              
                 out.println("<input type='button' id='cancelEditDriver' value='Отмена' onClick='clearEditForm()' /></div>");
@@ -120,5 +121,18 @@ public class EditDriver extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private String getOptions(String dayOff) {
+        String options = "";
+        switch(dayOff){
+            case "0": 
+                options = "<option value='0' selected>Без выходных</option><option value='11'>10/1</option>";
+                break;
+            case "11": 
+                options = "<option value='0'>Без выходных</option><option value='11' selected>10/1</option>";
+                break;
+        }
+        return options;
+    }
 
 }

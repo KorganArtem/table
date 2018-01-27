@@ -37,12 +37,14 @@ function addAjax(){
     var lastname = $('#driver_lastname').val();
     var phone = $('#driver_phone_number').val();
     var dayRent = $('#driver_day_rent').val();
+    var schedule = $('#driver_schedule').val();
+    alert(schedule);
     $.ajax({
         type: 'POST',
         url: 'DA',
         data: 'lastname='+lastname+'&name='+name+'&callsign='+callsign
                 +'&carnumber='+carnumber+'&limit='+limit+'&phone='+phone
-                +'&dayRent='+dayRent,
+                +'&dayRent='+dayRent+'&schedule='+schedule,
         success: function(data){
             location.reload();
         }
@@ -148,13 +150,14 @@ function editDriverSendRP(id){
     var name = $('#driver_name').val();
     var lastname = $('#driver_lastname').val();
     var phone = $('#driver_phone_number').val();
-    var dayRent = $('#driver_phone_number').val();
+    var dayRent = $('#driver_day_rent').val();
+    var schedule = $('#driver_schedule').val();
     $.ajax({
         type: 'POST',
         url: 'EDSP',
         data: 'driver_id='+id+'&lastname='+lastname+'&name='+name+'&callsign='
                 +callsign+'&carnumber='+carnumber+'&limit='+limit
-                +'&phone='+phone+'&dayRent='+dayRent,
+                +'&phone='+phone+'&dayRent='+dayRent+'&schedule='+schedule,
         success: function(data){
             if(data=='notpermit'){
                 alert('У вас нет прав на изменение!');
@@ -198,3 +201,69 @@ function delDriver(druverId){
     });
     }
 }
+
+////////////////////////////////////////////////////////////////////////////////
+/////                             Show Car list                            /////
+////////////////////////////////////////////////////////////////////////////////
+function getCarList(){
+    $.ajax({
+        type: 'POST',
+        url: 'CL',
+        success: function(data){
+            $('#carList').html(data);
+        },
+        error:function (msg){
+            alert('Error in geting car list!'+msg);
+        }
+    });
+}
+$('#carListButton').click(function(){
+    $('#listDriver').css('display', 'none');
+    $('#carListButton').attr('disabled', true);
+    $('#driverListButton').attr('disabled', false);
+    getCarList();
+    $('#carList').css('display', 'block');
+});
+////////////////////////////////////////////////////////////////////////////////
+/////                             Show Driver list                            /////
+////////////////////////////////////////////////////////////////////////////////
+$('#driverListButton').click(function (){
+    listDriverShow();
+    $('#carList').css('display', 'none');
+    $('#listDriver').css('display', 'block');
+    $('#driverListButton').attr('disabled', true);
+    $('#carListButton').attr('disabled', false);
+});
+
+
+
+function editShow(carId){ // лoвим клик пo ссылки с id="go"
+    //event.preventDefault(); // выключaем стaндaртную рoль элементa
+    $.ajax({
+        type: 'POST',
+        url: 'CarData.jsp',
+        data: 'id='+carId,
+        success: function(data){
+            $('#modal_form').html(data);
+        },
+        error:function (msg){
+            alert('Error in geting car list!'+msg);
+        }
+    });
+    $('#overlay').fadeIn(400, // снaчaлa плaвнo пoкaзывaем темную пoдлoжку
+        function(){ // пoсле выпoлнения предъидущей aнимaции
+            $('#modal_form') 
+                    .css('display', 'block') // убирaем у мoдaльнoгo oкнa display: none;
+                    .animate({opacity: 1, top: '50%'}, 200); // плaвнo прибaвляем прoзрaчнoсть oднoвременнo сo съезжaнием вниз
+    });
+}
+/* Зaкрытие мoдaльнoгo oкнa, тут делaем тo же сaмoе нo в oбрaтнoм пoрядке */
+$('#modal_close, #overlay').click( function(){ // лoвим клик пo крестику или пoдлoжке
+    $('#modal_form')
+        .animate({opacity: 0, top: '45%'}, 200,  // плaвнo меняем прoзрaчнoсть нa 0 и oднoвременнo двигaем oкнo вверх
+            function(){ // пoсле aнимaции
+                    $(this).css('display', 'none'); // делaем ему display: none;
+                    $('#overlay').fadeOut(400); // скрывaем пoдлoжку
+            }
+	);
+});
