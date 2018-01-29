@@ -17,9 +17,12 @@ if(!ac.isLogIn(request.getSession().getId())){%>
     <%
         return ; 
     }
+    String modelList = "";
 if(request.getParameter("id")!=null){
     WorkerSQL wsql = new WorkerSQL();
     carData = wsql.getCarData(Integer.parseInt(request.getParameter("id")));
+    
+    modelList = wsql.modelLisc();
 }
 else{
     %>Error <% 
@@ -29,7 +32,10 @@ else{
     <div class="carEditForm">
         <label>ID</label><input id='carId' type='text' disabled='true' value='<%=carData.get("id")%>'/><br>
         <label>Гос. Номер</label><input id='carNumber' type='text'  value='<%= carData.get("number") %>'/><br>
-        <label>Модель</label><input id='carModel' type='text'  value='<%= carData.get("model") %>'/><br>
+        <label>Модель</label>
+        <select id='carModel' type='text'  value='<%= carData.get("model") %>'>
+            <%= modelList %>
+        </select><br>
         <label>VIN код</label><input id='carVIN' type='text'  value='<%= carData.get("VIN") %>'/><br>
         <label>Тип КПП</label><input id='carTransmission' type='text'  value='<%= carData.get("transmission") %>'/><br>
         <label>Год выпуска</label><input id='carYear' type='text'  value='<%= carData.get("year") %>'/><br>

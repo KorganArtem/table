@@ -299,4 +299,23 @@ public class WorkerSQL {
         }
         return carData;
     }
+
+    public void writeCarData(String carNumber, 
+            String carVIN, String carModel, String carTransmission,
+            String carYear, String carCost, String carGlanasId, String carId) throws SQLException {
+        System.out.println("Попытка внести изменения в информации о машине()");
+        Statement st = con.createStatement();
+        st.execute("UPDATE `cars` SET `number`='" +carNumber+ "'"+
+                                            ", `model`='" + carModel+ "'"+
+                                            ", `VIN`='" + carVIN+"'"+
+                                            ", `transmission`='" + carTransmission+"'"+
+                                            ", `year`='" + carYear+"'"+
+                                            ", `cost`='" + carCost+"'"+
+                                            ", `glanasId`= '"+ carGlanasId+"'"+
+                                            " WHERE `id`="+carId);
+    }
+    public String modelLisc(){
+        return "<option value='1'>Kia Rio</option>"+
+               "<option value='2'>Kia Optima</option>";
+    }
 }
