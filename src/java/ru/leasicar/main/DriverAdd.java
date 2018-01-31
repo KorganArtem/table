@@ -40,7 +40,7 @@ public class DriverAdd extends HttpServlet {
             System.out.println("schedule  "+request.getParameter("schedule"));
             try{
                 WorkerSQL wsql = new WorkerSQL();
-                wsql.writeDriver(request.getParameter("limit"), request.getParameter("carnumber"), 
+                wsql.writeDriver(request.getParameter("limit"), request.getParameter("carId"), 
                         request.getParameter("callsign"), request.getParameter("name"), request.getParameter("lastname"), request.getParameter("phone"), 
                         request.getParameter("dayRent"), request.getParameter("schedule"));
                 wsql.con.close();

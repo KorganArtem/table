@@ -43,6 +43,7 @@ public class CarList extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             AccessControl ac = new AccessControl();
             if(ac.isLogIn(request.getSession().getId())){
+                    out.println("<input type='button' value='Add Car' onClick='addCar()'/>");
                     out.println("<table id='listDriverTabel' class='listDriver'>");
                     ///////////////////////////////////////////////////////////////
                     boolean delete = ac.checkPermission(ac.getUserId(request.getSession().getId()), "deletDriver");
@@ -59,12 +60,40 @@ public class CarList extends HttpServlet {
                         Map.Entry<String, Map> entry = entries.next();
                         Map carData = entry.getValue();
                         out.println("<tr><td class='edit' onClick='editShow("+carData.get("id")+")'>"+
-                        carData.get("number")+"</td>"+
-                        "<td>"+carData.get("model")+"</td>"+
-                        "<td>"+carData.get("VIN")+"</td>"+
-                        "<td>"+carData.get("year")+"</td>"+
-                        "<td>"+carData.get("transmission")+"</td>"+
-                        "<td>"+carData.get("cost")+"</td></tr>");
+                                carData.get("number")+"</td>");
+                        
+                        ////////////////////////// Model ///////////////////////
+                        if(carData.get("model")!=null){
+                            switch(carData.get("model").toString()){
+                                case "1": 
+                                    out.println("<td>Kio Rio</td>");
+                                    break;
+                                case "2": 
+                                    out.println("<td>Kio Optima</td>");
+                                    break;
+                            }
+                        }
+                        else 
+                            out.println("<td>Not</td>");
+                        out.println("<td>"+carData.get("VIN")+"</td>"+
+                                        "<td>"+carData.get("year")+"</td>");
+                        ////////////////////////////////////////////////////////
+                        
+                        ////////////////////////// Transmission ////////////////
+                        if(carData.get("transmission")!=null){
+                            switch(carData.get("transmission").toString()){
+                                case "1": 
+                                    out.println("<td>МКПП</td>");
+                                    break;
+                                case "2": 
+                                    out.println("<td>АКПП</td>");
+                                    break;
+                            }
+                        }
+                        else 
+                            out.println("<td>Not</td>");
+                        ////////////////////////////////////////////////////////
+                        out.println("<td>"+carData.get("cost")+"</td></tr>");
                     }
                     out.println("</table>");
                     //wsql.addAccrual();

@@ -36,7 +36,7 @@
                     data: 'login='+login+'&pass='+password,
                     success: function(data){
                         if(data.trim()==='1'){
-                            location.href='AddDriver';
+                            location.href='';
                         }
                         else{ 
                             $('#pass').css('background-color', 'red');

@@ -50,7 +50,11 @@ public class EditDriver extends HttpServlet {
                 out.println("<div class='formItem'><label>Имя</label><br><input type='text' id='driver_name' value='"+dataDriver.get("driver_firstname")+"'/></div>");
                 out.println("<div class='formItem'><label>Фамилия</label><br><input type='text' id='driver_lastname' value='"+dataDriver.get("driver_lastname")+"'/></div>");
                 out.println("<div class='formItem'><label>Позывной</label><br><input type='text' id='driver_callsign' value='"+dataDriver.get("driver_callsign")+"' /></div>");
-                out.println("<div class='formItem'><label>Номер машины</label><br><input type='text' id='driver_carnumber' value='"+dataDriver.get("driver_carnumber")+"' /></div>"); 
+                out.println("<div class='formItem'><label>Номер машины</label><br>"
+                        + "<select id='carId' >");
+                        /*+ "<input type='text' id='driver_carnumber' value='"+dataDriver.get("driver_carnumber")+"' />"*/
+                out.println(wsql.getFreeCarList(Integer.parseInt(dataDriver.get("driver_id").toString())));
+                out.println("</select></div>"); 
                 out.println("<div class='formItem'><label>Лимит</label><br><input type='text' id='driver_limit' value='"+dataDriver.get("driver_limit")+"' /></div>");  
                 out.println("<div class='formItem'><label>Номер телефона</label><br><input type='text' id='driver_phone_number' value='"+dataDriver.get("driver_phone_number")+"' /></div>"); 
                 if(ac.checkPermission(ac.getUserId(request.getSession().getId()), "editRent")){     

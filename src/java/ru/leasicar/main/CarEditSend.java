@@ -42,7 +42,6 @@ public class CarEditSend extends HttpServlet {
             return;
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
             String carNumber = request.getParameter("carNumber");
             String carModel = request.getParameter("carModel");
             String carVIN = request.getParameter("carVIN");

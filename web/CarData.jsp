@@ -21,13 +21,18 @@ if(!ac.isLogIn(request.getSession().getId())){%>
 if(request.getParameter("id")!=null){
     WorkerSQL wsql = new WorkerSQL();
     carData = wsql.getCarData(Integer.parseInt(request.getParameter("id")));
-    
-    modelList = wsql.modelLisc();
+    modelList = wsql.modelLisc(Integer.parseInt(carData.get("model").toString()));
 }
 else{
     %>Error <% 
     return;
 } 
+String mkpp = "";
+if(carData.get("transmission")=="1")
+    mkpp="selected";
+String akpp = "";
+if(carData.get("transmission")=="1")
+    akpp="selected";
 %>
     <div class="carEditForm">
         <label>ID</label><input id='carId' type='text' disabled='true' value='<%=carData.get("id")%>'/><br>
@@ -37,13 +42,23 @@ else{
             <%= modelList %>
         </select><br>
         <label>VIN код</label><input id='carVIN' type='text'  value='<%= carData.get("VIN") %>'/><br>
-        <label>Тип КПП</label><input id='carTransmission' type='text'  value='<%= carData.get("transmission") %>'/><br>
-        <label>Год выпуска</label><input id='carYear' type='text'  value='<%= carData.get("year") %>'/><br>
+        <label>Тип КПП</label>
+        <select id="carTransmission">
+            <option value="1" <%= mkpp %> >МКПП</option>
+            <option value="2" <%= akpp %> >АКПП</option>
+        </select>
+        <label>Год выпуска</label>
+        <select id="carYear">
+            <option value="2015" <% if(carData.get("year").equals("2015")){ %> selected <%}%> >2015</option>
+            <option value="2016" <% if(carData.get("year").equals("2016")){ %> selected <%}%> >2016</option>
+            <option value="2017" <% if(carData.get("year").equals("2017")){ %> selected <%}%> >2017</option>
+            <option value="2018" <% if(carData.get("year").equals("2018")){ %> selected <%}%> >2018</option>
+        </select>
         <label>Суточная Аренда</label><input id='carCost' type='text'  value='<%= carData.get("cost") %>'/><br>
         <label>ID в ГЛАНАС</label><input id='carGlanasId' type='text'  value='<%= carData.get("glanasId") %>'/><br>
         <div class="buttonBlock">
             <input id='editCarButton' type='button' value="Изменить"/>
-            <input id='cancelCarButton' type='button' value="Отменить"/>
+            <input id='cancelCarButton' type='button' onClick="closeModWind()" value="Отменить"/>
         </div>
     </div>
         <script>

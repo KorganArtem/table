@@ -42,7 +42,7 @@ public class WorkerSQL {
         }
     }
     public void writeDriver(String limit, 
-            String carnumber, 
+            String carId, 
             String callsign, 
             String name, 
             String lastname, 
@@ -51,13 +51,22 @@ public class WorkerSQL {
             String schedule) throws SQLException{
         Statement st = con.createStatement();
         st.execute("INSERT INTO `drivers` (`driver_lastname`, `driver_firstname`, "
-                + "`driver_callsign`, `driver_carnumber`, `driver_limit`, `driver_phone_number`, "
+                + "`driver_callsign`, `carId`, `driver_limit`, `driver_phone_number`, "
                 + "`driver_day_rent`, `driver_current_debt`, `driverStartDate`, `driverDayOffPeriod`) "
-                + "VALUES ('"+lastname+"', '"+name+"', '"+callsign+"', '"+carnumber+"', '"+limit+"', '"+phone+"', "+dayRent+", 0, CURRENT_DATE(), "+schedule+")  ");
+                + "VALUES ('"+lastname+"', '"+name+"', '"+callsign+"', '"+carId+"', '"+limit+"', '"+phone+"', "+dayRent+", 0, CURRENT_DATE(), "+schedule+")  ");
+        ResultSet rs = st.executeQuery("SELECT LAST_INSERT_ID() as driverId");
+        if(rs.next()){
+            con.createStatement().execute("UPDATE `cars` SET `driverId`="+rs.getInt("driverId")+" WHERE `id` = "+carId);
+            System.out.println(rs.getInt("driverId")+"");
+        }
+        
     }
     public Map listDriver() throws SQLException{
         Statement st = con.createStatement();
-        ResultSet rs = st.executeQuery("SELECT *  FROM `drivers`  WHERE driver_deleted=0");
+        ResultSet rs = st.executeQuery("SELECT `drivers`.*, `cars`.`number`  FROM `drivers`  \n" +
+                                        "LEFT JOIN `cars`\n" +
+                                        "ON `cars`.`id`=`drivers`.`carId` \n" +
+                                        "WHERE `drivers`.`driver_deleted`=0");
         Map listDriver = new HashMap<String, HashMap>();
         while(rs.next()){
             Map rowDriver = new HashMap<String, HashMap>();
@@ -65,7 +74,7 @@ public class WorkerSQL {
             rowDriver.put("driver_lastname", rs.getString("driver_lastname"));
             rowDriver.put("driver_firstname", rs.getString("driver_firstname"));
             rowDriver.put("driver_callsign", rs.getString("driver_callsign"));
-            rowDriver.put("driver_carnumber", rs.getString("driver_carnumber"));
+            rowDriver.put("driver_carnumber", rs.getString("number"));
             rowDriver.put("driver_current_debt", rs.getString("driver_current_debt"));
             rowDriver.put("driver_limit", rs.getString("driver_limit"));
             rowDriver.put("driver_day_rent", rs.getString("driver_day_rent"));
@@ -216,23 +225,23 @@ public class WorkerSQL {
     }
 
     public void getEditDataDriver(int driverId, String limit, 
-            String carnumber, 
+            String carId, 
             String callsign, 
             String name, 
             String lastname, String phone) throws SQLException{
         Statement st = con.createStatement();
         st.execute("UPDATE `drivers` SET `driver_lastname`='"+lastname+"', `driver_firstname`='"+name+"', "
-                + "`driver_callsign`='"+callsign+"', `driver_carnumber`='"+carnumber+"', `driver_limit`='"+limit+"', `driver_phone_number`='"+phone+"' WHERE driver_id="+driverId);
+                + "`driver_callsign`='"+callsign+"', `carId`='"+carId+"', `driver_limit`='"+limit+"', `driver_phone_number`='"+phone+"' WHERE driver_id="+driverId);
     }
     public void getEditDataDriver(int driverId, String limit, 
-            String carnumber, 
+            String carId, 
             String callsign, 
             String name, 
             String lastname, String phone, String rentPay, String driver_schedule) throws SQLException{
         System.out.println(rentPay);
         Statement st = con.createStatement();
         st.execute("UPDATE `drivers` SET `driverDayOffPeriod`="+driver_schedule+", `driver_day_rent`="+rentPay+", `driver_lastname`='"+lastname+"', `driver_firstname`='"+name+"', "
-                + "`driver_callsign`='"+callsign+"', `driver_carnumber`='"+carnumber+"', `driver_limit`='"+limit+"', `driver_phone_number`='"+phone+"' WHERE driver_id="+driverId);
+                + "`driver_callsign`='"+callsign+"', `carId`='"+carId+"', `driver_limit`='"+limit+"', `driver_phone_number`='"+phone+"' WHERE driver_id="+driverId);
     }
     public Map getPayList(int driverId) throws SQLException{
         Statement stPayList = con.createStatement();
@@ -284,7 +293,7 @@ public class WorkerSQL {
         return listDriver;
     }
     public Map getCarData(int id) throws SQLException{
-        Map carData = new HashMap<String, HashMap>();
+        Map carData = new HashMap<String, String>();
         Statement st = con.createStatement();
         ResultSet rs = st.executeQuery("SELECT *  FROM `cars` WHERE `id`="+id);
         if(rs.next()){
@@ -314,8 +323,63 @@ public class WorkerSQL {
                                             ", `glanasId`= '"+ carGlanasId+"'"+
                                             " WHERE `id`="+carId);
     }
+    public String modelLisc(int currentIds){
+        Map<Integer, String> carData = new HashMap();
+        carData.put(1, "Kia Rio");
+        carData.put(2, "Kia Optima");
+        String forRet="";
+        for (Map.Entry<Integer, String> entry : carData.entrySet()) {
+            forRet =forRet+"<option value='"+entry.getKey()+"' ";
+            if(entry.getKey()== currentIds)
+                forRet = forRet+" selected "; 
+            forRet =forRet+ ">" + entry.getValue()+"</option>";           
+        }
+        return forRet;
+    }
+    
     public String modelLisc(){
-        return "<option value='1'>Kia Rio</option>"+
-               "<option value='2'>Kia Optima</option>";
+        Map<Integer, String> carData = new HashMap();
+        carData.put(1, "Kia Rio");
+        carData.put(2, "Kia Optima");
+        String forRet="";
+        for (Map.Entry<Integer, String> entry : carData.entrySet()) {
+            forRet =forRet+"<option value='"+entry.getKey()+"' ";
+            forRet =forRet+ ">" + entry.getValue()+"</option>";           
+        }
+        return forRet;
+    }
+    public void addCar(String carNumber, 
+            String carVIN, String carModel, String carTransmission,
+            String carYear, String carCost, String carGlanasId) throws SQLException {
+        System.out.println("Попытка внести изменения в информации о машине()");
+        Statement st = con.createStatement();
+        st.execute("INSERT INTO `cars` (`number`, `model`, `VIN`, `transmission`, `year`, `cost`, `glanasId`)"
+                + " VALUES ('" +carNumber+ "', '"+carModel+ "', "+
+                                            " '" + carVIN+"', "+
+                                            " '" + carTransmission+"', "+
+                                            " '" + carYear+"', "+
+                                            " '" + carCost+"', "+
+                                            " '"+ carGlanasId+"')");
+    }
+    public String getFreeCarList() throws SQLException{
+        String carData = "";
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery("SELECT *  FROM `cars` WHERE `driverId`= 0");
+        while(rs.next()){
+            carData = carData +"<option value='"+rs.getString("id")+"'>"+rs.getString("model")+"("+rs.getString("number")+")</option>";
+        }
+        return carData;
+    }
+    public String getFreeCarList(int driverId) throws SQLException{
+        String carData = "";
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery("SELECT *  FROM `cars` WHERE `driverId`= 0 OR `driverId`="+driverId);
+        while(rs.next()){
+            String selected = "";
+            if(rs.getInt("driverId")==driverId)
+                selected="selected";
+            carData = carData +"<option value='"+rs.getString("id")+"' "+selected+">"+rs.getString("model")+"("+rs.getString("number")+")</option>";
+        }
+        return carData;
     }
 }
