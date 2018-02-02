@@ -44,7 +44,7 @@ public class CarList extends HttpServlet {
             AccessControl ac = new AccessControl();
             if(ac.isLogIn(request.getSession().getId())){
                     out.println("<input type='button' value='Add Car' onClick='addCar()'/>");
-                    out.println("<table id='listDriverTabel' class='listDriver'>");
+                    out.println("<table id='carListTabel' class='listDriver'>");
                     ///////////////////////////////////////////////////////////////
                     boolean delete = ac.checkPermission(ac.getUserId(request.getSession().getId()), "deletDriver");
                     String colDel="";
@@ -59,7 +59,7 @@ public class CarList extends HttpServlet {
                     while (entries.hasNext()) {
                         Map.Entry<String, Map> entry = entries.next();
                         Map carData = entry.getValue();
-                        out.println("<tr><td class='edit' onClick='editShow("+carData.get("id")+")'>"+
+                        out.println("<tr ><td class='edit' onClick='editShow("+carData.get("id")+")'>"+
                                 carData.get("number")+"</td>");
                         
                         ////////////////////////// Model ///////////////////////

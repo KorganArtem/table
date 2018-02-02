@@ -63,7 +63,7 @@ public class WorkerSQL {
     }
     public Map listDriver() throws SQLException{
         Statement st = con.createStatement();
-        ResultSet rs = st.executeQuery("SELECT `drivers`.*, `cars`.`number`  FROM `drivers`  \n" +
+        ResultSet rs = st.executeQuery("SELECT `drivers`.*, `cars`.`number`   FROM `drivers`  \n" +
                                         "LEFT JOIN `cars`\n" +
                                         "ON `cars`.`id`=`drivers`.`carId` \n" +
                                         "WHERE `drivers`.`driver_deleted`=0");
@@ -74,7 +74,8 @@ public class WorkerSQL {
             rowDriver.put("driver_lastname", rs.getString("driver_lastname"));
             rowDriver.put("driver_firstname", rs.getString("driver_firstname"));
             rowDriver.put("driver_callsign", rs.getString("driver_callsign"));
-            rowDriver.put("driver_carnumber", rs.getString("number"));
+            rowDriver.put("id_car", rs.getString("number"));
+            rowDriver.put("driver_carnumber", rs.getString("driver_carnumber"));
             rowDriver.put("driver_current_debt", rs.getString("driver_current_debt"));
             rowDriver.put("driver_limit", rs.getString("driver_limit"));
             rowDriver.put("driver_day_rent", rs.getString("driver_day_rent"));
@@ -364,7 +365,7 @@ public class WorkerSQL {
     public String getFreeCarList() throws SQLException{
         String carData = "";
         Statement st = con.createStatement();
-        ResultSet rs = st.executeQuery("SELECT *  FROM `cars` WHERE `driverId`= 0");
+        ResultSet rs = st.executeQuery("SELECT * FROM `cars` WHERE `id` not in (SELECT `carId` FROM `drivers` WHERE `driver_deleted`=0)");
         while(rs.next()){
             carData = carData +"<option value='"+rs.getString("id")+"'>"+rs.getString("model")+"("+rs.getString("number")+")</option>";
         }
@@ -373,10 +374,16 @@ public class WorkerSQL {
     public String getFreeCarList(int driverId) throws SQLException{
         String carData = "";
         Statement st = con.createStatement();
-        ResultSet rs = st.executeQuery("SELECT *  FROM `cars` WHERE `driverId`= 0 OR `driverId`="+driverId);
+        int currentCarId=0;
+        ResultSet carentCarRes = con.createStatement().executeQuery("SELECT * FROM `cars` "
+                + "WHERE `id` in (SELECT carId FROM drivers WHERE driver_id= "+driverId+")");
+        if(carentCarRes.next())
+            currentCarId=carentCarRes.getInt("id");
+        ResultSet rs = st.executeQuery("SELECT * FROM `cars` WHERE `id` not in (SELECT `carId` FROM `drivers` WHERE `driver_deleted`=0) or  "
+                + " `id` in (SELECT `carId` FROM `drivers` WHERE `driver_id`="+driverId+")");//"SELECT *  FROM `cars` WHERE `driverId`= 0 OR `driverId`="+driverId
         while(rs.next()){
             String selected = "";
-            if(rs.getInt("driverId")==driverId)
+            if(rs.getInt("id")==currentCarId)
                 selected="selected";
             carData = carData +"<option value='"+rs.getString("id")+"' "+selected+">"+rs.getString("model")+"("+rs.getString("number")+")</option>";
         }

@@ -221,6 +221,7 @@ $('#carListButton').click(function(){
     $('#carListButton').attr('disabled', true);
     $('#driverListButton').attr('disabled', false);
     getCarList();
+    $('#carListTabel').DataTable();
     $('#carList').css('display', 'block');
 });
 ////////////////////////////////////////////////////////////////////////////////

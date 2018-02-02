@@ -19,6 +19,7 @@ if(!ac.isLogIn(request.getSession().getId())){%>
     }
     String modelList = "";
 if(request.getParameter("id")!=null){
+System.out.println("Get car data id="+request.getParameter("id"));
     WorkerSQL wsql = new WorkerSQL();
     carData = wsql.getCarData(Integer.parseInt(request.getParameter("id")));
     modelList = wsql.modelLisc(Integer.parseInt(carData.get("model").toString()));
@@ -35,7 +36,7 @@ if(carData.get("transmission")=="1")
     akpp="selected";
 %>
     <div class="carEditForm">
-        <label>ID</label><input id='carId' type='text' disabled='true' value='<%=carData.get("id")%>'/><br>
+        <label>ID</label><input id='carIdn' type='text' disabled='true' value='<%=carData.get("id")%>'/><br>
         <label>Гос. Номер</label><input id='carNumber' type='text'  value='<%= carData.get("number") %>'/><br>
         <label>Модель</label>
         <select id='carModel' type='text'  value='<%= carData.get("model") %>'>
@@ -70,8 +71,7 @@ if(carData.get("transmission")=="1")
                 var carYear = $("#carYear").val();
                 var carCost = $("#carCost").val();
                 var carGlanasId = $("#carGlanasId").val();
-                var carId = $("#carId").val();
-                alert(carNumber);
+                var carId = $("#carIdn").val();
                 $.ajax({
                     type: 'POST',
                     url: 'CES',
@@ -80,9 +80,11 @@ if(carData.get("transmission")=="1")
                             +'&carCost='+carCost+'&carGlanasId='+carGlanasId+'&carId='+carId,
                     success: function(){
                         alert('Изменения сохранены');
+                        closeModWind();
+                        getCarList();
                     },
                     error: function(msg){
-                        console.log(msg)
+                        alert(msg);
                     }
                 });
             });

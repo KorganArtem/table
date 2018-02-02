@@ -54,7 +54,7 @@ public class ListDriver extends HttpServlet {
                 WorkerSQL wsql = new WorkerSQL();
                 Map listDriver = wsql.listDriver();
                 Iterator<Map.Entry<String, Map>> entries = listDriver.entrySet().iterator();
-                out.println("<thead><tr><td>Фамилия</td><td>Имя</td><td>Номер</td><td>Телефон</td><td>Лимит</td>"
+                out.println("<thead><tr><td>Фамилия</td><td>Имя</td><td>Номер</td><td>Номер</td><td>Телефон</td><td>Лимит</td>"
                         + "<td>Баланс</td><td>Депозит</td><td class='noPrint'> </td><td class='noPrint'></td><td class='noPrint'></td><td class='noPrint'></td>"+colDel+"</tr></thead>");
                 while (entries.hasNext()) {
                     Map.Entry<String, Map> entry = entries.next();
@@ -76,6 +76,7 @@ public class ListDriver extends HttpServlet {
                             + "<td id='listDriverFirstName"+entry.getKey()+"'>"+draverData.get("driver_lastname")+"</td>"
                             + "<td id='listDriverLastName"+entry.getKey()+"'>"+draverData.get("driver_firstname")+"</td>"
                             + "<td id='listDriverCarNamber"+entry.getKey()+"'>"+draverData.get("driver_carnumber")+"</td>"
+                            + "<td id='listDriverCarNamber"+entry.getKey()+"'>"+draverData.get("id_car")+"</td>"
                             + "<td>"+draverData.get("driver_phone_number")+"</td>"
                             + "<td>"+draverData.get("driver_limit")+"</td>"
                             + "<td>"+draverData.get("driver_current_debt")+"</td>"

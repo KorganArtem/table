@@ -40,8 +40,8 @@ public class CarEditSend extends HttpServlet {
         AccessControl ac = new AccessControl();
         if(!ac.isLogIn(request.getSession().getId()))
             return;
+        int userId = ac.getUserId(request.getSession().getId());
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             String carNumber = request.getParameter("carNumber");
             String carModel = request.getParameter("carModel");
             String carVIN = request.getParameter("carVIN");
@@ -53,6 +53,14 @@ public class CarEditSend extends HttpServlet {
             WorkerSQL wrk = new WorkerSQL();
             wrk.writeCarData(carNumber, carVIN,  carModel,  carTransmission,
             carYear, carCost, carGlanasId, carId);
+            System.out.println("INFO: Car data chenged bu user "+userId+" (id="+carId
+                    +" carNumber="+carNumber
+                    +" carModel="+carModel
+                    +" carVIN="+carVIN
+                    +" carTransmission="+carTransmission
+                    +" carYear="+carYear
+                    +" carCost="+carCost
+                    +" carGlanasId="+carGlanasId);
             
         }
     }

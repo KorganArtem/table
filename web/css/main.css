@@ -126,10 +126,10 @@ and open the template in the editor.
     background-color: white;
 }
 .yellow{
-    background-color: yellow;
+    background-color: yellow !important;
 }
 .red{
-    background-color: red;
+    background-color: red !important;
 }
 .listDriver{
     margin-top: 5px;
