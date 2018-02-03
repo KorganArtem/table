@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ru.leasicar.authorization.AccessControl;
-import ru.leasicar.workerSql.WorkerSQL;
+import ru.leasicar.workerSql.ReportSQL;
 
 /**
  *
@@ -43,18 +43,21 @@ public class DriverPayReport extends HttpServlet {
         AccessControl ac = new AccessControl();
         if(ac.isLogIn(request.getSession().getId())){
             try (PrintWriter out = response.getWriter()) {
-                out.println("<!DOCTYPE html>");
+                /*out.println("<!DOCTYPE html>");
                 out.println("<html>");
                 out.println("<head>");
                 out.println("<link rel='stylesheet' type='text/css'  href='css/datatabel.css'/>");
                 out.println("<link rel='stylesheet' type='text/css' href='css/main.css'/>");
                 out.println("<script src='https://code.jquery.com/jquery-1.12.4.js'></script>");
                 out.println("<script type='text/javascript' src='https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js'></script>");
-                out.println("</head>");
-                out.println("<body><div id='driverReportDiv'>");
+                out.println("</head><body>");*/
+                out.println("<div id='driverReportDiv'>");
                 int driverId = 0;
+                String begin = request.getParameter("begin");
+                String end = request.getParameter("end");
                 try{
                     driverId = Integer.parseInt(request.getParameter("driverId"));
+                    
                 }
                 catch(Exception ex){
                     System.out.println("Driver ID is not passed!");
@@ -62,19 +65,12 @@ public class DriverPayReport extends HttpServlet {
                 /* TODO output your page here. You may use following sample code. */
                 if(driverId==0)
                     return;
-                WorkerSQL wsql = new WorkerSQL();
+                ReportSQL rsql = new ReportSQL();
                 //Map payList = wsql.getPayList(driverId);
-                Map payList = new TreeMap<>(wsql.getPayList(driverId));
+                Map payList = new TreeMap<>(rsql.getPayList(driverId, begin, end));
                 out.println("<table id='driverReport' class='report'>");
                 out.println("<thead><tr><td>Дата</td><td>Тип</td><td>Источник</td><td>Сумма</td></tr></thead>");
                 Iterator<Map.Entry<String, Map>> entries = payList.entrySet().iterator();
-                String yandex="";
-                String gett="";
-                String uber="";
-                String card="";
-                String macdack="";
-                String discount="";
-                String fromDeposit="";
                 while (entries.hasNext()) {
                     Map.Entry<String, Map> entry = entries.next();
                     Map payRaw = entry.getValue();
@@ -120,11 +116,11 @@ public class DriverPayReport extends HttpServlet {
                     }
                     out.println("<tr><td>"+payRaw.get("date")+"</td><td>"+typePay+"</td><td>"+sourcePay+"</td><td>"+payRaw.get("sum")+"</td></tr>");
                 }
-                out.println("</table>");
-                out.println("<script src='js/main.js'></script>");
+                out.println("</table></div>");
+                /*out.println("<script src='js/main.js'></script>");
                 out.println("<script>$('#driverReport').DataTable()</script>");
-                out.println("</div></body></html>"); 
-                wsql.con.close();
+                out.println("</body></html>"); */
+                rsql.con.close();
 
             }
         }

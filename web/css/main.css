@@ -149,8 +149,9 @@ and open the template in the editor.
     margin: 5px;
     background: white;
 }
-#listDriver{
+#listDriver, #mainContainer{
     float: left;
+    width: 900px;
 }
 .addDriverForm{
     box-shadow: 0 0 10px rgba(0,0,0,0.5);

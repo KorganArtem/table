@@ -244,21 +244,6 @@ public class WorkerSQL {
         st.execute("UPDATE `drivers` SET `driverDayOffPeriod`="+driver_schedule+", `driver_day_rent`="+rentPay+", `driver_lastname`='"+lastname+"', `driver_firstname`='"+name+"', "
                 + "`driver_callsign`='"+callsign+"', `carId`='"+carId+"', `driver_limit`='"+limit+"', `driver_phone_number`='"+phone+"' WHERE driver_id="+driverId);
     }
-    public Map getPayList(int driverId) throws SQLException{
-        Statement stPayList = con.createStatement();
-        ResultSet rsPayList = stPayList.executeQuery("SELECT DATE_FORMAT(`date`, '%Y-%m-%d') as date_f, "
-                + "`pay`.* FROM `pay` WHERE `driverId`="+driverId+" ORDER BY `id`");
-        Map payList = new HashMap<String, HashMap>();
-        while(rsPayList.next()){
-            Map payRaw = new HashMap<String, String>();
-            payRaw.put("type", rsPayList.getString("type"));
-            payRaw.put("source", rsPayList.getString("source"));
-            payRaw.put("sum", rsPayList.getString("sum"));
-            payRaw.put("date", rsPayList.getString("date_f"));
-            payList.put(rsPayList.getString("id"), payRaw);
-        }
-        return payList;
-    }
 
     public void addPayDeposit(int driverId, int sum, int source, int userId) throws SQLException {
         Statement st = con.createStatement();

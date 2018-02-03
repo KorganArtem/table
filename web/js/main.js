@@ -62,7 +62,9 @@ function listDriverShow(){
         url: 'LD',
         success: function(data){
             $('#listDriver').html(data);
-            $('#listDriverTabel').DataTable();
+            $('#listDriverTabel').DataTable( {
+                "paging":   false
+            });
         }
     });
 }
@@ -172,7 +174,7 @@ function clearEditForm(){
     location.reload();
 }
 function getReport(driverId){
-    window.open('DriverPayReport?driverId='+driverId);
+    window.open('reports/driverReport.jsp?driverId='+driverId);
 }
 function addDeposit(driverId){
     $('#fromDeposit').css('display', 'none');
@@ -210,6 +212,9 @@ function getCarList(){
         url: 'CL',
         success: function(data){
             $('#carList').html(data);
+            $('#carListTabel').DataTable( {
+                "paging":   false,
+            });
         },
         error:function (msg){
             alert('Error in geting car list!'+msg);
@@ -221,7 +226,6 @@ $('#carListButton').click(function(){
     $('#carListButton').attr('disabled', true);
     $('#driverListButton').attr('disabled', false);
     getCarList();
-    $('#carListTabel').DataTable();
     $('#carList').css('display', 'block');
 });
 ////////////////////////////////////////////////////////////////////////////////
