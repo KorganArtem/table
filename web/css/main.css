@@ -142,7 +142,7 @@ and open the template in the editor.
 }
 #takePay{
     display: none;
-    float: right;
+    float: right !important;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
     padding: 5px;
     float: left;

@@ -75,24 +75,7 @@ public class AddDriver extends HttpServlet {
                         + "<div id='carList'></div>"
                         + "</div>");
                 out.println("<div id='editDriver'></div>");
-                out.println("<div id='takePay'>"
-                        + "<form class='takePayForm'>"
-                        + "<input type='text' style='display: none' disabled id='typePay'/><br>"
-                        + "<input type='text' disabled id='takePayDriverId'/><br>"
-                        + "<input type='text' disabled id='takePayDriverName'/><br>"
-                        + "<input type='text' id='takePayDriverSum'/><br>"
-                        + "<select id='takePayDriverType'><br>"
-                        + "<option value='1'>Наличными</option>"
-                        + "<option value='2'>Яндекс</option>"
-                        + "<option value='3'>Gett</option>"
-                        + "<option value='4'>Uber</option>"
-                        + "<option value='5'>На карту</option>"
-                        + "<option id='fromDeposit' value='6'>С депозита</option>"
-                        + "<option id='fromDeposit' value='7'>Макдональс</option>"
-                        + "<option id='fromDeposit' value='8'>Скидка</option>"
-                        + "</select>"
-                        + "<input type='button' id='takePayButton' value='Принять'/>"
-                        + "</form></div>");
+                out.println("");
                 out.println("</div><div id='modal_form'><!-- Сaмo oкнo --> \n" +
                             "      <span id='modal_close'>X</span> <!-- Кнoпкa зaкрыть --> \n" +
                             "      <!-- Тут любoе сoдержимoе -->\n" +
