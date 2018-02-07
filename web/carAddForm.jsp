@@ -31,10 +31,10 @@
             <option value="2017">2017</option>
             <option value="2018">2018</option>
         </select>
-        <label>Суточная Аренда</label><input id='carCost' type='text'  value=''/><br>
-        <label>ID в ГЛАНАС</label><input id='carGlanasId' type='text'  value=''/><br>
+        <label>Суточная Аренда</label><input id='carCost' type='text'  value='0'/><br>
+        <label>ID в ГЛАНАС</label><input id='carGlanasId' type='text'  value='0'/><br>
         <div class="buttonBlock">
-            <input id='carAddButton' type='button' value="Изменить"/>
+            <input id='carAddButton' type='button' value="Сохранить"/>
             <input id='cancelCarButton' type='button' onClick="closeModWind()" value="Отменить"/>
         </div>
     </div>

@@ -40,7 +40,7 @@ public class AddDriver extends HttpServlet {
         if(ac.isLogIn(request.getSession().getId())){
             try (PrintWriter out = response.getWriter()) {
                 /* TODO output your page here. You may use following sample code. */
-                out.println("<!DOCTYPE html>");
+                /*out.println("<!DOCTYPE html>");
                 out.println("<html>");
                 out.println("<head>");
                 out.println("<meta http-equiv='Cache-Control' content='no-cache'>");
@@ -83,7 +83,7 @@ public class AddDriver extends HttpServlet {
                             "<div id='overlay'></div</body>");
                 out.println("<script src='js/main.js'></script>");
                 out.println("<script>listDriverShow()</script>");
-                out.println("</html>"); 
+                out.println("</html>"); */
             }   
         }
         else{

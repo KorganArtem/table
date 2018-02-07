@@ -37,7 +37,7 @@
     </head>
 <body>
     <div class='place'>
-        <div id='formDriver'>
+        <!--div id='formDriver'>
             <form class='addDriverForm'>
                 <h3>Добавление водителя</h3>
                 <div class='formItem'><label>Имя</label><br><input type='text' id='driver_name' /></div>
@@ -47,7 +47,6 @@
                     <select id='carId'>
                         <%= carlist %>
                     </select>
-                    <!--input type='text' id='driver_carnumber' /-->
                 </div>
                 <div class='formItem'><label>Лимит</label><br><input type='text' id='driver_limit' /></div>
                 <div class='formItem'><label>Номер телефона</label><br><input type='text' id='driver_phone_number' /></div>
@@ -59,7 +58,7 @@
                     </select></div>
                 <div class='formItem'><br><input type='button' id='driver_add' value='Добавить' /></div>
             </form>
-        </div>
+        </div-->
         <div id='clickBox'><input id='carListButton' type='button' value='Car list'/>
             <input id='driverListButton' type='button' disabled='true' value='Driver list'/></div>
             <div id='mainContainer'>
@@ -67,27 +66,7 @@
                 <div id='carList'></div>
             </div>
         <div id='editDriver'></div>
-        <div id='takePay'>
-            <form class='takePayForm'>
-                <input type='text' style='display: none' disabled id='typePay'/><br>
-                <input type='text' disabled id='takePayDriverId'/><br>
-                <input type='text' disabled id='takePayDriverName'/><br>
-                <input type='text' id='takePayDriverSum'/><br>
-                <select id='takePayDriverType'><br>
-                    <option value='1'>Наличными</option>
-                    <option value='2'>Яндекс</option>
-                    <option value='3'>Gett</option>
-                    <option value='4'>Uber</option>
-                    <option value='5'>На карту</option>
-                    <option id='fromDeposit' value='6'>С депозита</option>
-                    <option id='fromDeposit' value='7'>Макдональс</option>
-                    <option id='fromDeposit' value='8'>Скидка</option>
-                </select>
-                <input type='button' id='takePayButton' value='Принять'/>
-            </form>
-        </div>
     </div><div id='modal_form'><!-- Сaмo oкнo --> 
-        <span id='modal_close'>X</span> <!-- Кнoпкa зaкрыть -->
         <!-- Тут любoе сoдержимoе -->
     </div>
     <div id='overlay'>

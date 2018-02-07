@@ -58,7 +58,7 @@ if(carData.get("transmission")=="1")
         <label>Суточная Аренда</label><input id='carCost' type='text'  value='<%= carData.get("cost") %>'/><br>
         <label>ID в ГЛАНАС</label><input id='carGlanasId' type='text'  value='<%= carData.get("glanasId") %>'/><br>
         <div class="buttonBlock">
-            <input id='editCarButton' type='button' value="Изменить"/>
+            <input id='editCarButton' type='button' value="Сохранить"/>
             <input id='cancelCarButton' type='button' onClick="closeModWind()" value="Отменить"/>
         </div>
     </div>

@@ -21,7 +21,8 @@
             <option id='fromDeposit' value='6'>С депозита</option>
             <option id='fromDeposit' value='7'>Макдональс</option
             <option id='fromDeposit' value='8'>Скидка</option>
-        </select>
-        <input type='button' id='takePayButton' value='Принять'/>
+        </select><br>
+        <input type='button' id='takePayButton' onclick="takePaySend()" value='Принять'/>
+        <input type='button' id='takePayButton' onclick="closeModWind()" value='Отмена'/>
     </form>
 </div>

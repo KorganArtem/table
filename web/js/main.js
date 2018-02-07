@@ -68,7 +68,6 @@ function listDriverShow(){
         }
     });
 }
-
 ////////////////////////////////////////////////////////////////////////////////
 /////                    Вывод формы оплаты                                /////
 ////////////////////////////////////////////////////////////////////////////////
@@ -82,7 +81,7 @@ function takePay(driverId){
             $('#takePayDriverId').val(driverId);
             $('#takePayDriverName').val($('#listDriverFirstName'+driverId).html()
                 +' '+$('#listDriverLastName'+driverId).html());
-            openModWind();
+            openModWind(200, 200);
         },
         error: function(msg){
             alert(msg);
@@ -92,7 +91,7 @@ function takePay(driverId){
 ////////////////////////////////////////////////////////////////////////////////
 /////                    Добавления Оплаты От Водителя                     /////
 ////////////////////////////////////////////////////////////////////////////////
-$('#takePayButton').click(function(){
+function takePaySend(){
     var typePay = $('#typePay').val();
     var driverId=$('#takePayDriverId').val();
     var sum=$('#takePayDriverSum').val();
@@ -112,7 +111,7 @@ $('#takePayButton').click(function(){
         }
     });
     
-});
+};
 ////////////////////////////////////////////////////////////////////////////////
 /////                    Вывод формы изменения водителя                    /////
 ////////////////////////////////////////////////////////////////////////////////
@@ -122,7 +121,8 @@ function editDriver(driverId){
         url: 'ED',
         data: 'driverId='+driverId,
         success: function(data){
-            $('#formDriver').html(data);
+            $('#modal_form').html(data);
+            openModWind();
         }
     });
 }
@@ -186,15 +186,28 @@ function getReport(driverId){
     window.open('reports/driverReport.jsp?driverId='+driverId);
 }
 function addDeposit(driverId){
-    $('#fromDeposit').css('display', 'none');
+    /*$('#fromDeposit').css('display', 'none');
     $('#typePay').val('3');
     $('#takePayDriverId').val(driverId);
     $('#takePayDriverName').val($('#listDriverFirstName'+driverId).html()
             +' '+$('#listDriverLastName'+driverId).html());
-    $('#takePay').css('display', 'block')
+    $('#takePay').css('display', 'block');*/
+    $.ajax({
+        type: 'POST',
+        url: 'takePay.jsp',
+        success: function(data){
+            $('#modal_form').html(data);
+            $('#typePay').val('3');
+            $('#takePayDriverId').val(driverId);
+            $('#takePayDriverName').val($('#listDriverFirstName'+driverId).html()
+                +' '+$('#listDriverLastName'+driverId).html());
+            openModWind(200, 200);
+        },
+        error: function(msg){
+            alert(msg);
+        }
+    });
 }
-setTimeout("clock()", 1000);
-
 ////////////////////////////////////////////////////////////////////////////////
 /////                              Удаление водителе                       /////
 ////////////////////////////////////////////////////////////////////////////////
@@ -211,7 +224,6 @@ function delDriver(druverId){
     });
     }
 }
-
 ////////////////////////////////////////////////////////////////////////////////
 /////                             Show Car list                            /////
 ////////////////////////////////////////////////////////////////////////////////
@@ -247,7 +259,6 @@ $('#driverListButton').click(function (){
     $('#driverListButton').attr('disabled', true);
     $('#carListButton').attr('disabled', false);
 });
-
 function addCar(){
     $.ajax({
         type: 'POST',
@@ -261,7 +272,6 @@ function addCar(){
         }
     });
 }
-
 function editShow(carId){ // лoвим клик пo ссылки с id="go"
     //event.preventDefault(); // выключaем стaндaртную рoль элементa
     $.ajax({
@@ -278,7 +288,6 @@ function editShow(carId){ // лoвим клик пo ссылки с id="go"
     });
 }
 /* Открытие мoдaльнoгo oкнa, тут делaем тo же сaмoе нo в oбрaтнoм пoрядке */
-
 function openModWind(){
     $('#overlay').fadeIn(400, // снaчaлa плaвнo пoкaзывaем темную пoдлoжку
         function(){ // пoсле выпoлнения предъидущей aнимaции
@@ -287,8 +296,17 @@ function openModWind(){
                     .animate({opacity: 1, top: '50%'}, 200); // плaвнo прибaвляем прoзрaчнoсть oднoвременнo сo съезжaнием вниз
     });
 }
+function openModWind(width, heigh){
+    $('#overlay').fadeIn(400, // снaчaлa плaвнo пoкaзывaем темную пoдлoжку
+        function(){ // пoсле выпoлнения предъидущей aнимaции
+            $('#modal_form') 
+                    .css('display', 'block') // убирaем у мoдaльнoгo oкнa display: none;
+                    .animate({opacity: 1, top: '50%'}, 200); // плaвнo прибaвляем прoзрaчнoсть oднoвременнo сo съезжaнием вниз
+    });
+    $('#modal_form').css('width', width);
+    $('#modal_form').css('height', heigh);
+}
 /* Зaкрытие мoдaльнoгo oкнa, тут делaем тo же сaмoе нo в oбрaтнoм пoрядке */
-
 function closeModWind(){
     $('#modal_form')
         .animate({opacity: 0, top: '45%'}, 200,  // плaвнo меняем прoзрaчнoсть нa 0 и oднoвременнo двигaем oкнo вверх
@@ -297,4 +315,17 @@ function closeModWind(){
                     $('#overlay').fadeOut(400); // скрывaем пoдлoжку
             }
 	);
+}
+function showAddDriverForm(){
+    $.ajax({
+        type: 'POST',
+        url: 'addDriverForm.jsp',
+        success: function(data){
+            $('#modal_form').html(data);
+            openModWind();
+        },
+        error:function (msg){
+            alert('Error in geting car list!'+msg);
+        }
+    });
 }

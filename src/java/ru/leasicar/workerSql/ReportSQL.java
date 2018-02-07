@@ -46,7 +46,7 @@ public class ReportSQL {
         System.out.println(begin + "  " +end);
         Statement stPayList = con.createStatement();
         ResultSet rsPayList = stPayList.executeQuery("SELECT DATE_FORMAT(`date`, '%Y-%m-%d') as date_f, "
-                + "`pay`.* FROM `pay` WHERE `driverId`="+driverId+" AND `date` > '"+begin+"' AND `date` < '"+end+"' ORDER BY `id`");
+                + "`pay`.* FROM `pay` WHERE `driverId`="+driverId+" AND `date` > '"+begin+"' AND `date` < '"+end+" 23:59:59' ORDER BY `id`");
         Map payList = new HashMap<String, HashMap>();
         while(rsPayList.next()){
             Map payRaw = new HashMap<String, String>();

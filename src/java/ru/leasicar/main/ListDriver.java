@@ -44,6 +44,7 @@ public class ListDriver extends HttpServlet {
             try (PrintWriter out = response.getWriter()) {
                 /* TODO output your page here. You may use following sample code. */
                 out.println("<meta http-equiv='Cache-Control' content='no-cache'>");
+                out.println("<input type='button' value='Добавить водителя' onclick='showAddDriverForm()'/>");
                 out.println("<table id='listDriverTabel' class='listDriver'>");
                 ///////////////////////////////////////////////////////////////
                 boolean delete = ac.checkPermission(ac.getUserId(request.getSession().getId()), "deletDriver");
@@ -71,7 +72,7 @@ public class ListDriver extends HttpServlet {
                         colorRow="red";
                     String delButton = "";
                     if(delete)
-                        delButton="<td onClick='delDriver("+entry.getKey()+")'>x</td>";
+                        delButton="<td onClick='delDriver("+entry.getKey()+")'>Уволить</td>";
                     out.println("<tr class="+colorRow+">"
                             + "<td id='listDriverFirstName"+entry.getKey()+"'>"+draverData.get("driver_lastname")+"</td>"
                             + "<td id='listDriverLastName"+entry.getKey()+"'>"+draverData.get("driver_firstname")+"</td>"
