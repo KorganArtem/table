@@ -37,40 +37,22 @@
     </head>
 <body>
     <div class='place'>
-        <!--div id='formDriver'>
-            <form class='addDriverForm'>
-                <h3>Добавление водителя</h3>
-                <div class='formItem'><label>Имя</label><br><input type='text' id='driver_name' /></div>
-                <div class='formItem'><label>Фамилия</label><br><input type='text' id='driver_lastname' /></div>
-                <div class='formItem'><label>Позывной</label><br><input type='text' id='driver_callsign' /></div>
-                <div class='formItem'><label>Номер машины</label><br>
-                    <select id='carId'>
-                        <%= carlist %>
-                    </select>
-                </div>
-                <div class='formItem'><label>Лимит</label><br><input type='text' id='driver_limit' /></div>
-                <div class='formItem'><label>Номер телефона</label><br><input type='text' id='driver_phone_number' /></div>
-                <div class='formItem'><label>Суточная Аренда</label><br><input type='text' id='driver_day_rent' /></div>
-                <div class='formItem'><label>График</label><br>
-                    <select id='driver_schedule'>
-                        <option value='0'>Без выходных</option>
-                        <option value='11'>10/1</option>
-                    </select></div>
-                <div class='formItem'><br><input type='button' id='driver_add' value='Добавить' /></div>
-            </form>
-        </div-->
-        <div id='clickBox'><input id='carListButton' type='button' value='Car list'/>
-            <input id='driverListButton' type='button' disabled='true' value='Driver list'/></div>
+        <div id="leftMenu">
+            <input id='driverListButton' type='button' disabled='true' value='Driver list'/>
+            <input id='carListButton' type='button' value='Car list'/>
+            <input id='mainProp' type='button' value='Настройка'/>
+        </div>
+        <div id='clickBox'></div>
             <div id='mainContainer'>
                 <div id='listDriver'></div>
                 <div id='carList'></div>
             </div>
         <div id='editDriver'></div>
-    </div><div id='modal_form'><!-- Сaмo oкнo --> 
+    </div>
+    <div id='modal_form'><!-- Сaмo oкнo --> 
         <!-- Тут любoе сoдержимoе -->
     </div>
-    <div id='overlay'>
-        
+    <div id='overlay'>   
     </div>
 </body>
     <script src='js/main.js'></script>

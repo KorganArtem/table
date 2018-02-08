@@ -18,9 +18,8 @@
             <option value='3'>Gett</option>
             <option value='4'>Uber</option>
             <option value='5'>На карту</option>
-            <option id='fromDeposit' value='6'>С депозита</option>
-            <option id='fromDeposit' value='7'>Макдональс</option
-            <option id='fromDeposit' value='8'>Скидка</option>
+            <option value='6'>С депозита</option>
+            <option value='8'>Скидка</option>
         </select><br>
         <input type='button' id='takePayButton' onclick="takePaySend()" value='Принять'/>
         <input type='button' id='takePayButton' onclick="closeModWind()" value='Отмена'/>

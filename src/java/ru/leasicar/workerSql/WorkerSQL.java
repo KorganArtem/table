@@ -73,9 +73,7 @@ public class WorkerSQL {
             rowDriver.put("driver_id", rs.getString("driver_id"));
             rowDriver.put("driver_lastname", rs.getString("driver_lastname"));
             rowDriver.put("driver_firstname", rs.getString("driver_firstname"));
-            rowDriver.put("driver_callsign", rs.getString("driver_callsign"));
             rowDriver.put("id_car", rs.getString("number"));
-            rowDriver.put("driver_carnumber", rs.getString("driver_carnumber"));
             rowDriver.put("driver_current_debt", rs.getString("driver_current_debt"));
             rowDriver.put("driver_limit", rs.getString("driver_limit"));
             rowDriver.put("driver_day_rent", rs.getString("driver_day_rent"));
@@ -215,7 +213,6 @@ public class WorkerSQL {
             rowDriver.put("driver_lastname", rs.getString("driver_lastname"));
             rowDriver.put("driver_firstname", rs.getString("driver_firstname"));
             rowDriver.put("driver_callsign", rs.getString("driver_callsign"));
-            rowDriver.put("driver_carnumber", rs.getString("driver_carnumber"));
             rowDriver.put("driver_current_debt", rs.getString("driver_current_debt"));
             rowDriver.put("driver_day_rent", rs.getString("driver_day_rent"));
             rowDriver.put("driver_limit", rs.getString("driver_limit"));

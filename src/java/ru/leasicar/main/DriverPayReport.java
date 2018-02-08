@@ -74,49 +74,9 @@ public class DriverPayReport extends HttpServlet {
                 while (entries.hasNext()) {
                     Map.Entry<String, Map> entry = entries.next();
                     Map payRaw = entry.getValue();
-                    int type = Integer.parseInt((String) payRaw.get("type"));
-                    String typePay = "";
-                    switch(type){
-                        case 1: 
-                            typePay = "внесение";
-                                break;
-                        case 2: 
-                            typePay = "Списание аренды";
-                                break;
-                        case 3: 
-                            typePay = "Пополнение депозита";
-                                break;
-                    }
-                    int source = Integer.parseInt((String) payRaw.get("source"));
-                    String sourcePay = "";
-                    switch(source){
-                        case 1: 
-                            sourcePay = "Наличными";
-                                break;
-                        case 2: 
-                            sourcePay = "Яндекс";
-                                break;
-                        case 3: 
-                            sourcePay = "Gett";
-                                break;
-                        case 4: 
-                            sourcePay = "Uber";
-                                break;
-                        case 5: 
-                            sourcePay = "На карту";
-                                break;
-                        case 6: 
-                            sourcePay = "С депозита";
-                        case 7: 
-                            sourcePay = "Макдональд";
-                                break;
-                        case 8: 
-                            sourcePay = "Скидка";
-                                break;
-                    }
-                    out.println("<tr><td>"+payRaw.get("date")+"</td><td>"+typePay+"</td><td>"+sourcePay+"</td><td>"+payRaw.get("sum")+"</td></tr>");
+                    out.println("<tr><td>"+payRaw.get("date")+"</td><td>"+payRaw.get("payTypeName")+"</td><td>"+payRaw.get("payName")+"</td><td>"+payRaw.get("sum")+"</td></tr>");
                 }
-                out.println("</table></div>");
+                out.println("</table><div>"+rsql.getGroupPay(driverId, begin, end)+"</div></div>");
                 /*out.println("<script src='js/main.js'></script>");
                 out.println("<script>$('#driverReport').DataTable()</script>");
                 out.println("</body></html>"); */

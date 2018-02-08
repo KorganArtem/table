@@ -43,8 +43,8 @@ public class ListDriver extends HttpServlet {
         if(ac.isLogIn(request.getSession().getId())){
             try (PrintWriter out = response.getWriter()) {
                 /* TODO output your page here. You may use following sample code. */
-                out.println("<meta http-equiv='Cache-Control' content='no-cache'>");
                 out.println("<input type='button' value='Добавить водителя' onclick='showAddDriverForm()'/>");
+                out.println("<input type='button' value='DBClick' ondblclick='alert('dfgdfg')'/>");
                 out.println("<table id='listDriverTabel' class='listDriver'>");
                 ///////////////////////////////////////////////////////////////
                 boolean delete = ac.checkPermission(ac.getUserId(request.getSession().getId()), "deletDriver");
@@ -55,8 +55,8 @@ public class ListDriver extends HttpServlet {
                 WorkerSQL wsql = new WorkerSQL();
                 Map listDriver = wsql.listDriver();
                 Iterator<Map.Entry<String, Map>> entries = listDriver.entrySet().iterator();
-                out.println("<thead><tr><td>Фамилия</td><td>Имя</td><td>Номер</td><td>Номер</td><td>Телефон</td><td>Лимит</td>"
-                        + "<td>Баланс</td><td>Депозит</td><td class='noPrint'> </td><td class='noPrint'></td><td class='noPrint'></td><td class='noPrint'></td>"+colDel+"</tr></thead>");
+                out.println("<thead><tr><td>Фамилия</td><td>Имя</td><td>Номер</td><td>Телефон</td><td>Лимит</td>"
+                        + "<td>Баланс</td><td>Депозит</td><td class='noPrint'> </td><td class='noPrint'></td><td class='noPrint'></td>"+colDel+"</tr></thead>");
                 while (entries.hasNext()) {
                     Map.Entry<String, Map> entry = entries.next();
                     Map draverData = entry.getValue();
@@ -74,16 +74,15 @@ public class ListDriver extends HttpServlet {
                     if(delete)
                         delButton="<td onClick='delDriver("+entry.getKey()+")'>Уволить</td>";
                     out.println("<tr class="+colorRow+">"
-                            + "<td id='listDriverFirstName"+entry.getKey()+"'>"+draverData.get("driver_lastname")+"</td>"
+                            + "<td ondblclick='editDriver("+entry.getKey()+")' id='listDriverFirstName"+entry.getKey()+"'>"+draverData.get("driver_lastname")+"</td>"
                             + "<td id='listDriverLastName"+entry.getKey()+"'>"+draverData.get("driver_firstname")+"</td>"
-                            + "<td id='listDriverCarNamber"+entry.getKey()+"'>"+draverData.get("driver_carnumber")+"</td>"
+                            /*+ "<td id='listDriverCarNamber"+entry.getKey()+"'>"+draverData.get("driver_carnumber")+"</td>"*/
                             + "<td id='listDriverCarNamber"+entry.getKey()+"'>"+draverData.get("id_car")+"</td>"
                             + "<td>"+draverData.get("driver_phone_number")+"</td>"
                             + "<td>"+draverData.get("driver_limit")+"</td>"
                             + "<td>"+draverData.get("driver_current_debt")+"</td>"
                             + "<td>"+draverData.get("driver_deposit")+"<img onClick='addDeposit("+entry.getKey()+")' src='img/add.png'/></td>"
                             + "<td class='takeMoney noPrint' onClick='takePay("+entry.getKey()+")')><img src='img/takeMoney.png'/></td>"
-                            + "<td class='editDriver noPrint' onClick='editDriver("+entry.getKey()+")')><img src='img/edit.png'/></td>"
                             + delButton        
                             + "<td class='wrkday noPrint'>"+day_off+"</td>"
                             + "<td class='wrkday noPrint' onClick='getReport("+entry.getKey()+")'>отчет</td>"

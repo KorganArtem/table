@@ -3,33 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-$('#driver_add').click(function(){
-  addAjax();
-});
 ////////////////////////////////////////////////////////////////////////////////
 /////                    Добавление Водителя                               /////
 ////////////////////////////////////////////////////////////////////////////////
-function clock() {
-    var d = new Date();
-    var month_num = d.getMonth()
-    var day = d.getDate();
-    var hours = d.getHours();
-    var minutes = d.getMinutes();
-    var seconds = d.getSeconds();
-
-    month=new Array("января", "февраля", "марта", "апреля", "мая", "июня",
-    "июля", "августа", "сентября", "октября", "ноября", "декабря");
-
-    if (day <= 9) day = "0" + day;
-    if (hours <= 9) hours = "0" + hours;
-    if (minutes <= 9) minutes = "0" + minutes;
-    if (seconds <= 9) seconds = "0" + seconds;
-
-    date_time = "Сегодня - " + day + " " + month[month_num] + " " + d.getFullYear() +
-    " г.&nbsp;&nbsp;&nbsp;Текущее время - "+ hours + ":" + minutes + ":" + seconds;
-    $('#clickBox').val();
-}
-function addAjax(){   
+function addDriver(){   
     var limit = $('#driver_limit').val();
     var carId = $('#carId').val();
     var callsign = $('#driver_callsign').val();
@@ -107,6 +84,7 @@ function takePaySend(){
                 $('#takePayDriverSum').val('');
                 $('#takePayDriverType').val('');
                 listDriverShow();
+                closeModWind();
             }
         }
     });
