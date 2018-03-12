@@ -69,12 +69,14 @@ public class DriverPayReport extends HttpServlet {
                 //Map payList = wsql.getPayList(driverId);
                 Map payList = new TreeMap<>(rsql.getPayList(driverId, begin, end));
                 out.println("<table id='driverReport' class='report'>");
-                out.println("<thead><tr><td>Дата</td><td>Тип</td><td>Источник</td><td>Сумма</td></tr></thead>");
+                out.println("<thead><tr><td>Дата</td><td>Тип</td><td>Источник</td><td>Сумма</td><td>Баланс</td></tr></thead>");
                 Iterator<Map.Entry<String, Map>> entries = payList.entrySet().iterator();
                 while (entries.hasNext()) {
                     Map.Entry<String, Map> entry = entries.next();
                     Map payRaw = entry.getValue();
-                    out.println("<tr><td>"+payRaw.get("date")+"</td><td>"+payRaw.get("payTypeName")+"</td><td>"+payRaw.get("payName")+"</td><td>"+payRaw.get("sum")+"</td></tr>");
+                    out.println("<tr><td>"+payRaw.get("date")+"</td><td>"+payRaw.get("payTypeName")
+                            +"</td><td>"+payRaw.get("payName")+"</td><td>"+payRaw.get("sum")
+                            +"</td><td>"+payRaw.get("balance")+"</td></tr>");
                 }
                 out.println("</table><div>"+rsql.getGroupPay(driverId, begin, end)+"</div></div>");
                 /*out.println("<script src='js/main.js'></script>");

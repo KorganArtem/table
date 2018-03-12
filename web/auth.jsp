@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>EyePrint</title>
+        <title>LC</title>
         <meta charset="UTF-8">
         <meta http-equiv="Cache-Control" content="no-cache"/>
         <meta http-equiv='Cache-Control' content='private'/>

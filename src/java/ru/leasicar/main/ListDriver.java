@@ -78,7 +78,7 @@ public class ListDriver extends HttpServlet {
                             + "<td id='listDriverLastName"+entry.getKey()+"'>"+draverData.get("driver_firstname")+"</td>"
                             /*+ "<td id='listDriverCarNamber"+entry.getKey()+"'>"+draverData.get("driver_carnumber")+"</td>"*/
                             + "<td id='listDriverCarNamber"+entry.getKey()+"'>"+draverData.get("id_car")+"</td>"
-                            + "<td>"+draverData.get("driver_phone_number")+"</td>"
+                            + "<td class='phoneInList'>"+draverData.get("driver_phone_number")+"</td>"
                             + "<td>"+draverData.get("driver_limit")+"</td>"
                             + "<td>"+draverData.get("driver_current_debt")+"</td>"
                             + "<td>"+draverData.get("driver_deposit")+"<img onClick='addDeposit("+entry.getKey()+")' src='img/add.png'/></td>"

@@ -45,10 +45,10 @@ public class ReportSQL {
     public Map getPayList(int driverId, String begin, String end) throws SQLException{
         System.out.println(begin + "  " +end);
         Statement stPayList = con.createStatement();
-        ResultSet rsPayList = stPayList.executeQuery("SELECT zap1.`date_f`, zap1.`id`, zap1.`payName`, zap1.`user`, payType.payTypeName, zap1.`sum`  FROM payType " +
+        ResultSet rsPayList = stPayList.executeQuery("SELECT zap1.`date_f`, zap1.`id`, zap1.`payName`, zap1.`user`, payType.payTypeName, zap1.`sum`, zap1.`balance` FROM payType " +
                                 "INNER JOIN (SELECT DATE_FORMAT(`date`, '%Y-%m-%d') as date_f, `pay`.*, `paySource`.`payName` FROM `pay` " +
                                 "LEFT join `paySource` " +
-                                "ON `paySource`.`payId`=`pay`.`source`) as zap1\n" +
+                                "ON `paySource`.`payId`=`pay`.`source`) as zap1 " +
                                 "ON zap1.`type`=payType.payTapeId\n" +
                                 "WHERE `driverId`="+driverId+" AND `date` > '"+begin+"' AND `date` < '"+end+" 23:59:59' ORDER BY `id`");
         Map payList = new HashMap<String, HashMap>();
@@ -57,6 +57,8 @@ public class ReportSQL {
             payRaw.put("payTypeName", rsPayList.getString("payTypeName"));
             payRaw.put("payName", rsPayList.getString("payName"));
             payRaw.put("sum", rsPayList.getString("sum"));
+            System.out.println("Balance : ");
+            payRaw.put("balance", rsPayList.getString("balance"));
             payRaw.put("date", rsPayList.getString("date_f"));
             payList.put(rsPayList.getString("id"), payRaw);
         }
