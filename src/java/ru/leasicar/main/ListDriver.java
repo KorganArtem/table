@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ru.leasicar.authorization.AccessControl;
-import ru.leasicar.workerSql.WorkerSQL;
+import ru.leasicar.workerSql.DriverSQL;
 
 /**
  *
@@ -44,7 +44,6 @@ public class ListDriver extends HttpServlet {
             try (PrintWriter out = response.getWriter()) {
                 /* TODO output your page here. You may use following sample code. */
                 out.println("<input type='button' value='Добавить водителя' onclick='showAddDriverForm()'/>");
-                out.println("<input type='button' value='DBClick' ondblclick='alert('dfgdfg')'/>");
                 out.println("<table id='listDriverTabel' class='listDriver'>");
                 ///////////////////////////////////////////////////////////////
                 boolean delete = ac.checkPermission(ac.getUserId(request.getSession().getId()), "deletDriver");
@@ -52,7 +51,7 @@ public class ListDriver extends HttpServlet {
                 if(delete)
                     colDel="<td></td>";
                 ///////////////////////////////////////////////////////////////
-                WorkerSQL wsql = new WorkerSQL();
+                DriverSQL wsql = new DriverSQL();
                 Map listDriver = wsql.listDriver();
                 Iterator<Map.Entry<String, Map>> entries = listDriver.entrySet().iterator();
                 out.println("<thead><tr><td>Фамилия</td><td>Имя</td><td>Номер</td><td>Телефон</td><td>Лимит</td>"

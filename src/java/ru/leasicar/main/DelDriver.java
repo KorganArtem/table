@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ru.leasicar.authorization.AccessControl;
-import ru.leasicar.workerSql.WorkerSQL;
+import ru.leasicar.workerSql.DriverSQL;
 
 /**
  *
@@ -42,7 +42,7 @@ public class DelDriver extends HttpServlet {
             AccessControl ac = new AccessControl();
             /* TODO output your page here. You may use following sample code. */
             if(ac.isLogIn(request.getSession().getId()) && ac.checkPermission(ac.getUserId(request.getSession().getId()), "deletDriver")){
-                WorkerSQL wsql = new WorkerSQL();
+                DriverSQL wsql = new DriverSQL();
                 wsql.delDriver(request.getParameter("driverId"));
             }
             else{
