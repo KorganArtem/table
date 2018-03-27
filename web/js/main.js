@@ -15,13 +15,12 @@ function addDriver(){
     var phone = $('#driver_phone_number').val();
     var dayRent = $('#driver_day_rent').val();
     var schedule = $('#driver_schedule').val();
-    var driverComment = $('#driverComment').val();
     $.ajax({
         type: 'POST',
         url: 'DA',
         data: 'lastname='+lastname+'&name='+name+'&callsign='+callsign
                 +'&carId='+carId+'&limit='+limit+'&phone='+phone
-                +'&dayRent='+dayRent+'&schedule='+schedule+'$driverComment='+driverComment,
+                +'&dayRent='+dayRent+'&schedule='+schedule,
         success: function(data){
             location.reload();
         }

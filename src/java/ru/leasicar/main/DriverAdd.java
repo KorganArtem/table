@@ -13,7 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import ru.leasicar.workerSql.DriverSQL;
+import ru.leasicar.workerSql.WorkerSQL;
 
 /**
  *
@@ -38,7 +38,7 @@ public class DriverAdd extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             System.out.println("schedule  "+request.getParameter("schedule"));
             try{
-                DriverSQL wsql = new DriverSQL();
+                WorkerSQL wsql = new WorkerSQL();
                 wsql.writeDriver(request.getParameter("limit"), request.getParameter("carId"), 
                         request.getParameter("callsign"), request.getParameter("name"), request.getParameter("lastname"), request.getParameter("phone"), 
                         request.getParameter("dayRent"), request.getParameter("schedule"));

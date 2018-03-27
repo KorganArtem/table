@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ru.leasicar.authorization.AccessControl;
-import ru.leasicar.workerSql.PaySQL;
+import ru.leasicar.workerSql.WorkerSQL;
 
 /**
  *
@@ -47,7 +47,7 @@ public class AddPay extends HttpServlet {
                     int sum = Integer.parseInt(request.getParameter("sum"));
                     int source = Integer.parseInt(request.getParameter("source"));
                     int typePay = Integer.parseInt(request.getParameter("typePay"));
-                    PaySQL wsql = new PaySQL();
+                    WorkerSQL wsql = new WorkerSQL();
                     if(typePay==1)
                         wsql.addPayDriver(driverId, sum, source, userId);
                     if(typePay==3)

@@ -57,6 +57,7 @@ public class ReportSQL {
             payRaw.put("payTypeName", rsPayList.getString("payTypeName"));
             payRaw.put("payName", rsPayList.getString("payName"));
             payRaw.put("sum", rsPayList.getString("sum"));
+            System.out.println("Balance : ");
             payRaw.put("balance", rsPayList.getString("balance"));
             payRaw.put("date", rsPayList.getString("date_f"));
             payList.put(rsPayList.getString("id"), payRaw);

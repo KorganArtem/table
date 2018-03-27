@@ -17,8 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ru.leasicar.authorization.AccessControl;
-import ru.leasicar.workerSql.DriverSQL;
-import ru.leasicar.workerSql.CarSQL;
+import ru.leasicar.workerSql.WorkerSQL;
 
 /**
  *
@@ -44,9 +43,8 @@ public class EditDriver extends HttpServlet {
             AccessControl ac = new AccessControl();
             if(ac.isLogIn(request.getSession().getId())){
                 int driverId = Integer.parseInt(request.getParameter("driverId"));
-                DriverSQL dsql = new DriverSQL();
-                CarSQL csql = new CarSQL();
-                Map dataDriver = dsql.getAllDataDriver(driverId);
+                WorkerSQL wsql = new WorkerSQL();
+                Map dataDriver = wsql.getAllDataDriver(driverId);
                 String editClick = "onClick='editDriverSend("+dataDriver.get("driver_id")+")'";
                 out.println("<form class='addDriverForm'>");
                 out.println("<div class='formItem'><label>Имя</label><br><input type='text' id='driver_name' value='"+dataDriver.get("driver_firstname")+"'/></div>");
@@ -55,7 +53,7 @@ public class EditDriver extends HttpServlet {
                 out.println("<div class='formItem'><label>Номер машины</label><br>"
                         + "<select id='carId' >");
                         /*+ "<input type='text' id='driver_carnumber' value='"+dataDriver.get("driver_carnumber")+"' />"*/
-                out.println(csql.getFreeCarList(Integer.parseInt(dataDriver.get("driver_id").toString())));
+                out.println(wsql.getFreeCarList(Integer.parseInt(dataDriver.get("driver_id").toString())));
                 out.println("</select></div>"); 
                 out.println("<div class='formItem'><label>Лимит</label><br><input type='text' id='driver_limit' value='"+dataDriver.get("driver_limit")+"' /></div>");  
                 out.println("<div class='formItem'><label>Номер телефона</label><br><input type='text' id='driver_phone_number' value='"+dataDriver.get("driver_phone_number")+"' /></div>"); 

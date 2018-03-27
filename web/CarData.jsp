@@ -5,7 +5,7 @@
 --%>
 
 <%@page import="java.util.Map"%>
-<%@page import="ru.leasicar.workerSql.CarSQL"%>
+<%@page import="ru.leasicar.workerSql.WorkerSQL"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ page import="ru.leasicar.authorization.*" %>
@@ -20,7 +20,7 @@ if(!ac.isLogIn(request.getSession().getId())){%>
     String modelList = "";
 if(request.getParameter("id")!=null){
 System.out.println("Get car data id="+request.getParameter("id"));
-    CarSQL wsql = new CarSQL();
+    WorkerSQL wsql = new WorkerSQL();
     carData = wsql.getCarData(Integer.parseInt(request.getParameter("id")));
     modelList = wsql.modelLisc(Integer.parseInt(carData.get("model").toString()));
 }

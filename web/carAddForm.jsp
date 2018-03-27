@@ -4,11 +4,11 @@
     Author     : korgan
 --%>
 
-<%@page import="ru.leasicar.workerSql.CarSQL"%>
+<%@page import="ru.leasicar.workerSql.WorkerSQL"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-    CarSQL wsql = new CarSQL();
+    WorkerSQL wsql = new WorkerSQL();
     String modelList = wsql.modelLisc();
 %>
 <html>

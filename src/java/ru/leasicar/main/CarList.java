@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ru.leasicar.authorization.AccessControl;
-import ru.leasicar.workerSql.CarSQL;
+import ru.leasicar.workerSql.WorkerSQL;
 
 /**
  *
@@ -51,7 +51,7 @@ public class CarList extends HttpServlet {
                     if(delete)
                         colDel="<td></td>";
                     ///////////////////////////////////////////////////////////////
-                    CarSQL wsql = new CarSQL();
+                    WorkerSQL wsql = new WorkerSQL();
                     Map carList = wsql.carList();
                     Iterator<Map.Entry<String, Map>> entries = carList.entrySet().iterator();
                     out.println("<thead><tr><td>Гос. Номер</td><td>Модель</td><td>VIN</td><td>Год выпуска</td>"

@@ -4,7 +4,7 @@
     Author     : korgan
 --%>
 
-<%@page import="ru.leasicar.workerSql.CarSQL"%>
+<%@page import="ru.leasicar.workerSql.WorkerSQL"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <!DOCTYPE html>
 <!doctype html>
@@ -17,8 +17,8 @@
         return ; 
     }
     String carlist = "";
-    CarSQL crk = new CarSQL();
-    carlist = crk.getFreeCarList();
+    WorkerSQL wrk = new WorkerSQL();
+    carlist = wrk.getFreeCarList();
 %>
 <html lang="us">
 <head>

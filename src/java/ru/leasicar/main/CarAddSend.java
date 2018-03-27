@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ru.leasicar.authorization.AccessControl;
-import ru.leasicar.workerSql.CarSQL;
+import ru.leasicar.workerSql.WorkerSQL;
 
 /**
  *
@@ -49,7 +49,7 @@ public class CarAddSend extends HttpServlet {
             String carYear = request.getParameter("carYear");
             String carCost = request.getParameter("carCost");
             String carGlanasId = request.getParameter("carGlanasId");
-            CarSQL wrk = new CarSQL();
+            WorkerSQL wrk = new WorkerSQL();
             wrk.addCar(carNumber, carVIN,  carModel,  carTransmission,
             carYear, carCost, carGlanasId);
             System.out.println("INFO: Car added bu user "+userId+" ("
