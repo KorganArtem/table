@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ru.leasicar.authorization.AccessControl;
-import ru.leasicar.workerSql.WorkerSQL;
+import ru.leasicar.workerSql.DriverSQL;
 
 /**
  *
@@ -44,7 +44,7 @@ public class EditDriverSendRP extends HttpServlet {
             if(ac.isLogIn(request.getSession().getId()) && ac.checkPermission(ac.getUserId(request.getSession().getId()), "editdriver")){
                 System.out.println(request.getParameter("driver_id")+" driver id which i get from JS");
                 int driverId = Integer.parseInt(request.getParameter("driver_id"));
-                WorkerSQL wsql = new WorkerSQL();
+                DriverSQL wsql = new DriverSQL();
                 wsql.getEditDataDriver(driverId, request.getParameter("limit"), request.getParameter("carId"), 
                         request.getParameter("callsign"), request.getParameter("name"), request.getParameter("lastname"), request.getParameter("phone"), request.getParameter("dayRent"), 
                         request.getParameter("schedule")); //dayRent

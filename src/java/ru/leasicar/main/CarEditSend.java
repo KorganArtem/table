@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ru.leasicar.authorization.AccessControl;
-import ru.leasicar.workerSql.WorkerSQL;
+import ru.leasicar.workerSql.CarSQL;
 
 /**
  *
@@ -50,7 +50,7 @@ public class CarEditSend extends HttpServlet {
             String carCost = request.getParameter("carCost");
             String carGlanasId = request.getParameter("carGlanasId");
             String carId = request.getParameter("carId");
-            WorkerSQL wrk = new WorkerSQL();
+            CarSQL wrk = new CarSQL();
             wrk.writeCarData(carNumber, carVIN,  carModel,  carTransmission,
             carYear, carCost, carGlanasId, carId);
             System.out.println("INFO: Car data chenged bu user "+userId+" (id="+carId

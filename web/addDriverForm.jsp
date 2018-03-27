@@ -4,9 +4,10 @@
     Author     : Artem
 --%>
 
-<%@page import="ru.leasicar.workerSql.WorkerSQL"%>
+<%@page import="ru.leasicar.workerSql.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<% WorkerSQL wsql = new WorkerSQL(); %>
+<% DriverSQL dsql = new DriverSQL(); %>
+<% CarSQL csql = new CarSQL(); %>
 <div id='formDriver'>
     <!--h3>Добавление водителя</h3-->
     <form class='addDriverForm'>
@@ -22,7 +23,7 @@
         <div class='formItem'>
             <label>Номер машины</label><br>
             <select id='carId' >
-                <%= wsql.getFreeCarList()%>
+                <%= csql.getFreeCarList()%>
             </select>
         </div>
         <div class='formItem'>
@@ -39,8 +40,12 @@
             <select id='driver_schedule'>
                 <option value='0'>Без выходных</option>
 		<option value='11'>10/1</option>
+		<option value='7'>6/1</option>
             </select>
         </div>
+        <div class='formItem'>
+            <label>Коментарий</label><br><textarea height="5" id='driverComment' />
+        </div> 
         <div class='formItem'><br><input type='button' id='driver_add' value='Добавить' onClick="addDriver()"/></div>
         <div class='formItem'><br><input type='button' id='driver_add' value='Отмена' onClick="closeModWind()"/></div>
     </form>
