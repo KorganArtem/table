@@ -7,6 +7,12 @@ and open the template in the editor.
     Created on : 04.08.2017, 14:04:25
     Author     : korgan
 */
+.place{
+    width: 1200px;
+}
+.itemDisplay{
+    
+}
 .phoneInList{
     max-width: 90px !important;
 }

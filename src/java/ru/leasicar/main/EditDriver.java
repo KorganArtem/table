@@ -137,6 +137,9 @@ public class EditDriver extends HttpServlet {
             case "11": 
                 options = "<option value='0'>Без выходных</option><option value='11' selected>10/1</option>";
                 break;
+            case "7": 
+                options = "<option value='0'>Без выходных</option><option value='11' selected>10/1</option>";
+                break;
         }
         return options;
     }

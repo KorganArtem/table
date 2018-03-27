@@ -130,7 +130,7 @@ public class CarSQL {
                                             " '"+ carGlanasId+"')");
     }
     public String getFreeCarList() throws SQLException{
-        String carData = "";
+        String carData = "<option value='0'>Выбрать</option>";
         Statement st = con.createStatement();
         ResultSet rs = st.executeQuery("SELECT * FROM `cars` WHERE `id` not in (SELECT `carId` FROM `drivers` WHERE `driver_deleted`=0)");
         while(rs.next()){
@@ -139,7 +139,7 @@ public class CarSQL {
         return carData;
     }
     public String getFreeCarList(int driverId) throws SQLException{
-        String carData = "";
+        String carData = "<option value='0'>Выбрать</option>";
         Statement st = con.createStatement();
         int currentCarId=0;
         ResultSet carentCarRes = con.createStatement().executeQuery("SELECT * FROM `cars` "

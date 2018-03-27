@@ -21,9 +21,10 @@ function addDriver(){
         url: 'DA',
         data: 'lastname='+lastname+'&name='+name+'&callsign='+callsign
                 +'&carId='+carId+'&limit='+limit+'&phone='+phone
-                +'&dayRent='+dayRent+'&schedule='+schedule+'$driverComment='+driverComment,
+                +'&dayRent='+dayRent+'&schedule='+schedule+'&driverComment='+driverComment,
         success: function(data){
-            location.reload();
+            listDriverShow();
+            closeModWind();
         }
     });
     listDriverShow();
@@ -222,22 +223,35 @@ function getCarList(){
     });
 }
 $('#carListButton').click(function(){
-    $('#listDriver').css('display', 'none');
-    $('#carListButton').attr('disabled', true);
-    $('#driverListButton').attr('disabled', false);
     getCarList();
+    $('.itemDisplay').css('display', 'none');
+    $('.itemMenu').attr('disabled', false);
+    $('#carListButton').attr('disabled', true);
     $('#carList').css('display', 'block');
 });
 ////////////////////////////////////////////////////////////////////////////////
-/////                             Show Driver list                            /////
+/////                             Show Driver list                         /////
 ////////////////////////////////////////////////////////////////////////////////
 $('#driverListButton').click(function (){
     listDriverShow();
-    $('#carList').css('display', 'none');
-    $('#listDriver').css('display', 'block');
+    $('.itemDisplay').css('display', 'none');
+    $('.itemMenu').attr('disabled', false);
     $('#driverListButton').attr('disabled', true);
-    $('#carListButton').attr('disabled', false);
+    $('#listDriver').css('display', 'block');
 });
+////////////////////////////////////////////////////////////////////////////////
+/////                             Show prop list                           /////
+////////////////////////////////////////////////////////////////////////////////
+$('#mainProp').click(function (){
+    listDriverShow();
+    $('.itemDisplay').css('display', 'none');
+    $('.itemMenu').attr('disabled', false);
+    $('#mainProp').attr('disabled', true);
+    $('#prop').css('display', 'block');
+});
+////////////////////////////////////////////////////////////////////////////////
+/////                             Show add car form                        /////
+////////////////////////////////////////////////////////////////////////////////
 function addCar(){
     $.ajax({
         type: 'POST',
@@ -251,6 +265,9 @@ function addCar(){
         }
     });
 }
+////////////////////////////////////////////////////////////////////////////////
+/////                             Show edit car form                       /////
+////////////////////////////////////////////////////////////////////////////////
 function editShow(carId){ // лoвим клик пo ссылки с id="go"
     //event.preventDefault(); // выключaем стaндaртную рoль элементa
     $.ajax({

@@ -7,13 +7,12 @@
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Map"%>
-<%@page import="ru.leasicar.workerSql.WorkerSQL"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ page import="ru.leasicar.authorization.*" %>
 <% 
 AccessControl ac = new AccessControl();
-if(!ac.isLogIn(request.getSession().getId())){%>
+if(!ac.isLogIn(request.getSession().getId())){%> 
     <meta http-equiv="refresh" content="1; URL=auth.jsp" />
     <%
     return ; 

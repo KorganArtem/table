@@ -38,15 +38,15 @@
 <body>
     <div class='place'>
         <div id="leftMenu">
-            <input id='driverListButton' type='button' disabled='true' value='Driver list'/>
-            <input id='carListButton' type='button' value='Car list'/>
-            <input id='mainProp' type='button' value='Настройка'/>
+            <input id='driverListButton' class='itemMenu' type='button' disabled='true' value='Driver list'/>
+            <input id='carListButton' class='itemMenu' type='button' value='Car list'/>
+            <input id='mainProp' class='itemMenu' type='button' value='Настройка'/>
         </div>
-        <div id='clickBox'></div>
-            <div id='mainContainer'>
-                <div id='listDriver'></div>
-                <div id='carList'></div>
-            </div>
+        <div id='mainContainer'>
+            <div id='listDriver' class='itemDisplay'></div>
+            <div id='carList' class='itemDisplay'></div>
+            <div id='prop' class='itemDisplay'></div>
+        </div>
         <div id='editDriver'></div>
     </div>
     <div id='modal_form'><!-- Сaмo oкнo --> 

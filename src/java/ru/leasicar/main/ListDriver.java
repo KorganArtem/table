@@ -44,6 +44,7 @@ public class ListDriver extends HttpServlet {
             try (PrintWriter out = response.getWriter()) {
                 /* TODO output your page here. You may use following sample code. */
                 out.println("<input type='button' value='Добавить водителя' onclick='showAddDriverForm()'/>");
+                out.println("<a href='sryadrvr.jsp'><input type='button' value='Водители Яндекс'/></a>");
                 out.println("<table id='listDriverTabel' class='listDriver'>");
                 ///////////////////////////////////////////////////////////////
                 boolean delete = ac.checkPermission(ac.getUserId(request.getSession().getId()), "deletDriver");
