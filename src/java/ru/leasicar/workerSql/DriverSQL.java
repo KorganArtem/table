@@ -48,12 +48,15 @@ public class DriverSQL {
             String lastname, 
             String phone,
             String dayRent,
-            String schedule) throws SQLException{
+            String schedule,
+            String comment) throws SQLException{
         Statement st = con.createStatement();
         st.execute("INSERT INTO `drivers` (`driver_lastname`, `driver_firstname`, "
                 + "`driver_callsign`, `carId`, `driver_limit`, `driver_phone_number`, "
-                + "`driver_day_rent`, `driver_current_debt`, `driverStartDate`, `driverDayOffPeriod`) "
-                + "VALUES ('"+lastname+"', '"+name+"', '"+callsign+"', '"+carId+"', '"+limit+"', '"+phone+"', "+dayRent+", 0, CURRENT_DATE(), "+schedule+")  ");
+                + "`driver_day_rent`, `driver_current_debt`, `driverStartDate`, `driverDayOffPeriod`, `comment`) "
+                + "VALUES ('"+lastname+"', '"+name+"', '"+callsign+"', '"
+                +carId+"', '"+limit+"', '"+phone+"', "+dayRent
+                +", 0, CURRENT_DATE(), "+schedule+", '"+comment+"')");
         ResultSet rs = st.executeQuery("SELECT LAST_INSERT_ID() as driverId");
         if(rs.next()){
             con.createStatement().execute("UPDATE `cars` SET `driverId`="+rs.getInt("driverId")+" WHERE `id` = "+carId);
@@ -83,7 +86,8 @@ public class DriverSQL {
             listDriver.put(rs.getString("driver_id"), rowDriver);
         }
         return listDriver;
-    }    
+    }   
+    // Плучение данных для формы изменения водителя
     public Map getAllDataDriver(int driverId) throws SQLException{
         Statement st = con.createStatement();
         ResultSet rs = st.executeQuery("SELECT * FROM `drivers` WHERE `driver_id`="+driverId);
@@ -98,32 +102,69 @@ public class DriverSQL {
             rowDriver.put("driver_limit", rs.getString("driver_limit"));
             rowDriver.put("driver_phone_number", rs.getString("driver_phone_number"));
             rowDriver.put("driverDayOffPeriod", rs.getString("driverDayOffPeriod"));
+            rowDriver.put("comment", rs.getString("comment"));
+            rowDriver.put("yaId", rs.getString("yaId"));
         }
         return rowDriver;
     }
-
+    //Измененте данных водителя без изменения аренды и графика
     public void getEditDataDriver(int driverId, String limit, 
             String carId, 
             String callsign, 
             String name, 
-            String lastname, String phone) throws SQLException{
+            String lastname, 
+            String phone, 
+            String comment) throws SQLException{
         Statement st = con.createStatement();
         st.execute("UPDATE `drivers` SET `driver_lastname`='"+lastname+"', `driver_firstname`='"+name+"', "
-                + "`driver_callsign`='"+callsign+"', `carId`='"+carId+"', `driver_limit`='"+limit+"', `driver_phone_number`='"+phone+"' WHERE driver_id="+driverId);
+                + "`driver_callsign`='"+callsign+"', `carId`='"+carId+"', `driver_limit`='"+limit
+                +"', `comment` ='"+comment+"', `driver_phone_number`='"+phone+"' WHERE driver_id="+driverId);
     }
-    public void getEditDataDriver(int driverId, String limit, 
+    //Измененте данных водителя с изменением аренды и графика
+    public void getEditDataDriver(int driverId, 
+            String limit, 
             String carId, 
             String callsign, 
             String name, 
-            String lastname, String phone, String rentPay, String driver_schedule) throws SQLException{
-        System.out.println(rentPay);
+            String lastname, 
+            String phone, 
+            String rentPay, 
+            String driver_schedule,
+            String comment,
+            String yaId) throws SQLException{
+        System.out.println("UPDATE driver id:"+driverId
+                +" comment: "+comment);
         Statement st = con.createStatement();
-        st.execute("UPDATE `drivers` SET `driverDayOffPeriod`="+driver_schedule+", `driver_day_rent`="+rentPay+", `driver_lastname`='"+lastname+"', `driver_firstname`='"+name+"', "
-                + "`driver_callsign`='"+callsign+"', `carId`='"+carId+"', `driver_limit`='"+limit+"', `driver_phone_number`='"+phone+"' WHERE driver_id="+driverId);
+        st.execute("UPDATE `drivers` SET `driverDayOffPeriod`="+driver_schedule
+                +", `driver_day_rent`="+rentPay
+                +", `driver_lastname`='"+lastname
+                +"', `driver_firstname`='"+name+"', "
+                + "`driver_callsign`='"+callsign
+                +"', `carId`='"+carId
+                +"', `driver_limit`='"+limit
+                +"', `driver_phone_number`='"+phone
+                +"', `comment`='"+comment
+                +"', `yaId`='"+yaId
+                +"' WHERE driver_id="+driverId);
     }
     public void delDriver(String driverId) throws SQLException{
         Statement stDelDriver = con.createStatement();
         stDelDriver.execute("UPDATE drivers SET `driver_deleted`=1, `driverEndDate`=CURRENT_DATE() WHERE `driver_id`="+driverId);
         stDelDriver.close();
+    }
+    public String getOptions(int dayOff) throws SQLException {
+        String options = "";
+        Statement stSch = con.createStatement();
+        ResultSet rsSch = stSch.executeQuery("SELECT * FROM `driverSchedule`");
+        while(rsSch.next()){
+            String selected = "";
+            if(rsSch.getInt("dayInCiсle")==dayOff){
+                selected = "selected";
+            }
+            options = options + "<option value='" + rsSch.getInt("dayInCiсle") + "' "+ selected +" >" + rsSch.getString("scheduleName")+ "</option>";
+        }
+        rsSch.close();
+        stSch.close();
+        return options;
     }
 }

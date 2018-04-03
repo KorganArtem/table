@@ -41,7 +41,7 @@ public class DriverAdd extends HttpServlet {
                 DriverSQL wsql = new DriverSQL();
                 wsql.writeDriver(request.getParameter("limit"), request.getParameter("carId"), 
                         request.getParameter("callsign"), request.getParameter("name"), request.getParameter("lastname"), request.getParameter("phone"), 
-                        request.getParameter("dayRent"), request.getParameter("schedule"));
+                        request.getParameter("dayRent"), request.getParameter("schedule"), request.getParameter("driverComment"));
                 wsql.con.close();
             }
             catch(ClassNotFoundException | SQLException ex){

@@ -45,7 +45,9 @@ public class EditDriverSend extends HttpServlet {
                 int driverId = Integer.parseInt(request.getParameter("driver_id"));
                 DriverSQL wsql = new DriverSQL();
                 wsql.getEditDataDriver(driverId, request.getParameter("limit"), request.getParameter("carId"), 
-                        request.getParameter("callsign"), request.getParameter("name"), request.getParameter("lastname"), request.getParameter("phone"));
+                        request.getParameter("callsign"), request.getParameter("name"), 
+                        request.getParameter("lastname"), request.getParameter("phone"), 
+                        request.getParameter("driverComment"));
             }
             else{
                 out.println("notpermit");

@@ -98,7 +98,7 @@ function takePaySend(){
 function editDriver(driverId){
     $.ajax({
         type: 'POST',
-        url: 'ED',
+        url: 'editDriver.jsp',
         data: 'driverId='+driverId,
         success: function(data){
             $('#modal_form').html(data);
@@ -116,12 +116,15 @@ function editDriverSend(id){
     var name = $('#driver_name').val();
     var lastname = $('#driver_lastname').val();
     var phone = $('#driver_phone_number').val();
+    var driverComment = $('driverComment').val();
+    var yaId = $('#yaId').val();
     $.ajax({
         type: 'POST',
         url: 'EDS',
         data: 'driver_id='+id+'&lastname='+lastname+'&name='+name+'&callsign='
                 +callsign+'&carId='+carnumber+'&limit='+limit
-                +'&phone='+phone,
+                +'&phone='+phone+'&driverComment='+driverComment
+                +'&yaId='+yaId,
         success: function(data){
             if(data=='notpermit'){
                 alert('У вас нет прав на изменение!');
@@ -142,12 +145,16 @@ function editDriverSendRP(id){
     var phone = $('#driver_phone_number').val();
     var dayRent = $('#driver_day_rent').val();
     var schedule = $('#driver_schedule').val();
+    var driverComment = $('#driverComment').val();
+    var yaId = $('#yaId').val();
     $.ajax({
         type: 'POST',
         url: 'EDSP',
         data: 'driver_id='+id+'&lastname='+lastname+'&name='+name+'&callsign='
                 +callsign+'&carId='+carId+'&limit='+limit
-                +'&phone='+phone+'&dayRent='+dayRent+'&schedule='+schedule,
+                +'&phone='+phone+'&dayRent='+dayRent
+                +'&schedule='+schedule+'&driverComment='+driverComment
+                +'&yaId='+yaId,
         success: function(data){
             if(data=='notpermit'){
                 alert('У вас нет прав на изменение!');

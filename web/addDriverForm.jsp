@@ -44,7 +44,8 @@
             </select>
         </div>
         <div class='formItem'>
-            <label>Коментарий</label><br><textarea height="5" id='driverComment' />
+            <label>Комментарий</label><br>
+            <textarea height="5" id='driverComment' ></textarea>
         </div> 
         <div class='formItem'><br><input type='button' id='driver_add' value='Добавить' onClick="addDriver()"/></div>
         <div class='formItem'><br><input type='button' id='driver_add' value='Отмена' onClick="closeModWind()"/></div>
