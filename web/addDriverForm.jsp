@@ -49,4 +49,9 @@
         <div class='formItem'><br><input type='button' id='driver_add' value='Добавить' onClick="addDriver()"/></div>
         <div class='formItem'><br><input type='button' id='driver_add' value='Отмена' onClick="closeModWind()"/></div>
     </form>
+    <form class='addDriverPasportForm'>
+        <div class='formItem'>
+            <label>Номер паспорта</label><br><input type='text' id='driver_phone_number' />
+        </div>
+    </form>
 </div>
