@@ -49,9 +49,13 @@ public class CarAddSend extends HttpServlet {
             String carYear = request.getParameter("carYear");
             String carCost = request.getParameter("carCost");
             String carGlanasId = request.getParameter("carGlanasId");
+            String carStsNumber = request.getParameter("carStsNumber");
+            String carOsagoNumber = request.getParameter("carOsagoNumber");
+            String carOsagoEnd = request.getParameter("carOsagoEnd");
+            String ttoNumber = request.getParameter("ttoNumber");
             CarSQL wrk = new CarSQL();
             wrk.addCar(carNumber, carVIN,  carModel,  carTransmission,
-            carYear, carCost, carGlanasId);
+            carYear, carCost, carGlanasId, carStsNumber,carOsagoNumber, carOsagoEnd, ttoNumber);
             System.out.println("INFO: Car added bu user "+userId+" ("
                     +" carNumber="+carNumber
                     +" carModel="+carModel
@@ -61,6 +65,9 @@ public class CarAddSend extends HttpServlet {
                     +" carCost="+carCost
                     +" carGlanasId="+carGlanasId);
             
+        }
+        catch(Exception ex){
+            System.out.println("Error"+ex.getMessage());
         }
     }
 

@@ -62,24 +62,34 @@ public class CarSQL {
     }
     public Map getCarData(int id) throws SQLException{
         Map carData = new HashMap<String, String>();
-        Statement st = con.createStatement();
-        ResultSet rs = st.executeQuery("SELECT *  FROM `cars` WHERE `id`="+id);
-        if(rs.next()){
-            carData.put("id", rs.getString("id"));
-            carData.put("number", rs.getString("number"));
-            carData.put("model", rs.getString("model"));
-            carData.put("VIN", rs.getString("VIN"));
-            carData.put("transmission", rs.getString("transmission"));
-            carData.put("year", rs.getString("year"));
-            carData.put("cost", rs.getString("cost"));
-            carData.put("glanasId", rs.getString("glanasId"));
+        try{
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT *  FROM `cars` WHERE `id`="+id);
+            if(rs.next()){
+                carData.put("id", rs.getString("id"));
+                carData.put("number", rs.getString("number"));
+                carData.put("model", rs.getString("model"));
+                carData.put("VIN", rs.getString("VIN"));
+                carData.put("transmission", rs.getString("transmission"));
+                carData.put("year", rs.getString("year"));
+                carData.put("cost", rs.getString("cost"));
+                carData.put("glanasId", rs.getString("glanasId"));
+                carData.put("sts", rs.getString("sts"));
+                carData.put("insuranceNamber", rs.getString("insuranceNamber"));
+                carData.put("insuranceDateEnd", rs.getString("insuranceDateEnd"));
+                carData.put("ttoNumber", rs.getString("ttoNumber"));
+            }
+        }
+        catch(Exception ex){
+            System.out.println("Error " + ex.getMessage());
         }
         return carData;
     }
 
     public void writeCarData(String carNumber, 
             String carVIN, String carModel, String carTransmission,
-            String carYear, String carCost, String carGlanasId, String carId) throws SQLException {
+            String carYear, String carCost, String carGlanasId, String carId,
+            String carStsNumber, String carOsagoNumber, String carOsagoEnd, String ttoNumber) throws SQLException {
         System.out.println("Попытка внести изменения в информации о машине()");
         Statement st = con.createStatement();
         st.execute("UPDATE `cars` SET `number`='" +carNumber+ "'"+
@@ -89,6 +99,10 @@ public class CarSQL {
                                             ", `year`='" + carYear+"'"+
                                             ", `cost`='" + carCost+"'"+
                                             ", `glanasId`= '"+ carGlanasId+"'"+
+                                            ", `sts`= '"+ carStsNumber+"'"+
+                                            ", `insuranceNamber`= '"+ carOsagoNumber+"'"+
+                                            ", `insuranceDateEnd`= '"+ carOsagoEnd+"'"+
+                                            ", `ttoNumber`= '"+ ttoNumber+"'"+
                                             " WHERE `id`="+carId);
     }
     public String modelLisc(int currentIds){
@@ -118,16 +132,22 @@ public class CarSQL {
     }
     public void addCar(String carNumber, 
             String carVIN, String carModel, String carTransmission,
-            String carYear, String carCost, String carGlanasId) throws SQLException {
+            String carYear, String carCost, String carGlanasId,
+            String carStsNumber, String carOsagoNumber, String carOsagoEnd, String ttoNumber) throws SQLException {
         System.out.println("Попытка внести изменения в информации о машине()");
         Statement st = con.createStatement();
-        st.execute("INSERT INTO `cars` (`number`, `model`, `VIN`, `transmission`, `year`, `cost`, `glanasId`)"
+        st.execute("INSERT INTO `cars` (`number`, `model`, `VIN`, `transmission`, "
+                + "`year`, `cost`, `glanasId`, `sts`, `insuranceNamber`, `insuranceDateEnd`, `ttoNumber`)"
                 + " VALUES ('" +carNumber+ "', '"+carModel+ "', "+
                                             " '" + carVIN+"', "+
                                             " '" + carTransmission+"', "+
                                             " '" + carYear+"', "+
                                             " '" + carCost+"', "+
-                                            " '"+ carGlanasId+"')");
+                                            " '"+ carGlanasId+"', "+
+                                            " '"+ carStsNumber+"', "+
+                                            " '"+ carOsagoNumber+"', "+
+                                            " '"+ carOsagoEnd+"', "+
+                                            " '"+ ttoNumber+"')");
     }
     public String getFreeCarList() throws SQLException{
         String carData = "<option value='0'>Выбрать</option>";

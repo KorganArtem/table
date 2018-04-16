@@ -57,6 +57,10 @@ if(carData.get("transmission")=="1")
         </select>
         <label>Суточная Аренда</label><input id='carCost' type='text'  value='<%= carData.get("cost") %>'/><br>
         <label>ID в ГЛАНАС</label><input id='carGlanasId' type='text'  value='<%= carData.get("glanasId") %>'/><br>
+        <label>СТС</label><input id='carStsNumber' type='text'  value='<%= carData.get("sts") %> '/><br>
+        <label>ОСАГО</label><input id='carOsagoNumber' type='text'  value=' <%= carData.get("insuranceNamber") %>'/>
+        <label>Срок действия ОСАГО</label><input id='carOsagoEnd' type='date' value="<%= carData.get("insuranceDateEnd") %>"/><br>
+        <label>Номе талона ТО</label><input id='ttoNumber' type='text' value='<%= carData.get("ttoNumber") %>'/><br>
         <div class="buttonBlock">
             <input id='editCarButton' type='button' value="Сохранить"/>
             <input id='cancelCarButton' type='button' onClick="closeModWind()" value="Отменить"/>
@@ -72,12 +76,20 @@ if(carData.get("transmission")=="1")
                 var carCost = $("#carCost").val();
                 var carGlanasId = $("#carGlanasId").val();
                 var carId = $("#carIdn").val();
+                var carStsNumber = $("#carStsNumber").val();
+                var carOsagoNumber = $("#carOsagoNumber").val();
+                var carOsagoEnd = $("#carOsagoEnd").val();
+                var ttoNumber = $("#ttoNumber").val();
                 $.ajax({
                     type: 'POST',
                     url: 'CES',
                     data: 'carNumber='+carNumber+'&carModel='+carModel+'&carVIN='+carVIN
                             +'&carTransmission='+carTransmission+'&carYear='+carYear
-                            +'&carCost='+carCost+'&carGlanasId='+carGlanasId+'&carId='+carId,
+                            +'&carCost='+carCost+'&carGlanasId='+carGlanasId+'&carId='+carId
+                            +'&carStsNumber='+carStsNumber
+                            +'&carOsagoNumber='+carOsagoNumber
+                            +'&carOsagoEnd='+carOsagoEnd
+                            +'&ttoNumber='+ttoNumber,
                     success: function(){
                         alert('Изменения сохранены');
                         closeModWind();
