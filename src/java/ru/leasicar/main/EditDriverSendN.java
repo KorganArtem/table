@@ -8,6 +8,8 @@ package ru.leasicar.main;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -22,8 +24,8 @@ import ru.leasicar.workerSql.DriverSQL;
  *
  * @author korgan
  */
-@WebServlet(name = "EditDriverSendRP", urlPatterns = {"/EDSP"})
-public class EditDriverSendRP extends HttpServlet {
+@WebServlet(name = "EditDriverSendRP", urlPatterns = {"/EDSPN"})
+public class EditDriverSendN extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,26 +40,37 @@ public class EditDriverSendRP extends HttpServlet {
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            AccessControl ac = new AccessControl();
-            /* TODO output your page here. You may use following sample code. */
-            if(ac.isLogIn(request.getSession().getId()) && ac.checkPermission(ac.getUserId(request.getSession().getId()), "editdriver")){
-                System.out.println(request.getParameter("driver_id")+" driver id which i get from JS");
-                int driverId = Integer.parseInt(request.getParameter("driver_id"));
-                DriverSQL wsql = new DriverSQL();
-                wsql.getEditDataDriver(driverId, request.getParameter("limit"), request.getParameter("carId"),  request.getParameter("name"), 
-                        request.getParameter("lastname"), request.getParameter("phone"), request.getParameter("dayRent"), 
-                        request.getParameter("schedule"),  request.getParameter("driverComment"),  request.getParameter("yaId")); //dayRent
-                int changedSchedue = Integer.parseInt(request.getParameter("changetSchedule"));
-                if(changedSchedue==1){
-                   wsql.changeStartDate(driverId); 
-                }
-            }
-            else{
-                out.println("notpermit");
-                return;
-            }
-            ac.con.close();
+            DriverSQL dsql = new DriverSQL();
+            Map<String, String> driverData = new HashMap();
+            driverData.put("lastName",	request.getParameter("lastName"));
+            driverData.put("firstName",	request.getParameter("firstName")); 
+            driverData.put("midlName",	request.getParameter("midlName")); 
+            driverData.put("mainPhone",	request.getParameter("mainPhone")); 
+            driverData.put("addPhone",	request.getParameter("addPhone")); 
+            driverData.put("email",	request.getParameter("email")); 
+            driverData.put("bornDate",	request.getParameter("bornDate")); 
+            driverData.put("addDate",	request.getParameter("addDate")); 
+            driverData.put("delDate",	request.getParameter("delDate")); 
+            driverData.put("passportNumber",	request.getParameter("passportNumber")); 
+            driverData.put("passportDate",	request.getParameter("passportDate")); 
+            driverData.put("passportFrom",	request.getParameter("passportFrom")); 
+            driverData.put("country",	request.getParameter("country")); 
+            driverData.put("province",	request.getParameter("province")); 
+            driverData.put("city",	request.getParameter("city")); 
+            driverData.put("strit",	request.getParameter("strit")); 
+            driverData.put("house",	request.getParameter("house")); 
+            driverData.put("building",	request.getParameter("building")); 
+            driverData.put("flat",	request.getParameter("flat")); 
+            driverData.put("car",	request.getParameter("car")); 
+            driverData.put("shedule",	request.getParameter("shedule")); 
+            driverData.put("dayRent",	request.getParameter("dayRent")); 
+            driverData.put("debtLimit",	request.getParameter("debtLimit")); 
+            driverData.put("comment",	request.getParameter("comment")); 
+            driverData.put("yaId",	request.getParameter("yaId")); 
+            driverData.put("changeSchedule",	request.getParameter("changeSchedule")); 
+            int driverId = Integer.parseInt(request.getParameter("driverId")); 
+            dsql.editDriver(driverData, driverId);
+            //System.out.println(request.toString());
         }
     }
 
@@ -76,9 +89,9 @@ public class EditDriverSendRP extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(EditDriverSendRP.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditDriverSendN.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(EditDriverSendRP.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditDriverSendN.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -96,9 +109,9 @@ public class EditDriverSendRP extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(EditDriverSendRP.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditDriverSendN.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(EditDriverSendRP.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditDriverSendN.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

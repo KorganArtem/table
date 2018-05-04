@@ -14,7 +14,7 @@
     int driverId = Integer.parseInt(request.getParameter("driverId"));
     Map dataDriver = dsql.getAllDataDriver(driverId);
     int dayOffCicle = Integer.parseInt(dataDriver.get("driverDayOffPeriod").toString());
-    String editClick = "onClick='editDriverSend("+dataDriver.get("driver_id")+")'";
+    String editClick = "onClick='editDriverSendNew("+dataDriver.get("driver_id")+")'";
     String editRent = "";
     if(ac.checkPermission(ac.getUserId(request.getSession().getId()), "editRent")){ 
         editRent = "<div class='formItem'>"
@@ -62,6 +62,20 @@
             <label>Комментарий</label><br>
             <textarea height="5" id='driverComment' ><%= dataDriver.get("comment") %></textarea>
     </div> 
+    <div class='formItem' style="/*display: none;*/">
+        <input type='checkbox' id='changeSchedule' />
+        <input type='text' id='driverId' value='<%= dataDriver.get("driver_id") %>' />
+    </div> 
     <div class='formItem'><br><input type='button' <%= editClick %> value='Изменить' />             
     <input type='button' id='cancelEditDriver' value='Отмена' onClick='clearEditForm()' /></div>
 </form>
+    <script>
+        var oldSchedule = $('#driver_schedule').val();
+        $('#driver_schedule').change(function(){
+            var schdule = $('#driver_schedule').val();
+            if(schdule!==oldSchedule)
+                $('#changeSchedule').prop('checked', true);
+            else
+                $('#changeSchedule').prop('checked', false);
+        });
+    </script>

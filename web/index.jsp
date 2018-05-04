@@ -30,10 +30,13 @@
         <meta http-equiv='Cache-Control' content='private'>
         <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
         <script src='https://code.jquery.com/jquery-1.12.4.js'></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script type='text/javascript' src='https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js'></script>
         <link rel='stylesheet' type='text/css' href='https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css'/>
         <link rel='stylesheet' type='text/css'  href='css/datatabel.css'/>
         <link rel='stylesheet' type='text/css'  href='css/main.css'/>
+        <link rel="stylesheet" type="text/css" href="css/view.css" media="all">
+        <script type="text/javascript" src="js/view.js"></script>
     </head>
 <body>
     <div class='place'>

@@ -29,6 +29,19 @@ function addDriver(){
     });
     listDriverShow();
 }
+function addDriverN(){   
+    var msg   = $('#addDriverFormN').serialize();
+    $.ajax({
+        type: 'POST',
+        url: 'AddDriverNew',
+        data: msg,
+        success: function(data){
+            listDriverShow();
+            closeModWind();
+        }
+    });
+    listDriverShow();
+}
 ////////////////////////////////////////////////////////////////////////////////
 /////                    Вывод списка водителей                            /////
 ////////////////////////////////////////////////////////////////////////////////
@@ -98,11 +111,11 @@ function takePaySend(){
 function editDriver(driverId){
     $.ajax({
         type: 'POST',
-        url: 'editDriver.jsp',
+        url: 'editDriverNew.jsp',
         data: 'driverId='+driverId,
         success: function(data){
             $('#modal_form').html(data);
-            openModWind();
+            openModWind(470, 500);
         }
     });
 }
@@ -146,6 +159,9 @@ function editDriverSendRP(id){
     var dayRent = $('#driver_day_rent').val();
     var schedule = $('#driver_schedule').val();
     var driverComment = $('#driverComment').val();
+    var changetSchedule = 0;
+    if($('#changeSchedule').prop('checked'))
+        changetSchedule = 1;
     var yaId = $('#yaId').val();
     $.ajax({
         type: 'POST',
@@ -154,7 +170,24 @@ function editDriverSendRP(id){
                 +callsign+'&carId='+carId+'&limit='+limit
                 +'&phone='+phone+'&dayRent='+dayRent
                 +'&schedule='+schedule+'&driverComment='+driverComment
-                +'&yaId='+yaId,
+                +'&yaId='+yaId+'&changetSchedule='+changetSchedule,
+        success: function(data){
+            if(data=='notpermit'){
+                alert('У вас нет прав на изменение!');
+                return;
+            }
+            else
+                location.reload();
+        }
+    });
+    listDriverShow();
+}
+function editDriverSendNew(){
+    var msg   = $('#addDriverFormN').serialize();
+    $.ajax({
+        type: 'POST',
+        url: 'EDSPN',
+        data: msg,
         success: function(data){
             if(data=='notpermit'){
                 alert('У вас нет прав на изменение!');
@@ -255,6 +288,16 @@ $('#mainProp').click(function (){
     $('.itemMenu').attr('disabled', false);
     $('#mainProp').attr('disabled', true);
     $('#prop').css('display', 'block');
+    $.ajax({
+        type: 'POST',
+        url: 'props/mainProps.jsp',
+        success: function(data){
+            $('#prop').html(data);
+        },
+        error:function (msg){
+            alert('Error in geting car list!'+msg);
+        }
+    });
 });
 ////////////////////////////////////////////////////////////////////////////////
 /////                             Show add car form                        /////
@@ -296,7 +339,7 @@ function openModWind(){
         function(){ // пoсле выпoлнения предъидущей aнимaции
             $('#modal_form') 
                     .css('display', 'block') // убирaем у мoдaльнoгo oкнa display: none;
-                    .animate({opacity: 1, top: '50%'}, 200); // плaвнo прибaвляем прoзрaчнoсть oднoвременнo сo съезжaнием вниз
+                    .animate({opacity: 1}, 200); // плaвнo прибaвляем прoзрaчнoсть oднoвременнo сo съезжaнием вниз
     });
 }
 function openModWind(width, heigh){
@@ -304,15 +347,16 @@ function openModWind(width, heigh){
         function(){ // пoсле выпoлнения предъидущей aнимaции
             $('#modal_form') 
                     .css('display', 'block') // убирaем у мoдaльнoгo oкнa display: none;
-                    .animate({opacity: 1, top: '50%'}, 200); // плaвнo прибaвляем прoзрaчнoсть oднoвременнo сo съезжaнием вниз
+                    .animate({opacity: 1}, 200); // плaвнo прибaвляем прoзрaчнoсть oднoвременнo сo съезжaнием вниз
     });
     $('#modal_form').css('width', width);
     $('#modal_form').css('height', heigh);
+    $('#modal_form').css('margin-left', width/-2+'px');
 }
 /* Зaкрытие мoдaльнoгo oкнa, тут делaем тo же сaмoе нo в oбрaтнoм пoрядке */
 function closeModWind(){
     $('#modal_form')
-        .animate({opacity: 0, top: '45%'}, 200,  // плaвнo меняем прoзрaчнoсть нa 0 и oднoвременнo двигaем oкнo вверх
+        .animate({opacity: 0}, 200,  // плaвнo меняем прoзрaчнoсть нa 0 и oднoвременнo двигaем oкнo вверх
             function(){ // пoсле aнимaции
                     $(this).css('display', 'none'); // делaем ему display: none;
                     $('#overlay').fadeOut(400); // скрывaем пoдлoжку
@@ -322,10 +366,10 @@ function closeModWind(){
 function showAddDriverForm(){
     $.ajax({
         type: 'POST',
-        url: 'addDriverForm.jsp',
+        url: 'addDriverNew.jsp',
         success: function(data){
             $('#modal_form').html(data);
-            openModWind();
+            openModWind(470, 500);
         },
         error:function (msg){
             alert('Error in geting car list!'+msg);

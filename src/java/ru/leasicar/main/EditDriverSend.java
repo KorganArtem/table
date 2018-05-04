@@ -44,8 +44,7 @@ public class EditDriverSend extends HttpServlet {
                 System.out.println(request.getParameter("driver_id")+" driver id which i get from JS");
                 int driverId = Integer.parseInt(request.getParameter("driver_id"));
                 DriverSQL wsql = new DriverSQL();
-                wsql.getEditDataDriver(driverId, request.getParameter("limit"), request.getParameter("carId"), 
-                        request.getParameter("callsign"), request.getParameter("name"), 
+                wsql.getEditDataDriver(driverId, request.getParameter("limit"), request.getParameter("carId"), request.getParameter("name"), 
                         request.getParameter("lastname"), request.getParameter("phone"), 
                         request.getParameter("driverComment"));
             }
