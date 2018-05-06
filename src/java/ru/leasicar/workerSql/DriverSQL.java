@@ -272,7 +272,6 @@ public class DriverSQL {
                         + "`driver_addPhone_number`='"+ driverData.get("addPhone") +"', "
                         + "`driver_email`='"+ driverData.get("email") +"', "
                         + "`driver_day_rent`='"+ driverData.get("dayRent") +"', "
-                        + "`driver_current_debt`=0, "
                         + "`driverStartDate`='"+ driverData.get("addDate") +"', "
                         + "`driverDayOffPeriod`='"+ driverData.get("shedule") +"', "
                         + "`yaId`='"+ driverData.get("yaId") +"', "
@@ -286,8 +285,13 @@ public class DriverSQL {
         address.put("house", driverData.get("house"));
         address.put("building", driverData.get("building"));
         address.put("flat", driverData.get("flat"));
+        try{
         writeDriverAddres(address, driverId, 1);
         writeDriverPassport(driverId, driverData.get("passportNumber"),
                 driverData.get("passportDate"), driverData.get("passportFrom"));
+        }
+        catch(Exception ex){
+            System.out.println("Не удалось записать данные об адресе/паспорте водителя\n"+ex.getMessage());
+        }
     }
 }

@@ -24,7 +24,7 @@ import ru.leasicar.workerSql.DriverSQL;
  *
  * @author korgan
  */
-@WebServlet(name = "EditDriverSendRP", urlPatterns = {"/EDSPN"})
+@WebServlet(name = "EditDriverSendNEW", urlPatterns = {"/EDSPN"})
 public class EditDriverSendN extends HttpServlet {
 
     /**
@@ -69,7 +69,15 @@ public class EditDriverSendN extends HttpServlet {
             driverData.put("yaId",	request.getParameter("yaId")); 
             driverData.put("changeSchedule",	request.getParameter("changeSchedule")); 
             int driverId = Integer.parseInt(request.getParameter("driverId")); 
-            dsql.editDriver(driverData, driverId);
+            int changeSchedule = Integer.parseInt(request.getParameter("changeSchedule"));
+            try{
+                dsql.editDriver(driverData, driverId);
+            }
+            catch(Exception ex){
+                System.out.println("Не удалось изменить данные водителя\n"+ex.getMessage());
+            }
+            if(changeSchedule==1)
+                dsql.changeStartDate(driverId); 
             //System.out.println(request.toString());
         }
     }

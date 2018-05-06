@@ -194,7 +194,7 @@ function editDriverSendNew(){
                 return;
             }
             else
-                location.reload();
+                closeModWind();
         }
     });
     listDriverShow();

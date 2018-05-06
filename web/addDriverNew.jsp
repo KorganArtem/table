@@ -46,15 +46,15 @@
 		</li>
                 <li id="li_1" >
                     <span>
-			<input type="date" id="element_1_1" name= "bornDate" class="element date" maxlength="255" size="14" value=""/>
+			<input type="date" id="element_1_1" name= "bornDate" class="element date" maxlength="255" size="14"/>
 			<label>Дата рождения</label>
                     </span>
                     <span>
-                        <input type="date" id="element_1_2" name= "addDate" class="element date" maxlength="255" size="14" value=""/>
+                        <input type="date" id="element_1_2" name= "addDate" class="element date" maxlength="255" size="14"/>
                         <label>Дата принятия</label>
                     </span> 
                     <span>
-                        <input type="date" id="element_1_2" name= "delDate" class="element date" maxlength="255" size="14" value=""/>
+                        <input type="date" id="element_1_2" name= "delDate" class="element date" maxlength="255" size="14"/>
                         <label>Дата увольнения</label>
                     </span> 
 		</li>
@@ -65,7 +65,7 @@
 			<label>Серия номер</label>
                     </span>
                     <span>
-                        <input type="date" id="element_1_2" name= "passportDate" class="element text" maxlength="255" size="14" value=""/>
+                        <input type="date" id="element_1_2" name= "passportDate" class="element text" maxlength="255" size="14"/>
                         <label>Дата выдачи</label>
                     </span> 
                     <span>

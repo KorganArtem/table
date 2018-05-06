@@ -9,6 +9,8 @@ and open the template in the editor.
 */
 .tabsNav{
     display: block;
+    overflow: hidden;
+    list-style: none;
 }
 .tabsNav li{
     float: left;
@@ -18,7 +20,7 @@ and open the template in the editor.
     width: 1200px;
 }
 .itemDisplay{
-    
+    max-width: 900px;
 }
 .phoneInList{
     max-width: 90px !important;
