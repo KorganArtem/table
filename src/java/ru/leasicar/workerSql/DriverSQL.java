@@ -74,7 +74,18 @@ public class DriverSQL {
         address.put("house", driverData.get("house"));
         address.put("building", driverData.get("building"));
         address.put("flat", driverData.get("flat"));
+        address.put("postCode", driverData.get("postCode"));
         writeDriverAddres(address, driveID, 1);
+        
+        address.put("country", driverData.get("addCountry"));
+        address.put("province", driverData.get("addProvince"));
+        address.put("city", driverData.get("addCity"));
+        address.put("strit", driverData.get("addStrit"));
+        address.put("house", driverData.get("addHouse"));
+        address.put("building", driverData.get("addBuilding"));
+        address.put("flat", driverData.get("addFlat"));
+        address.put("postCode", driverData.get("addPostCode"));
+        writeDriverAddres(address, driveID, 2);
         writeDriverPassport(driveID, driverData.get("passportNumber"),
                 driverData.get("passportDate"), driverData.get("passportFrom"));
     }
@@ -87,6 +98,7 @@ public class DriverSQL {
                 + "`house`='"+ address.get("house") +"', "
                 + "`building`='"+ address.get("building") +"', "
                 + "`flat`='"+ address.get("flat") +"', "
+                + "`postCode`='"+ address.get("postCode") +"', "
                 + "`type`="+ type + " ON DUPLICATE KEY UPDATE "
                 + "`country`='"+ address.get("country") +"', "
                 + "`province`='"+ address.get("province") +"', "
@@ -94,7 +106,8 @@ public class DriverSQL {
                 + "`strit`='"+ address.get("strit") +"', "
                 + "`house`='"+ address.get("house") +"', "
                 + "`building`='"+ address.get("building") +"', "
-                + "`flat`='"+ address.get("flat") +"' ";
+                + "`flat`='"+ address.get("flat")  +"', "
+                + "`postCode`='"+ address.get("postCode") +"' ";
         Statement stAddAddress = con.createStatement();
         stAddAddress.execute(insertQuery);
     }
@@ -112,7 +125,7 @@ public class DriverSQL {
         stAddPassport.execute(insertQuery);
     }
     ////////////////////////////////////////////////////////////////////////////
-    public void writeDriver(String limit, 
+/*    public void writeDriver(String limit, 
             String carId, 
             String callsign, 
             String name, 
@@ -134,7 +147,7 @@ public class DriverSQL {
             System.out.println(rs.getInt("driverId")+"");
         }
         
-    }
+    }*/
     public Map listDriver() throws SQLException{
         Statement st = con.createStatement();
         ResultSet rs = st.executeQuery("SELECT `drivers`.*, `cars`.`number`   FROM `drivers`  \n" +
@@ -165,7 +178,7 @@ public class DriverSQL {
                 + "RIGHT JOIN (SELECT * FROM `drivers` "
                 + "LEFT JOIN passports "
                 + "ON passports.driverId=drivers.driver_id WHERE drivers.driver_id="+ driverId +") as zap "
-                + "ON zap.driver_id=driverAddress.driverId";
+                + "ON zap.driver_id=driverAddress.driverId WHERE `driverAddress`.`type`=1";
         ResultSet rs = st.executeQuery(query);
         Map<String, String> rowDriver = new HashMap();
         if(rs.next()){
@@ -194,7 +207,24 @@ public class DriverSQL {
             rowDriver.put("house", rs.getString("house"));
             rowDriver.put("building", rs.getString("building"));
             rowDriver.put("flat", rs.getString("flat"));
+            rowDriver.put("postCode", rs.getString("postCode"));
         }
+        Statement stGetAddAddress = con.createStatement();
+        String getAddAddressQuery ="SELECT * FROM driverAddress WHERE driverId="+driverId
+                            +" AND `type`=2";
+        ResultSet rsGetAddAddress = stGetAddAddress.executeQuery(getAddAddressQuery);
+        if(rsGetAddAddress.next()){
+            rowDriver.put("addCountry", rsGetAddAddress.getString("country"));
+            rowDriver.put("addProvince", rsGetAddAddress.getString("province"));
+            rowDriver.put("addCity", rsGetAddAddress.getString("city"));
+            rowDriver.put("addStrit", rsGetAddAddress.getString("strit"));
+            rowDriver.put("addHouse", rsGetAddAddress.getString("house"));
+            rowDriver.put("addBuilding", rsGetAddAddress.getString("building"));
+            rowDriver.put("addFlat", rsGetAddAddress.getString("flat"));
+            rowDriver.put("addPostCode", rsGetAddAddress.getString("postCode"));
+        }
+        rsGetAddAddress.close();
+        stGetAddAddress.close();
         return rowDriver;
     }
     //Измененте данных водителя без изменения аренды и графика
@@ -285,13 +315,23 @@ public class DriverSQL {
         address.put("house", driverData.get("house"));
         address.put("building", driverData.get("building"));
         address.put("flat", driverData.get("flat"));
+        address.put("postCode", driverData.get("postCode"));
         try{
-        writeDriverAddres(address, driverId, 1);
-        writeDriverPassport(driverId, driverData.get("passportNumber"),
-                driverData.get("passportDate"), driverData.get("passportFrom"));
+            writeDriverPassport(driverId, driverData.get("passportNumber"),
+                    driverData.get("passportDate"), driverData.get("passportFrom"));
+            writeDriverAddres(address, driverId, 1);
         }
         catch(Exception ex){
             System.out.println("Не удалось записать данные об адресе/паспорте водителя\n"+ex.getMessage());
         }
+        address.put("country", driverData.get("addCountry"));
+        address.put("province", driverData.get("addProvince"));
+        address.put("city", driverData.get("addCity"));
+        address.put("strit", driverData.get("addStrit"));
+        address.put("house", driverData.get("addHouse"));
+        address.put("building", driverData.get("addBuilding"));
+        address.put("flat", driverData.get("addFlat"));
+        address.put("postCode", driverData.get("addPostCode"));
+        writeDriverAddres(address, driverId, 2);
     }
 }

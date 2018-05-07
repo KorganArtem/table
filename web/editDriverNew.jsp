@@ -92,10 +92,9 @@
                         <input id="element_1_2" name= "passportFrom" class="element text" maxlength="255" size="14" value="<%= dataDriver.get("passportFrom") %>"/>
                         <label>Выдан</label>
                     </span> 
-		</li>			
+		</li>		
                 <li id="li_3" >
-                    <label class="description" for="element_3">Адрес </label>
-                    <div class="left">
+                    <div id="address"><div class="left">
                             <input id="element_3_3" name="country" class="element text medium" value="<%= dataDriver.get("country") %>" type="text">
                             <label for="element_3_3">Страна</label>
                     </div>
@@ -112,18 +111,58 @@
                         <label for="element_3_6">Улица</label>
                     </div> 
                     <span>
-			<input id="element_1_1" name= "house" class="element text" maxlength="255" size="14" value="<%= dataDriver.get("house") %>"/>
+			<input id="element_1_1" name= "house" class="element text" maxlength="255" size="9" value="<%= dataDriver.get("house") %>"/>
 			<label>Дом</label>
                     </span>
                     <span>
-                        <input id="element_1_2" name= "building" class="element text" maxlength="255" size="14" value="<%= dataDriver.get("building") %>"/>
+                        <input id="element_1_2" name= "building" class="element text" maxlength="255" size="9" value="<%= dataDriver.get("building") %>"/>
                         <label>Корпус/Строение</label>
                     </span> 
                     <span>
-                        <input id="element_1_2" name= "flat" class="element text" maxlength="255" size="14" value="<%= dataDriver.get("flat") %>"/>
+                        <input id="element_1_2" name= "flat" class="element text" maxlength="255" size="9" value="<%= dataDriver.get("flat") %>"/>
                         <label>Квартира</label>
                     </span> 
-		</li>		
+                        <span>
+                            <input id="element_1_2" name= "postCode" class="element text" maxlength="255" size="9" value="<%= dataDriver.get("postCode") %>"/>
+                            <label>Индекс</label>
+                        </span> 
+                    </div>
+                    <div id="addAddress">
+                        <label class="description" for="element_3">Почтовый адрес </label>
+                        <div class="left">
+                                <input id="element_3_3" name="addCountry" class="element text medium" value="<%= dataDriver.get("addCountry") %>" type="text">
+                                <label for="element_3_3">Страна</label>
+                        </div>
+                        <div class="right">
+                                <input id="element_3_4" name="addProvince" class="element text medium" value="<%= dataDriver.get("addProvince") %>" type="text">
+                                <label for="element_3_4">Область</label>
+                        </div>
+                        <div class="left">
+                                <input id="element_3_5" name="addCity" class="element text medium" maxlength="15" value="<%= dataDriver.get("addCity") %>" type="text">
+                                <label for="element_3_5">Город</label>
+                        </div>
+                        <div class="right">
+                            <input id="element_3_5" name="addStrit" class="element text medium" maxlength="15" value="<%= dataDriver.get("addStrit") %>" type="text">
+                            <label for="element_3_6">Улица</label>
+                        </div> 
+                        <span>
+                            <input id="element_1_1" name= "addHouse" class="element text" maxlength="255" size="9" value="<%= dataDriver.get("addHouse") %>"/>
+                            <label>Дом</label>
+                        </span>
+                        <span>
+                            <input id="element_1_2" name= "addBuilding" class="element text" maxlength="255" size="9" value="<%= dataDriver.get("addBuilding") %>"/>
+                            <label>Корпус/Строение</label>
+                        </span> 
+                        <span>
+                            <input id="element_1_2" name= "addFlat" class="element text" maxlength="255" size="9" value="<%= dataDriver.get("addFlat") %>"/>
+                            <label>Квартира</label>
+                        </span> 
+                        <span>
+                            <input id="element_1_2" name= "addPostCode" class="element text" maxlength="255" size="9" value="<%= dataDriver.get("addPostCode") %>"/>
+                            <label>Индекс</label>
+                        </span> 
+                    </div>
+		</li>			
                 <li id="li_5" >
                     <label class="description" for="element_5">Аренда </label>
                     <span>

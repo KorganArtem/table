@@ -37,7 +37,7 @@ public class DriverAdd extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             System.out.println("schedule  "+request.getParameter("schedule"));
-            try{
+            /*try{
                 DriverSQL wsql = new DriverSQL();
                 wsql.writeDriver(request.getParameter("limit"), request.getParameter("carId"), 
                         request.getParameter("callsign"), request.getParameter("name"), request.getParameter("lastname"), request.getParameter("phone"), 
@@ -46,7 +46,7 @@ public class DriverAdd extends HttpServlet {
             }
             catch(ClassNotFoundException | SQLException ex){
                 System.out.println(ex.getMessage());
-            }
+            }*/
             
 
         }
