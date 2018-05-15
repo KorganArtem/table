@@ -56,7 +56,7 @@ public class ListDriver extends HttpServlet {
                 Map listDriver = wsql.listDriver();
                 Iterator<Map.Entry<String, Map>> entries = listDriver.entrySet().iterator();
                 out.println("<thead><tr><td>Фамилия</td><td>Имя</td><td>Номер</td><td>Телефон</td><td>Лимит</td>"
-                        + "<td>Баланс</td><td>Депозит</td><td class='noPrint'> </td><td class='noPrint'></td><td class='noPrint'></td>"+colDel+"</tr></thead>");
+                        + "<td>Баланс</td><td>Депозит</td><td class='noPrint'> </td><td class='noPrint'></td><td class='noPrint'></td>"+colDel+"<td class='noPrint'></td></tr></thead>");
                 while (entries.hasNext()) {
                     Map.Entry<String, Map> entry = entries.next();
                     Map draverData = entry.getValue();
@@ -86,7 +86,7 @@ public class ListDriver extends HttpServlet {
                             + delButton        
                             + "<td class='wrkday noPrint'>"+day_off+"</td>"
                             + "<td class='wrkday noPrint' onClick='getReport("+entry.getKey()+")'>отчет</td>"
-                                    + "</tr>");
+                                    + "<td class='docsCol'  driverId='"+entry.getKey()+"'><img src='img/docs.png'/></td></tr>");
                 }
                 out.println("</table>");
                 //wsql.addAccrual();

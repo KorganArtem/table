@@ -7,6 +7,20 @@ and open the template in the editor.
     Created on : 04.08.2017, 14:04:25
     Author     : korgan
 */
+#docMenu{
+    list-style-type: none;
+    text-align: left;
+    padding-left: 5px;
+    cursor: pointer;
+}
+#docMenu li{
+    
+    font-size: 20px;
+}
+#docMenu li:hover{
+    color: red;
+    bg-color: grey;
+}
 .tabsNav{
     display: block;
     overflow: hidden;

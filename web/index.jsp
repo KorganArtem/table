@@ -25,6 +25,8 @@
 	<meta charset="utf-8">
         <!-- index.jsp -->
         
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="/resources/demos/style.css">
 	<title>Lease Car</title>
         <meta http-equiv='Cache-Control' content='no-cache'>
         <meta http-equiv='Cache-Control' content='private'>
@@ -57,7 +59,28 @@
     </div>
     <div id='overlay'>   
     </div>
+    <div id="menuBox" title="Документы">
+	<ul id="docMenu">
+		<li class="menuItem" id="getDog" data="dogovor">Договор</li>
+		<li class="menuItem" data="aktvidachi">Акт выдачи</li>
+		<li class="menuItem" data="aktpriema">Акт приемки</li>
+		<li class="menuItem" data="putevoilist">Путевые листы</li>
+	</ul>
+    </div>
 </body>
+<script>
+    $( "#menuBox" ).dialog({
+      autoOpen: false,
+      width: 200,
+      show: {
+        effect: "blind",
+        duration: 1
+      },
+      hide: {
+        effect: "explode",
+        duration: 1
+      }
+    });
+</script>
     <script src='js/main.js'></script>
-    <script>listDriverShow()</script>
 </html>

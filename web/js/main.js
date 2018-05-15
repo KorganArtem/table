@@ -57,6 +57,7 @@ function listDriverShow(){
             $('#listDriverTabel').DataTable( {
                 "paging":   false
             });
+            docListener();
         }
     });
 }
@@ -373,6 +374,54 @@ function showAddDriverForm(){
         },
         error:function (msg){
             alert('Error in geting car list!'+msg);
+        }
+    });
+}
+////////////////////////////////////////////////////////////////////////////////
+//////////////////////Docs menu ////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+function docListener(){
+    
+    $(".docsCol").click(function(e){
+	var driverId = $(this).attr('driverId');
+        $('#menuBox').dialog("open");
+        console.log('Showed'+driverId);
+        $(".menuItem").click(function(){
+            if($(this).attr('data')==="dogovor"){
+                downloadDogowor(driverId);
+                driverId = null;
+            }
+            if($(this).attr('data')==="aktvidachi"){
+                doenloadAktvidachi(driverId);
+                driverId = null;
+            }
+            if($(this).attr('data')==="aktpriema"){
+                doenloadAktpriema(driverId);
+                driverId = null;
+            }
+            if($(this).attr('data')==="putevoilist"){
+                doenloadPutevoilist(driverId);
+                driverId = null;
+            }
+        });
+    });
+    $("#closeMenu").click(function(){
+        $('#menuBox').hide();
+    });
+}
+function downloadDogowor(driverIdForDog){
+    if(driverIdForDog==null)
+        return;
+    $.ajax({
+        type: 'POST',
+        url: 'DM',
+        data: 'driverId='+driverIdForDog,
+        success: function(data){
+            window.open(data);
+        },
+        error:function (msg){
+            alert('Error in geting dogovor!'+msg);
         }
     });
 }
