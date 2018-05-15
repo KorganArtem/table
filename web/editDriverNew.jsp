@@ -17,6 +17,7 @@
     }
     DriverSQL dsql = new DriverSQL();
     CarSQL csql = new CarSQL(); 
+    System.out.println(request.getParameter("driverId"));
     int driverId = Integer.parseInt(request.getParameter("driverId"));
     Map dataDriver = dsql.getAllDataDriver(driverId);
     int dayOffCicle = Integer.parseInt(dataDriver.get("driverDayOffPeriod").toString());

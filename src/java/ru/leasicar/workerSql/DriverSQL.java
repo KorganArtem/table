@@ -172,59 +172,70 @@ public class DriverSQL {
         return listDriver;
     }   
     // Плучение данных для формы изменения водителя
-    public Map getAllDataDriver(int driverId) throws SQLException{
-        Statement st = con.createStatement();
-        String query = "SELECT zap.*, driverAddress.*  FROM driverAddress "
-                + "RIGHT JOIN (SELECT * FROM `drivers` "
-                + "LEFT JOIN passports "
-                + "ON passports.driverId=drivers.driver_id WHERE drivers.driver_id="+ driverId +") as zap "
-                + "ON zap.driver_id=driverAddress.driverId WHERE `driverAddress`.`type`=1";
-        ResultSet rs = st.executeQuery(query);
+    public Map getAllDataDriver(int driverId) {
+        
         Map<String, String> rowDriver = new HashMap();
-        if(rs.next()){
-            rowDriver.put("driver_id", rs.getString("driver_id"));
-            rowDriver.put("driver_lastname", rs.getString("driver_lastname"));
-            rowDriver.put("driver_firstname", rs.getString("driver_firstname"));
-            rowDriver.put("driver_midName", rs.getString("driver_midName"));
-            rowDriver.put("driver_current_debt", rs.getString("driver_current_debt"));
-            rowDriver.put("driver_day_rent", rs.getString("driver_day_rent"));
-            rowDriver.put("driver_limit", rs.getString("driver_limit"));
-            rowDriver.put("driver_phone_number", rs.getString("driver_phone_number"));
-            rowDriver.put("driver_addPhone_number", rs.getString("driver_addPhone_number"));
-            rowDriver.put("driver_email", rs.getString("driver_email"));
-            rowDriver.put("driver_bornDate", rs.getString("driver_bornDate"));
-            rowDriver.put("driverStartDate", rs.getString("driverStartDate"));
-            rowDriver.put("driverDayOffPeriod", rs.getString("driverDayOffPeriod"));
-            rowDriver.put("comment", rs.getString("comment"));
-            rowDriver.put("yaId", rs.getString("yaId"));
-            rowDriver.put("passportNumber", rs.getString("passportNumber"));
-            rowDriver.put("passportDate", rs.getString("passportDate"));
-            rowDriver.put("passportFrom", rs.getString("passportFrom"));
-            rowDriver.put("country", rs.getString("country"));
-            rowDriver.put("province", rs.getString("province"));
-            rowDriver.put("city", rs.getString("city"));
-            rowDriver.put("strit", rs.getString("strit"));
-            rowDriver.put("house", rs.getString("house"));
-            rowDriver.put("building", rs.getString("building"));
-            rowDriver.put("flat", rs.getString("flat"));
-            rowDriver.put("postCode", rs.getString("postCode"));
+        try{
+            Statement st = con.createStatement();
+            /*String query = "SELECT zap.*, driverAddress.*  FROM driverAddress "
+                    + "RIGHT JOIN (SELECT * FROM `drivers` "
+                    + "LEFT JOIN passports "
+                    + "ON passports.driverId=drivers.driver_id WHERE drivers.driver_id="+ driverId +") as zap "
+                    + "ON zap.driver_id=driverAddress.driverId WHERE `driverAddress`.`type`=1";*/
+            String query = "SELECT zapDriverAddr.*, passports.* FROM passports "
+                    + "RIGHT JOIN (SELECT zapAddres.*, drivers.* FROM drivers LEFT JOIN (SELECT * FROM driverAddress WHERE `type`=1) as zapAddres "
+                    + "ON zapAddres.driverId=drivers.driver_id WHERE drivers.driver_id="+driverId+") as zapDriverAddr "
+                    + "ON zapDriverAddr.driver_id=passports.`driverId`";
+            ResultSet rs = st.executeQuery(query);
+            if(rs.next()){
+                rowDriver.put("driver_id", rs.getString("driver_id"));
+                rowDriver.put("driver_lastname", rs.getString("driver_lastname"));
+                rowDriver.put("driver_firstname", rs.getString("driver_firstname"));
+                rowDriver.put("driver_midName", rs.getString("driver_midName"));
+                rowDriver.put("driver_current_debt", rs.getString("driver_current_debt"));
+                rowDriver.put("driver_deposit", rs.getString("driver_deposit"));
+                rowDriver.put("driver_day_rent", rs.getString("driver_day_rent"));
+                rowDriver.put("driver_limit", rs.getString("driver_limit"));
+                rowDriver.put("driver_phone_number", rs.getString("driver_phone_number"));
+                rowDriver.put("driver_addPhone_number", rs.getString("driver_addPhone_number"));
+                rowDriver.put("driver_email", rs.getString("driver_email"));
+                rowDriver.put("driver_bornDate", rs.getString("driver_bornDate"));
+                rowDriver.put("driverStartDate", rs.getString("driverStartDate"));
+                rowDriver.put("driverDayOffPeriod", rs.getString("driverDayOffPeriod"));
+                rowDriver.put("comment", rs.getString("comment"));
+                rowDriver.put("yaId", rs.getString("yaId"));
+                rowDriver.put("passportNumber", rs.getString("passportNumber"));
+                rowDriver.put("passportDate", rs.getString("passportDate"));
+                rowDriver.put("passportFrom", rs.getString("passportFrom"));
+                rowDriver.put("country", rs.getString("country"));
+                rowDriver.put("province", rs.getString("province"));
+                rowDriver.put("city", rs.getString("city"));
+                rowDriver.put("strit", rs.getString("strit"));
+                rowDriver.put("house", rs.getString("house"));
+                rowDriver.put("building", rs.getString("building"));
+                rowDriver.put("flat", rs.getString("flat"));
+                rowDriver.put("postCode", rs.getString("postCode"));
+            }
+            Statement stGetAddAddress = con.createStatement();
+            String getAddAddressQuery ="SELECT * FROM driverAddress WHERE driverId="+driverId
+                                +" AND `type`=2";
+            ResultSet rsGetAddAddress = stGetAddAddress.executeQuery(getAddAddressQuery);
+            if(rsGetAddAddress.next()){
+                rowDriver.put("addCountry", rsGetAddAddress.getString("country"));
+                rowDriver.put("addProvince", rsGetAddAddress.getString("province"));
+                rowDriver.put("addCity", rsGetAddAddress.getString("city"));
+                rowDriver.put("addStrit", rsGetAddAddress.getString("strit"));
+                rowDriver.put("addHouse", rsGetAddAddress.getString("house"));
+                rowDriver.put("addBuilding", rsGetAddAddress.getString("building"));
+                rowDriver.put("addFlat", rsGetAddAddress.getString("flat"));
+                rowDriver.put("addPostCode", rsGetAddAddress.getString("postCode"));
+            }
+            rsGetAddAddress.close();
+            stGetAddAddress.close();
         }
-        Statement stGetAddAddress = con.createStatement();
-        String getAddAddressQuery ="SELECT * FROM driverAddress WHERE driverId="+driverId
-                            +" AND `type`=2";
-        ResultSet rsGetAddAddress = stGetAddAddress.executeQuery(getAddAddressQuery);
-        if(rsGetAddAddress.next()){
-            rowDriver.put("addCountry", rsGetAddAddress.getString("country"));
-            rowDriver.put("addProvince", rsGetAddAddress.getString("province"));
-            rowDriver.put("addCity", rsGetAddAddress.getString("city"));
-            rowDriver.put("addStrit", rsGetAddAddress.getString("strit"));
-            rowDriver.put("addHouse", rsGetAddAddress.getString("house"));
-            rowDriver.put("addBuilding", rsGetAddAddress.getString("building"));
-            rowDriver.put("addFlat", rsGetAddAddress.getString("flat"));
-            rowDriver.put("addPostCode", rsGetAddAddress.getString("postCode"));
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
         }
-        rsGetAddAddress.close();
-        stGetAddAddress.close();
         return rowDriver;
     }
     //Измененте данных водителя без изменения аренды и графика

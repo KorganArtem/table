@@ -41,7 +41,7 @@ public class DogMaker extends HttpServlet {
             ServletContext sc = request.getServletContext();
             String fullPath = sc.getRealPath("");
             int driverId = Integer.parseInt(request.getParameter("driverId"));
-            DogovorGenerator dg = new DogovorGenerator();
+            DogovorGenerator dg = new DogovorGenerator(); 
             String fileName = dg.createDog(driverId, fullPath);
             if(fileName!=null)
                 out.println(fileName);
