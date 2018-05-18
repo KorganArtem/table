@@ -18,7 +18,6 @@ import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import ru.leasicar.workerSql.DriverSQL;
 import com.ibm.icu.text.*;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 /**
  *
@@ -43,6 +42,7 @@ public class DogovorGenerator {
     public String  createDog(int DriverId, String filePath) throws ClassNotFoundException, SQLException { 
         System.out.println(System.getProperty("catalina.base"));
         DriverSQL dsql = new DriverSQL();
+        int numberDog = dsql.getDogNumber();
         Map<String, String> draverData = dsql.getAllDataDriver(DriverId);
         Calendar calendar = Calendar.getInstance();
         String dataDog = calendar.get(Calendar.DAY_OF_MONTH)+" "+mounths.get(calendar.get(Calendar.MONTH))+" "+calendar.get(Calendar.YEAR);
@@ -50,8 +50,10 @@ public class DogovorGenerator {
             String fullName = draverData.get("driver_lastname")+" "+draverData.get("driver_firstname")+" "+draverData.get("driver_midName");
             POIFSFileSystem pfs = new POIFSFileSystem(new FileInputStream("/table/doc_tmp/dogovor_tmp.doc"));
             HWPFDocument doc = new HWPFDocument(pfs);
-            String fileName = "dogFor_"+DriverId+".doc";
-            Range range = doc.getRange();
+            Transliterator toLatinTrans = Transliterator.getInstance("Bulgarian-Latin/BGN");
+            String fileName = "dogFor_"+toLatinTrans.transliterate(draverData.get("driver_lastname"))+"_"+numberDog+".doc";
+            Range range = doc.getRange(); 
+            range.replaceText("{%dogNumber%}", numberDog+"");
             range.replaceText("{%date%}", dataDog);
             range.replaceText("{%fulName%}", fullName);
             ////////////////////////////////////////////////////////////////////////
@@ -93,10 +95,11 @@ public class DogovorGenerator {
             range.replaceText("{%rentSum%}", draverData.get("driver_day_rent"));
             range.replaceText("{%currentDepositInWords%}", nf.format(Integer.parseInt(draverData.get("driver_deposit"))));
             range.replaceText("{%currentDeposit%}", draverData.get("driver_deposit"));
-            OutputStream out = new FileOutputStream(filePath+fileName);
+            OutputStream out = new FileOutputStream(filePath+"docs/"+fileName);
             doc.write(out);
             out.flush();
             out.close();
+            dsql.writeDogovor(numberDog, DriverId);
             return fileName;
         }
         catch (Exception e) {

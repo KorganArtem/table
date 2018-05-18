@@ -106,7 +106,7 @@ public class AccessControl {
     }
     public boolean checkPermission(int userId, String permissionName){
         boolean allow = false;
-        System.out.print("Check permission for user "+userId+" in "+permissionName);
+        //System.out.print("Check permission for user "+userId+" in "+permissionName);
         try{
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM `userrules` "

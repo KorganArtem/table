@@ -16,14 +16,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import ru.leasicar.doccreater.DogovorGenerator;
+import ru.leasicar.doccreater.ActInGenerator;
+import ru.leasicar.doccreater.ActOutGenerator;
 
 /**
  *
  * @author korgan
  */
-@WebServlet(name = "DogMaker", urlPatterns = {"/DM"})
-public class DogMaker extends HttpServlet {
+@WebServlet(name = "ActMaker", urlPatterns = {"/AM"})
+public class ActMaker extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,13 +37,20 @@ public class DogMaker extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
+        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */       
             ServletContext sc = request.getServletContext();
             String fullPath = sc.getRealPath("");
             int driverId = Integer.parseInt(request.getParameter("driverId"));
-            DogovorGenerator dg = new DogovorGenerator(); 
-            String fileName = "docs/"+dg.createDog(driverId, fullPath);
+            String fileName=null;
+            if(request.getParameter("actType").equals("1")){
+                ActInGenerator ai = new ActInGenerator(); 
+                fileName = "docs/"+ai.createAct(driverId, fullPath);
+            }
+            if(request.getParameter("actType").equals("2")){
+                ActOutGenerator ai = new ActOutGenerator(); 
+                fileName = "docs/"+ai.createAct(driverId, fullPath);
+            }
             if(fileName!=null)
                 out.println(fileName);
             else
@@ -65,9 +73,9 @@ public class DogMaker extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DogMaker.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ActMaker.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(DogMaker.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ActMaker.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -85,9 +93,9 @@ public class DogMaker extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DogMaker.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ActMaker.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(DogMaker.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ActMaker.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

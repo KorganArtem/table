@@ -215,6 +215,9 @@ public class DriverSQL {
                 rowDriver.put("building", rs.getString("building"));
                 rowDriver.put("flat", rs.getString("flat"));
                 rowDriver.put("postCode", rs.getString("postCode"));
+                rowDriver.put("dogovorNumber", rs.getString("dogovorNumber"));
+                rowDriver.put("dogovorDate", rs.getString("dogovorDate"));
+                rowDriver.put("carId", rs.getString("carId"));
             }
             Statement stGetAddAddress = con.createStatement();
             String getAddAddressQuery ="SELECT * FROM driverAddress WHERE driverId="+driverId
@@ -344,5 +347,22 @@ public class DriverSQL {
         address.put("flat", driverData.get("addFlat"));
         address.put("postCode", driverData.get("addPostCode"));
         writeDriverAddres(address, driverId, 2);
+    }
+
+    public int getDogNumber() throws SQLException {
+        int number = 0;
+        Statement stDogNumber = con.createStatement();
+        ResultSet rsDogNumber = stDogNumber.executeQuery("SELECT max(`dogovorNumber`)+1 as numb FROM `drivers`");
+        if(rsDogNumber.next())
+            number=rsDogNumber.getInt("numb");
+        rsDogNumber.close();
+        stDogNumber.close();
+        return number;
+    }
+
+    public void writeDogovor(int numberDog, int DriverId) throws SQLException {
+        Statement stDogNumber = con.createStatement();
+        stDogNumber.execute("UPDATE `drivers` SET `dogovorNumber`='"+numberDog+"', dogovorDate=CURRENT_DATE() WHERE `driver_id`="+DriverId);
+        stDogNumber.close();
     }
 }

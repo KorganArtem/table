@@ -85,7 +85,34 @@ public class CarSQL {
         }
         return carData;
     }
-
+    public Map getCarDataForAct(int id) throws SQLException{
+        Map carData = new HashMap<String, String>();
+        try{
+            String query = "SELECT *  FROM `cars` " +
+                        "INNER JOIN `models` " +
+                        "ON `cars`.`model`=`models`.`modelId` WHERE `id`="+id;
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            if(rs.next()){
+                carData.put("id", rs.getString("id"));
+                carData.put("number", rs.getString("number"));
+                carData.put("modelName", rs.getString("modelName"));
+                carData.put("VIN", rs.getString("VIN"));
+                carData.put("transmission", rs.getString("transmission"));
+                carData.put("year", rs.getString("year"));
+                carData.put("cost", rs.getString("cost"));
+                carData.put("glanasId", rs.getString("glanasId"));
+                carData.put("sts", rs.getString("sts"));
+                carData.put("insuranceNamber", rs.getString("insuranceNamber"));
+                carData.put("insuranceDateEnd", rs.getString("insuranceDateEnd"));
+                carData.put("ttoNumber", rs.getString("ttoNumber"));
+            }
+        }
+        catch(Exception ex){
+            System.out.println("Error " + ex.getMessage());
+        }
+        return carData;
+    }
     public void writeCarData(String carNumber, 
             String carVIN, String carModel, String carTransmission,
             String carYear, String carCost, String carGlanasId, String carId,

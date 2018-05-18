@@ -384,25 +384,22 @@ function showAddDriverForm(){
 function docListener(){
     
     $(".docsCol").click(function(e){
-	var driverId = $(this).attr('driverId');
+	var driverId = $(this).attr('driverId');/*.dialog("option", optionName, [value])*/
         $('#menuBox').dialog("open");
+        $('#menuBox').dialog("option", "position", 'top');
         console.log('Showed'+driverId);
         $(".menuItem").click(function(){
             if($(this).attr('data')==="dogovor"){
                 downloadDogowor(driverId);
-                driverId = null;
             }
             if($(this).attr('data')==="aktvidachi"){
-                doenloadAktvidachi(driverId);
-                driverId = null;
+                downloadAktvidachi(driverId);
             }
             if($(this).attr('data')==="aktpriema"){
-                doenloadAktpriema(driverId);
-                driverId = null;
+                downloadAktpriema(driverId);
             }
             if($(this).attr('data')==="putevoilist"){
-                doenloadPutevoilist(driverId);
-                driverId = null;
+                downloadPutevoilist(driverId);
             }
         });
     });
@@ -411,12 +408,42 @@ function docListener(){
     });
 }
 function downloadDogowor(driverIdForDog){
-    if(driverIdForDog==null)
+    if(driverIdForDog===null)
         return;
     $.ajax({
         type: 'POST',
         url: 'DM',
         data: 'driverId='+driverIdForDog,
+        success: function(data){
+            window.open(data);
+        },
+        error:function (msg){
+            alert('Error in geting dogovor!'+msg);
+        }
+    });
+}
+function downloadAktvidachi(driverIdForDog){
+    if(driverIdForDog===null)
+        return;
+    $.ajax({
+        type: 'POST',
+        url: 'AM',
+        data: 'actType=1&driverId='+driverIdForDog,
+        success: function(data){
+            window.open(data);
+        },
+        error:function (msg){
+            alert('Error in geting dogovor!'+msg);
+        }
+    });
+}
+function downloadAktpriema(driverIdForDog){
+    if(driverIdForDog===null)
+        return;
+    $.ajax({
+        type: 'POST',
+        url: 'AM',
+        data: 'actType=2&driverId='+driverIdForDog,
         success: function(data){
             window.open(data);
         },
