@@ -42,9 +42,37 @@
 <body>
     <div class='place'>
         <div id="leftMenu">
-            <input id='driverListButton' class='itemMenu' type='button' disabled='true' value='Driver list'/>
+            <!--input id='driverListButton' class='itemMenu' type='button' disabled='true' value='Driver list'/>
             <input id='carListButton' class='itemMenu' type='button' value='Car list'/>
-            <input id='mainProp' class='itemMenu' type='button' value='Настройка'/>
+            <input id='mainProp' class='itemMenu' type='button' value='Настройка'/-->
+            <ul id="menu">
+                <li>
+                  <div id='driverListButton'>Водители</div>
+                </li>
+                <li>
+                  <div id='carListButton'>Автомобили</div>
+                </li>
+                <li>
+                  <div id='mainProp'>Настройки</div>
+                  <!--ul>
+                    <li>
+                      <div>Item 3-1</div>
+                    </li>
+                    <li>
+                      <div>Item 3-2</div>
+                    </li>
+                    <li>
+                      <div>Item 3-3</div>
+                    </li>
+                  </ul-->
+                </li>
+                <li>
+                  <div id="fineList">Штрафы</div>
+                </li>
+                <li>
+                  <div>Item 5</div>
+                </li>
+              </ul>
         </div>
         <div id='mainContainer'>
             <div id='listDriver' class='itemDisplay'></div>
@@ -81,6 +109,7 @@
             duration: 1
         }
     });
+    $( "#menu" ).menu();
 </script>
     <script src='js/main.js'></script>
 </html>
