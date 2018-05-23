@@ -31,7 +31,9 @@ and open the template in the editor.
     margin: 10px;
 }
 .place{
-    width: 1200px;
+    overflow: hidden;
+    width: 1050px;
+    margin: auto;
 }
 .itemDisplay{
     max-width: 900px;
@@ -149,7 +151,6 @@ and open the template in the editor.
         background: #82a9c5;
         width: 100%;
         margin: auto;
-        padding-top: 70px;
     }
 }
 #driverReportDiv{
@@ -180,6 +181,10 @@ and open the template in the editor.
 }
 .red{
     background-color: red !important;
+}
+.listDriverTabel{
+    overflow: scroll;
+    height: 100vh;
 }
 .listDriver{
     margin-top: 5px;

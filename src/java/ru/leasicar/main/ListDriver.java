@@ -55,6 +55,7 @@ public class ListDriver extends HttpServlet {
                 DriverSQL wsql = new DriverSQL();
                 Map listDriver = wsql.listDriver();
                 Iterator<Map.Entry<String, Map>> entries = listDriver.entrySet().iterator();
+                out.println("<div class='scrollingBlock'>");
                 out.println("<thead><tr><td>Фамилия</td><td>Имя</td><td>Номер</td><td>Телефон</td><td>Лимит</td>"
                         + "<td>Баланс</td><td>Депозит</td><td class='noPrint'> </td><td class='noPrint'></td><td class='noPrint'></td>"+colDel+"<td class='noPrint'></td></tr></thead>");
                 while (entries.hasNext()) {
@@ -88,9 +89,10 @@ public class ListDriver extends HttpServlet {
                             + "<td class='wrkday noPrint' onClick='getReport("+entry.getKey()+")'>отчет</td>"
                                     + "<td class='docsCol'  driverId='"+entry.getKey()+"'><img src='img/docs.png'/></td></tr>");
                 }
-                out.println("</table>");
+                out.println("</table></div>");
                 //wsql.addAccrual();
                 wsql.con.close();
+                
             }
         }
         else{

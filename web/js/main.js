@@ -55,7 +55,8 @@ function listDriverShow(){
         success: function(data){
             $('#listDriver').html(data);
             $('#listDriverTabel').DataTable( {
-                "paging":   false
+                "paging":   false,
+                "scrollY": "75vh"
             });
             docListener();
         }

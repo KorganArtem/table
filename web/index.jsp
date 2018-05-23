@@ -69,9 +69,6 @@
                 <li>
                   <div id="fineList">Штрафы</div>
                 </li>
-                <li>
-                  <div>Item 5</div>
-                </li>
               </ul>
         </div>
         <div id='mainContainer'>
