@@ -7,6 +7,9 @@ and open the template in the editor.
     Created on : 04.08.2017, 14:04:25
     Author     : korgan
 */
+.clickable{
+    cursor: pointer;
+}
 #docMenu{
     list-style-type: none;
     text-align: left;
@@ -32,12 +35,11 @@ and open the template in the editor.
 }
 .place{
     overflow: hidden;
-    width: 1050px;
     margin: auto;
 }
 .itemDisplay{
-    max-width: 900px;
-    padding: 5px;
+    /*max-width: 900px;
+    padding: 5px;*/
 }
 .phoneInList{
     max-width: 90px !important;
@@ -149,7 +151,6 @@ and open the template in the editor.
     body{
         padding: 5px;
         background: #82a9c5;
-        width: 100%;
         margin: auto;
     }
 }
@@ -164,7 +165,8 @@ and open the template in the editor.
     padding: 5px;
     border: 1px solid black
 }
-.listDriver img{
+.listDriver img{    
+    float: right;
     padding-left: 5px;
     height: 20px;
     padding-right: 2px;
@@ -177,23 +179,24 @@ and open the template in the editor.
     background-color: white;
 }
 .yellow{
-    background-color: yellow !important;
+    background-color: #6eff002b !important;
 }
 .red{
-    background-color: red !important;
+    background-color: rgba(255, 59, 0, 0.45098039215686275) !important;
 }
 .listDriverTabel{
     overflow: scroll;
     height: 100vh;
 }
-.listDriver{
+/*.listDriver{
     margin-top: 5px;
     border: 1px solid black; 
     border-collapse: collapse;
-}
+}*/
 .listDriver td{
-    padding: 5px;
-    border: 1px solid black
+    /*padding: 5px;*/
+    white-space: nowrap;
+    border-bottom: 1px solid black
 }
 #takePay{
     display: none;
@@ -204,10 +207,11 @@ and open the template in the editor.
     margin: 5px;
     background: white;
 }
-#listDriver, #mainContainer{
+#mainContainer{
     float: left;
     margin: 5px;
-    /*width: 900px;*/
+    width: 80%;
+    padding: 10px;
 }
 .addDriverForm{
     box-shadow: 0 0 10px rgba(0,0,0,0.5);

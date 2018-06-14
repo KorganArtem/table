@@ -302,6 +302,80 @@ $('#mainProp').click(function (){
     });
 });
 ////////////////////////////////////////////////////////////////////////////////
+/////                             Show fine list                           /////
+////////////////////////////////////////////////////////////////////////////////
+var tableFine;
+$('#fineList').click(function (){
+    $('.itemDisplay').css('display', 'none');
+    $('.itemMenu').attr('disabled', false);
+    $('#mainProp').attr('disabled', true);
+    $('#fineListBlock').css('display', 'block');
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: 'GFL',
+        success: function(data){
+            tableFine = $('#tableFine').DataTable( {
+            dom: 'Bfrtip',
+            buttons:[
+                {
+                    text: 'My button',
+                    action: function ( e, dt, node, config ) {
+                        alert( 'Button activated' );
+                    }
+                }],
+            data: data,
+            select: true,
+            retrieve: true,
+            paging:   false,
+            scrollY: "75vh",
+            columnDefs: [
+                { "label": "engine",   "targets": 0 },
+                { "label": "browser",  "targets": 1 },
+                { "label": "platform", "targets": 2 },
+                { "label": "version",  "targets": 3 },
+                { "label": "version",  "targets": 3 },
+                { "label": "version",  "targets": 3 },
+                { "label": "grade",    "targets": 4 }
+            ],
+            columns: [
+                { data: 'carNumber' },
+                { data: 'fineDate' },
+                { data: 'fineUis' },
+                { data: 'finePlace' },
+                { data: 'fineReason' },
+                { data: 'fineOffender' },
+                { data: 'fineSum' }
+            ],
+            createdRow: function( row, data, dataIndex){
+                if( true ){ //data[2] ==  `someVal`
+                    $(row).addClass('redClass');
+                }
+            },
+            idSrc: 'fineUis'
+        } );
+        $("div.toolbar").html('<b>Custom tool bar! Text/images etc.</b>');
+        workWithFine();
+        },
+        error:function (msg){
+            alert('Error in geting car list!'+msg);
+        }
+    });
+});
+function workWithFine(){
+    $('#tableFine tbody').on( 'click', 'tr', function (indexes) {
+        
+        console.log(tableFine.row( this ).data().fineUis );
+        if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        }
+        else {
+            tableFine.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+    } );
+}
+////////////////////////////////////////////////////////////////////////////////
 /////                             Show add car form                        /////
 ////////////////////////////////////////////////////////////////////////////////
 function addCar(){

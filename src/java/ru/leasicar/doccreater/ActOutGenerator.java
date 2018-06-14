@@ -48,10 +48,9 @@ public class ActOutGenerator {
         String[] dateDog = draverData.get("dogovorDate").split("-");
         String currenDogDate = dateDog[2]+" "+mounths.get(Integer.parseInt(dateDog[1]))+" "+dateDog[0]; 
         Calendar calendar = Calendar.getInstance();
-        String dataAct = calendar.get(Calendar.DAY_OF_MONTH)+" "+mounths.get(calendar.get(Calendar.MONTH))+" "+calendar.get(Calendar.YEAR);
+        String dataAct = calendar.get(Calendar.DAY_OF_MONTH)+" "+mounths.get(calendar.get(Calendar.MONTH)+1)+" "+calendar.get(Calendar.YEAR);
         String numberDog = draverData.get("dogovorNumber");
-        Transliterator toLatinTrans = Transliterator.getInstance("Bulgarian-Latin/BGN");
-        String fileName = "actOutFor_"+toLatinTrans.transliterate(draverData.get("driver_lastname"))+"_"+numberDog+".doc";
+        String fileName = "actOutFor_"+numberDog+".doc";
         CarSQL csql = new CarSQL();
         Map<String, String> carData = csql.getCarDataForAct(Integer.parseInt(draverData.get("carId")));
         try {

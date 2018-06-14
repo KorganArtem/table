@@ -125,29 +125,7 @@ public class DriverSQL {
         stAddPassport.execute(insertQuery);
     }
     ////////////////////////////////////////////////////////////////////////////
-/*    public void writeDriver(String limit, 
-            String carId, 
-            String callsign, 
-            String name, 
-            String lastname, 
-            String phone,
-            String dayRent,
-            String schedule,
-            String comment) throws SQLException{
-        Statement st = con.createStatement();
-        st.execute("INSERT INTO `drivers` (`driver_lastname`, `driver_firstname`, "
-                + "`driver_callsign`, `carId`, `driver_limit`, `driver_phone_number`, "
-                + "`driver_day_rent`, `driver_current_debt`, `driverStartDate`, `driverDayOffPeriod`, `comment`) "
-                + "VALUES ('"+lastname+"', '"+name+"', '"+callsign+"', '"
-                +carId+"', '"+limit+"', '"+phone+"', "+dayRent
-                +", 0, CURRENT_DATE(), "+schedule+", '"+comment+"')");
-        ResultSet rs = st.executeQuery("SELECT LAST_INSERT_ID() as driverId");
-        if(rs.next()){
-            con.createStatement().execute("UPDATE `cars` SET `driverId`="+rs.getInt("driverId")+" WHERE `id` = "+carId);
-            System.out.println(rs.getInt("driverId")+"");
-        }
-        
-    }*/
+
     public Map listDriver() throws SQLException{
         Statement st = con.createStatement();
         ResultSet rs = st.executeQuery("SELECT `drivers`.*, `cars`.`number`   FROM `drivers`  \n" +
@@ -306,6 +284,7 @@ public class DriverSQL {
 
     public void editDriver(Map<String, String> driverData, int driverId) throws SQLException {
         Statement st = con.createStatement();
+        boolean carChanged = carIsChanged(driverId, Integer.parseInt(driverData.get("car")));
         String updateQuery = "UPDATE`drivers` SET `driver_lastname`='"+ driverData.get("lastName") +"', "
                         + "`driver_firstname`='"+ driverData.get("firstName") +"', "
                         + "`driver_midName`='"+ driverData.get("midlName") +"', "
@@ -321,6 +300,8 @@ public class DriverSQL {
                         + "`yaId`='"+ driverData.get("yaId") +"', "
                         + "`comment`='"+ driverData.get("comment") +"'  WHERE driver_id="+driverId;
         st.execute(updateQuery);
+        if(carChanged)
+            changeCar(driverId, Integer.parseInt(driverData.get("car")), 0);
         Map<String, String> address =new HashMap<>();
         address.put("country", driverData.get("country"));
         address.put("province", driverData.get("province"));
@@ -364,5 +345,23 @@ public class DriverSQL {
         Statement stDogNumber = con.createStatement();
         stDogNumber.execute("UPDATE `drivers` SET `dogovorNumber`='"+numberDog+"', dogovorDate=CURRENT_DATE() WHERE `driver_id`="+DriverId);
         stDogNumber.close();
+    }
+    public void changeCar(int driverId, int carId, int state) throws SQLException{
+        Statement st = con.createStatement();
+        st.execute("INSERT INTO `carsChangeLog` SET `carId`="+carId+",  `driverId`="+driverId+", `changeType`="+state+", `changeDate`=NOW()");
+        st.close();
+    }
+
+    private boolean carIsChanged(int driverId, int newCarId) throws SQLException {
+        Statement stGetCarId = con.createStatement();
+        ResultSet rsGetCarId = stGetCarId.executeQuery("SELECT `carId` FROM `drivers` WHERE `driver_id`="+driverId);
+        if(rsGetCarId.next()){
+            if(rsGetCarId.getInt("carId")==newCarId)
+                return false;
+            else
+                return true;
+        }
+        else
+            return false;
     }
 }

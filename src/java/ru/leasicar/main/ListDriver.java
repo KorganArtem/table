@@ -43,9 +43,7 @@ public class ListDriver extends HttpServlet {
         if(ac.isLogIn(request.getSession().getId())){
             try (PrintWriter out = response.getWriter()) {
                 /* TODO output your page here. You may use following sample code. */
-                out.println("<input type='button' value='Добавить водителя' onclick='showAddDriverForm()'/>");
-                out.println("<a href='sryadrvr.jsp'><input type='button' value='Водители Яндекс'/></a>");
-                out.println("<table id='listDriverTabel' class='listDriver'>");
+                out.println("<table id='listDriverTabel' class='listDriver'>"); 
                 ///////////////////////////////////////////////////////////////
                 boolean delete = ac.checkPermission(ac.getUserId(request.getSession().getId()), "deletDriver");
                 String colDel="";
@@ -55,6 +53,8 @@ public class ListDriver extends HttpServlet {
                 DriverSQL wsql = new DriverSQL();
                 Map listDriver = wsql.listDriver();
                 Iterator<Map.Entry<String, Map>> entries = listDriver.entrySet().iterator();
+                out.println("<input type='button' value='Добавить водителя' onclick='showAddDriverForm()'/>");
+                //out.println("<a href='sryadrvr.jsp'><input type='button' value='Водители Яндекс'/></a>");
                 out.println("<div class='scrollingBlock'>");
                 out.println("<thead><tr><td>Фамилия</td><td>Имя</td><td>Номер</td><td>Телефон</td><td>Лимит</td>"
                         + "<td>Баланс</td><td>Депозит</td><td class='noPrint'> </td><td class='noPrint'></td><td class='noPrint'></td>"+colDel+"<td class='noPrint'></td></tr></thead>");
@@ -75,7 +75,7 @@ public class ListDriver extends HttpServlet {
                     if(delete)
                         delButton="<td onClick='delDriver("+entry.getKey()+")'>Уволить</td>";
                     out.println("<tr class="+colorRow+">"
-                            + "<td ondblclick='editDriver("+entry.getKey()+")' id='listDriverFirstName"+entry.getKey()+"'>"+draverData.get("driver_lastname")+"</td>"
+                            + "<td ondblclick='editDriver("+entry.getKey()+")' class='clickable' id='listDriverFirstName"+entry.getKey()+"'>"+draverData.get("driver_lastname")+"</td>"
                             + "<td id='listDriverLastName"+entry.getKey()+"'>"+draverData.get("driver_firstname")+"</td>"
                             /*+ "<td id='listDriverCarNamber"+entry.getKey()+"'>"+draverData.get("driver_carnumber")+"</td>"*/
                             + "<td id='listDriverCarNamber"+entry.getKey()+"'>"+draverData.get("id_car")+"</td>"

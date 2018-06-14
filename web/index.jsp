@@ -34,7 +34,7 @@
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script type='text/javascript' src='https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js'></script>
         <link rel='stylesheet' type='text/css' href='https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css'/>
-        <link rel='stylesheet' type='text/css'  href='css/datatabel.css'/>
+        <!--link rel='stylesheet' type='text/css'  href='css/datatabel.css'/-->
         <link rel='stylesheet' type='text/css'  href='css/main.css'/>
         <link rel="stylesheet" type="text/css" href="css/view.css" media="all">
         <script type="text/javascript" src="js/view.js"></script>
@@ -42,9 +42,6 @@
 <body>
     <div class='place'>
         <div id="leftMenu">
-            <!--input id='driverListButton' class='itemMenu' type='button' disabled='true' value='Driver list'/>
-            <input id='carListButton' class='itemMenu' type='button' value='Car list'/>
-            <input id='mainProp' class='itemMenu' type='button' value='Настройка'/-->
             <ul id="menu">
                 <li>
                   <div id='driverListButton'>Водители</div>
@@ -72,9 +69,25 @@
               </ul>
         </div>
         <div id='mainContainer'>
-            <div id='listDriver' class='itemDisplay'></div>
+            <div id='listDriver' class='itemDisplay'>
+            </div>
             <div id='carList' class='itemDisplay'></div>
             <div id='prop' class='itemDisplay'></div>
+            <div id='fineListBlock' class='itemDisplay'>
+                <table id="tableFine">
+                    <thead>
+                        <tr>
+                            <th>Номер машины</th>
+                            <th>Дата</th>
+                            <th>Номер постановления</th>
+                            <th>Адрес нарушения</th>
+                            <th>Статья</th>
+                            <th>Нарушитель</th>
+                            <th>Сумма</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
         <div id='editDriver'></div>
     </div>

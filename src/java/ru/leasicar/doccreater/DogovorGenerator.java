@@ -45,13 +45,12 @@ public class DogovorGenerator {
         int numberDog = dsql.getDogNumber();
         Map<String, String> draverData = dsql.getAllDataDriver(DriverId);
         Calendar calendar = Calendar.getInstance();
-        String dataDog = calendar.get(Calendar.DAY_OF_MONTH)+" "+mounths.get(calendar.get(Calendar.MONTH))+" "+calendar.get(Calendar.YEAR);
+        String dataDog = calendar.get(Calendar.DAY_OF_MONTH)+" "+mounths.get(calendar.get(Calendar.MONTH)+1)+" "+calendar.get(Calendar.YEAR);
         try {
             String fullName = draverData.get("driver_lastname")+" "+draverData.get("driver_firstname")+" "+draverData.get("driver_midName");
             POIFSFileSystem pfs = new POIFSFileSystem(new FileInputStream("/table/doc_tmp/dogovor_tmp.doc"));
             HWPFDocument doc = new HWPFDocument(pfs);
-            Transliterator toLatinTrans = Transliterator.getInstance("Bulgarian-Latin/BGN");
-            String fileName = "dogFor_"+toLatinTrans.transliterate(draverData.get("driver_lastname"))+"_"+numberDog+".doc";
+            String fileName = "dogFor_"+numberDog+".doc";
             Range range = doc.getRange(); 
             range.replaceText("{%dogNumber%}", numberDog+"");
             range.replaceText("{%date%}", dataDog);

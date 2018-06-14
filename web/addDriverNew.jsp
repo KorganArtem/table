@@ -4,12 +4,18 @@
     Author     : korgan
 --%>
 
+<%@page import="java.util.Date"%>
+<%@page import="com.ibm.icu.text.SimpleDateFormat"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@page import="ru.leasicar.workerSql.*"%>
-<% DriverSQL dsql = new DriverSQL(); %>
-<% CarSQL csql = new CarSQL(); %>
+<% 
+    DriverSQL dsql = new DriverSQL(); 
+    CarSQL csql = new CarSQL(); 
+    SimpleDateFormat sdt = new SimpleDateFormat("yyyy-MM-dd");
+    String dateYerMore =sdt.format(new Date().getTime());
+%>
     <div id="form_container">
         <form id="addDriverFormN" class="appnitro"  method="post" >
             <div class="form_description">
@@ -46,11 +52,11 @@
 		</li>
                 <li id="li_1" >
                     <span>
-			<input type="date" id="element_1_1" name= "bornDate" class="element date" maxlength="255" size="14"/>
+			<input type="date" id="element_1_1" name= "bornDate" class="element date" maxlength="255" size="14" value="2000-01-01"/>
 			<label>Дата рождения</label>
                     </span>
                     <span>
-                        <input type="date" id="element_1_2" name= "addDate" class="element date" maxlength="255" size="14"/>
+                        <input type="date" id="element_1_2" name= "addDate" class="element date" maxlength="255" size="14" value="<%= dateYerMore %>"/>
                         <label>Дата принятия</label>
                     </span> 
                     <span>
@@ -65,7 +71,7 @@
 			<label>Серия номер</label>
                     </span>
                     <span>
-                        <input type="date" id="element_1_2" name= "passportDate" class="element text" maxlength="255" size="14"/>
+                        <input type="date" id="element_1_2" name= "passportDate" class="element text" maxlength="255" size="14" value="2000-01-01"/>
                         <label>Дата выдачи</label>
                     </span> 
                     <span>
@@ -163,11 +169,11 @@
                         <label>График</label>
                     </span> 
                     <span>
-                        <input id="element_1_2" name= "dayRent" class="element text" maxlength="255" size="9" value=""/>
+                        <input id="element_1_2" name= "dayRent" class="element text" maxlength="255" size="9" value="0"/>
                         <label>Аренда</label>
                     </span> 
                     <span>
-                        <input id="element_1_2" name= "debtLimit" class="element text" maxlength="255" size="8" value=""/>
+                        <input id="element_1_2" name= "debtLimit" class="element text" maxlength="255" size="8" value="0"/>
                         <label>Лимит</label>
                     </span> 
 		</li>		

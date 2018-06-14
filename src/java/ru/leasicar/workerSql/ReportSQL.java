@@ -65,13 +65,14 @@ public class ReportSQL {
     }
     public Map getGroupPay(int driverId, String begin, String end) throws SQLException{
         Statement stPayList = con.createStatement();
-        ResultSet rsPayList = stPayList.executeQuery("SELECT `source`, SUM(`sum`) as `sum` FROM `pay` "
-                + "WHERE `driverId`="+driverId+" AND `date` > '"+begin+"' AND `date` < '"+end+"' GROUP BY `source`");
+        ResultSet rsPayList = stPayList.executeQuery("SELECT `payGroup`.*, `paySource`.`payName` FROM `paySource` " +
+                    "INNER JOIN (SELECT `source`, SUM(`sum`) as `sum` FROM `pay` WHERE `driverId`="+driverId+" AND `date` > '"+begin+"' AND `date` < '"+end+"' GROUP BY `source`) as `payGroup` " +
+                    "ON `paySource`.`payId`=`payGroup`.`source`");
         Map payList = new HashMap<String, HashMap>();
         int indRep = 0;
         while(rsPayList.next()){
             Map payRaw = new HashMap<String, String>();
-            payRaw.put("source", rsPayList.getString("source"));
+            payRaw.put("payName", rsPayList.getString("payName"));
             payRaw.put("sum", rsPayList.getString("sum"));
             payList.put(rsPayList.getString("source"), payRaw);
         }

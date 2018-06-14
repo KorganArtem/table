@@ -8,8 +8,10 @@ package ru.leasicar.main;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,14 +45,6 @@ public class DriverPayReport extends HttpServlet {
         AccessControl ac = new AccessControl();
         if(ac.isLogIn(request.getSession().getId())){
             try (PrintWriter out = response.getWriter()) {
-                /*out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<link rel='stylesheet' type='text/css'  href='css/datatabel.css'/>");
-                out.println("<link rel='stylesheet' type='text/css' href='css/main.css'/>");
-                out.println("<script src='https://code.jquery.com/jquery-1.12.4.js'></script>");
-                out.println("<script type='text/javascript' src='https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js'></script>");
-                out.println("</head><body>");*/
                 out.println("<div id='driverReportDiv'>");
                 int driverId = 0;
                 String begin = request.getParameter("begin");
@@ -62,11 +56,9 @@ public class DriverPayReport extends HttpServlet {
                 catch(Exception ex){
                     System.out.println("Driver ID is not passed!");
                 }
-                /* TODO output your page here. You may use following sample code. */
                 if(driverId==0)
                     return;
                 ReportSQL rsql = new ReportSQL();
-                //Map payList = wsql.getPayList(driverId);
                 Map payList = new TreeMap<>(rsql.getPayList(driverId, begin, end));
                 out.println("<table id='driverReport' class='report'>");
                 out.println("<thead><tr><td>Дата</td><td>Тип</td><td>Источник</td><td>Сумма</td><td>Баланс</td></tr></thead>");
@@ -78,10 +70,13 @@ public class DriverPayReport extends HttpServlet {
                             +"</td><td>"+payRaw.get("payName")+"</td><td>"+payRaw.get("sum")
                             +"</td><td>"+payRaw.get("balance")+"</td></tr>");
                 }
-                out.println("</table><div>"+rsql.getGroupPay(driverId, begin, end)+"</div></div>");
-                /*out.println("<script src='js/main.js'></script>");
-                out.println("<script>$('#driverReport').DataTable()</script>");
-                out.println("</body></html>"); */
+                out.println("</table><div>");
+                Map<String, HashMap> payGroup = rsql.getGroupPay(driverId, begin, end);
+                Set keys = payGroup.keySet();
+                for(Object key : keys){
+                    out.println(payGroup.get(key).get("payName")+"  "+ payGroup.get(key).get("sum") +"<br>");
+                }
+                out.println("</div></div>");
                 rsql.con.close();
 
             }
