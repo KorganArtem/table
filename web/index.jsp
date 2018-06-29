@@ -40,7 +40,7 @@
         <script type="text/javascript" src="js/view.js"></script>
     </head>
 <body>
-    <div class='place'>
+    <div class='place' >
         <div id="leftMenu">
             <ul id="menu">
                 <li>
@@ -51,17 +51,17 @@
                 </li>
                 <li>
                   <div id='mainProp'>Настройки</div>
-                  <!--ul>
+                </li>
+                <li>
+                  <div id='mainProp'>отчеты</div>
+                  <ul>
                     <li>
-                      <div>Item 3-1</div>
+                      <div id="cashPayReport">Наличные</div>
                     </li>
                     <li>
-                      <div>Item 3-2</div>
+                      <div id="allPayReport">Все платежи</div>
                     </li>
-                    <li>
-                      <div>Item 3-3</div>
-                    </li>
-                  </ul-->
+                  </ul>
                 </li>
                 <li>
                   <div id="fineList">Штрафы</div>
@@ -69,11 +69,16 @@
               </ul>
         </div>
         <div id='mainContainer'>
-            <div id='listDriver' class='itemDisplay'>
+            <div id='listDriverBox' class='itemDisplay'>
+                <input type='button' value='Добавить водителя' onclick='showAddDriverForm()'/>
+                <a href='sryadrvr.jsp'><input type='button' value='Водители Яндекс'/></a>
+                <input type='checkbox' id='deletedDriver'/><label>Удаленные</label>
+                <div id='listDriver'>
+                </div>
             </div>
             <div id='carList' class='itemDisplay'></div>
             <div id='prop' class='itemDisplay'></div>
-            <div id='fineListBlock' class='itemDisplay'>
+            <div id='fineListBlock' class='itemDisplay' style="display: none">
                 <table id="tableFine">
                     <thead>
                         <tr>

@@ -28,8 +28,8 @@ import ru.leasicar.workerSql.ReportSQL;
  *
  * @author korgan
  */
-@WebServlet(name = "DriverPayReport", urlPatterns = {"/DriverPayReport"})
-public class DriverPayReport extends HttpServlet {
+@WebServlet(name = "DriverPayReport", urlPatterns = {"/AllPayReport"})
+public class AllPayReport extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,34 +47,30 @@ public class DriverPayReport extends HttpServlet {
         if(ac.isLogIn(request.getSession().getId())){
             try (PrintWriter out = response.getWriter()) {
                 DriverSQL dsql = new DriverSQL();
-                int driverId = 0;
+                int operatorId = 0;
                 String begin = request.getParameter("begin");
                 String end = request.getParameter("end");
                 try{
-                    driverId = Integer.parseInt(request.getParameter("driverId"));
-                    
+                    operatorId = Integer.parseInt(request.getParameter("operatorId"));
                 }
                 catch(Exception ex){
-                    System.out.println("Driver ID is not passed!");
+                    System.out.println("operator ID is not passed! "+request.getParameter("operatorId"));
                 }
-                if(driverId==0)
-                    return;
-                out.println("<div style='float: right'>"+dsql.getDriverName(driverId)+"</div>");
-                out.println("<div id='driverReportDiv' >");
                 ReportSQL rsql = new ReportSQL();
-                Map payList = new TreeMap<>(rsql.getPayList(driverId, begin, end));
+                Map payList = new TreeMap<>(rsql.getAllPayList(operatorId, begin, end));
                 out.println("<table id='driverReport' class='report'>");
-                out.println("<thead><tr><td>Дата</td><td>Тип</td><td>Источник</td><td>Сумма</td><td>Баланс</td></tr></thead>");
+                out.println("<thead><tr><td>Дата</td><td>Тип</td><td>Источник</td><td>Сумма</td><td>Оператор</td><td>Водитель</td></tr></thead>");
                 Iterator<Map.Entry<String, Map>> entries = payList.entrySet().iterator();
                 while (entries.hasNext()) {
                     Map.Entry<String, Map> entry = entries.next();
                     Map payRaw = entry.getValue();
                     out.println("<tr><td>"+payRaw.get("date")+"</td><td>"+payRaw.get("payTypeName")
                             +"</td><td>"+payRaw.get("payName")+"</td><td>"+payRaw.get("sum")
-                            +"</td><td>"+payRaw.get("balance")+"</td></tr>");
+                            +"</td><td>"+payRaw.get("user")+"</td>" 
+                            +"</td><td>"+payRaw.get("driver")+"</td></tr>");
                 }
                 out.println("</table><div>");
-                Map<String, HashMap> payGroup = rsql.getGroupPay(driverId, begin, end);
+                Map<String, HashMap> payGroup = rsql.getGroupPayByOperator(operatorId, begin, end);
                 Set keys = payGroup.keySet();
                 for(Object key : keys){
                     out.println(payGroup.get(key).get("payName")+"  "+ payGroup.get(key).get("sum") +"<br>");
@@ -106,9 +102,9 @@ public class DriverPayReport extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DriverPayReport.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AllPayReport.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(DriverPayReport.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AllPayReport.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -126,9 +122,9 @@ public class DriverPayReport extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DriverPayReport.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AllPayReport.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(DriverPayReport.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AllPayReport.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

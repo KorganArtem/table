@@ -48,10 +48,12 @@ function addDriverN(){
 $(document).ready(function() {
     listDriverShow();
 });
+var showDeleted = 0;
 function listDriverShow(){
         $.ajax({
         type: 'POST',
         url: 'LD',
+        data: 'deleted='+showDeleted,
         success: function(data){
             $('#listDriver').html(data);
             $('#listDriverTabel').DataTable( {
@@ -62,6 +64,13 @@ function listDriverShow(){
         }
     });
 }
+$('#deletedDriver').change(function(){
+    if($(this).is(":checked"))
+        showDeleted = 1;
+    else
+        showDeleted = 0;
+    listDriverShow()
+});
 ////////////////////////////////////////////////////////////////////////////////
 /////                    Вывод формы оплаты                                /////
 ////////////////////////////////////////////////////////////////////////////////
@@ -279,7 +288,7 @@ $('#driverListButton').click(function (){
     $('.itemDisplay').css('display', 'none');
     $('.itemMenu').attr('disabled', false);
     $('#driverListButton').attr('disabled', true);
-    $('#listDriver').css('display', 'block');
+    $('#listDriverBox').css('display', 'block');
 });
 ////////////////////////////////////////////////////////////////////////////////
 /////                             Show prop list                           /////

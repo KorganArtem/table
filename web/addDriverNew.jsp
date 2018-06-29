@@ -24,58 +24,58 @@
             <ul >
                 <li id="li_1" >
                     <span>
-			<input id="element_1_1" name= "lastName" class="element text" maxlength="255" size="14" value=""/>
+			<input id="element_1_1" name= "lastName" class="element text" size="14" value=""/>
 			<label>Фамилия</label>
                     </span>
                     <span>
-                        <input id="element_1_2" name= "firstName" class="element text" maxlength="255" size="14" value=""/>
+                        <input id="element_1_2" name= "firstName" class="element text" size="14" value=""/>
                         <label>Имя</label>
                     </span> 
                     <span>
-                        <input id="element_1_2" name= "midlName" class="element text" maxlength="255" size="14" value=""/>
+                        <input id="element_1_2" name= "midlName" class="element text" size="14" value=""/>
                         <label>Отчество</label>
                     </span> 
 		</li>
                 <li id="li_1" >
                     <span>
-			<input id="element_1_1" name= "mainPhone" class="element text" maxlength="255" size="14" value=""/>
+			<input id="element_1_1" name= "mainPhone" class="element text" size="14" value=""/>
 			<label>Моб. Тел.</label>
                     </span>
                     <span>
-                        <input id="element_1_2" name= "addPhone" class="element text" maxlength="255" size="14" value=""/>
+                        <input id="element_1_2" name= "addPhone" class="element text" size="14" value=""/>
                         <label>Доп. Тел.</label>
                     </span> 
                     <span>
-                        <input id="element_1_2" name= "email" class="element text" maxlength="255" size="14" value=""/>
+                        <input id="element_1_2" name= "email" class="element text" size="14" value=""/>
                         <label>Email</label>
                     </span> 
 		</li>
                 <li id="li_1" >
                     <span>
-			<input type="date" id="element_1_1" name= "bornDate" class="element date" maxlength="255" size="14" value="2000-01-01"/>
+			<input type="date" id="element_1_1" name= "bornDate" class="element date" size="14" value="2000-01-01"/>
 			<label>Дата рождения</label>
                     </span>
                     <span>
-                        <input type="date" id="element_1_2" name= "addDate" class="element date" maxlength="255" size="14" value="<%= dateYerMore %>"/>
+                        <input type="date" id="element_1_2" name= "addDate" class="element date" size="14" value="<%= dateYerMore %>"/>
                         <label>Дата принятия</label>
                     </span> 
                     <span>
-                        <input type="date" id="element_1_2" name= "delDate" class="element date" maxlength="255" size="14"/>
+                        <input type="date" id="element_1_2" name= "delDate" class="element date" size="14"/>
                         <label>Дата увольнения</label>
                     </span> 
 		</li>
                 <li id="li_1" >
                     <label class="description" for="element_3">Паспорт </label>
                     <span>
-			<input id="element_1_1" name= "passportNumber" class="element text" maxlength="255" size="14" value=""/>
+			<input id="element_1_1" name= "passportNumber" class="element text"  size="14" value=""/>
 			<label>Серия номер</label>
                     </span>
                     <span>
-                        <input type="date" id="element_1_2" name= "passportDate" class="element text" maxlength="255" size="14" value="2000-01-01"/>
+                        <input type="date" id="element_1_2" name= "passportDate" class="element text" size="14" value="2000-01-01"/>
                         <label>Дата выдачи</label>
                     </span> 
                     <span>
-                        <input id="element_1_2" name= "passportFrom" class="element text" maxlength="255" size="14" value=""/>
+                        <input id="element_1_2" name= "passportFrom" class="element text" size="14" value=""/>
                         <label>Выдан</label>
                     </span> 
 		</li>			
@@ -92,27 +92,27 @@
                                 <label for="element_3_4">Область</label>
                         </div>
                         <div class="left">
-                                <input id="element_3_5" name="city" class="element text medium" maxlength="15" value="" type="text">
+                                <input id="element_3_5" name="city" class="element text medium"  value="" type="text">
                                 <label for="element_3_5">Город</label>
                         </div>
                         <div class="right">
-                            <input id="element_3_5" name="strit" class="element text medium" maxlength="15" value="" type="text">
+                            <input id="element_3_5" name="strit" class="element text medium"  value="" type="text">
                             <label for="element_3_6">Улица</label>
                         </div> 
                         <span>
-                            <input id="element_1_1" name= "house" class="element text" maxlength="255" size="9" value=""/>
+                            <input id="element_1_1" name= "house" class="element text"  size="9" value=""/>
                             <label>Дом</label>
                         </span>
                         <span>
-                            <input id="element_1_2" name= "building" class="element text" maxlength="255" size="9" value=""/>
+                            <input id="element_1_2" name= "building" class="element text"  size="9" value=""/>
                             <label>Корпус/Строение</label>
                         </span> 
                         <span>
-                            <input id="element_1_2" name= "flat" class="element text" maxlength="255" size="9" value=""/>
+                            <input id="element_1_2" name= "flat" class="element text"  size="9" value=""/>
                             <label>Квартира</label>
                         </span> 
                         <span>
-                            <input id="element_1_2" name= "postCode" class="element text" maxlength="255" size="9" value=""/>
+                            <input id="element_1_2" name= "postCode" class="element text"  size="9" value=""/>
                             <label>Индекс</label>
                         </span> 
                     </div>
@@ -127,27 +127,27 @@
                                 <label for="element_3_4">Область</label>
                         </div>
                         <div class="left">
-                                <input id="element_3_5" name="addCity" class="element text medium" maxlength="15" value="" type="text">
+                                <input id="element_3_5" name="addCity" class="element text medium"  value="" type="text">
                                 <label for="element_3_5">Город</label>
                         </div>
                         <div class="right">
-                            <input id="element_3_5" name="addStrit" class="element text medium" maxlength="15" value="" type="text">
+                            <input id="element_3_5" name="addStrit" class="element text medium"  value="" type="text">
                             <label for="element_3_6">Улица</label>
                         </div> 
                         <span>
-                            <input id="element_1_1" name= "addHouse" class="element text" maxlength="255" size="9" value=""/>
+                            <input id="element_1_1" name= "addHouse" class="element text"  size="9" value=""/>
                             <label>Дом</label>
                         </span>
                         <span>
-                            <input id="element_1_2" name= "addBuilding" class="element text" maxlength="255" size="9" value=""/>
+                            <input id="element_1_2" name= "addBuilding" class="element text"  size="9" value=""/>
                             <label>Корпус/Строение</label>
                         </span> 
                         <span>
-                            <input id="element_1_2" name= "addFlat" class="element text" maxlength="255" size="9" value=""/>
+                            <input id="element_1_2" name= "addFlat" class="element text"  size="9" value=""/>
                             <label>Квартира</label>
                         </span> 
                         <span>
-                            <input id="element_1_2" name= "addPostCode" class="element text" maxlength="255" size="9" value=""/>
+                            <input id="element_1_2" name= "addPostCode" class="element text"  size="9" value=""/>
                             <label>Индекс</label>
                         </span> 
                     </div>
@@ -169,11 +169,11 @@
                         <label>График</label>
                     </span> 
                     <span>
-                        <input id="element_1_2" name= "dayRent" class="element text" maxlength="255" size="9" value="0"/>
+                        <input id="element_1_2" name= "dayRent" class="element text"  size="9" value="0"/>
                         <label>Аренда</label>
                     </span> 
                     <span>
-                        <input id="element_1_2" name= "debtLimit" class="element text" maxlength="255" size="8" value="0"/>
+                        <input id="element_1_2" name= "debtLimit" class="element text"  size="8" value="0"/>
                         <label>Лимит</label>
                     </span> 
 		</li>		

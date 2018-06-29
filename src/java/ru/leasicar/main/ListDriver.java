@@ -50,11 +50,10 @@ public class ListDriver extends HttpServlet {
                 if(delete)
                     colDel="<td></td>";
                 ///////////////////////////////////////////////////////////////
+                int showDeleted = Integer.parseInt(request.getParameter("deleted"));
                 DriverSQL wsql = new DriverSQL();
-                Map listDriver = wsql.listDriver();
+                Map listDriver = wsql.listDriver(showDeleted);
                 Iterator<Map.Entry<String, Map>> entries = listDriver.entrySet().iterator();
-                out.println("<input type='button' value='Добавить водителя' onclick='showAddDriverForm()'/>");
-                //out.println("<a href='sryadrvr.jsp'><input type='button' value='Водители Яндекс'/></a>");
                 out.println("<div class='scrollingBlock'>");
                 out.println("<thead><tr><td>Фамилия</td><td>Имя</td><td>Номер</td><td>Телефон</td><td>Лимит</td>"
                         + "<td>Баланс</td><td>Депозит</td><td class='noPrint'> </td><td class='noPrint'></td><td class='noPrint'></td>"+colDel+"<td class='noPrint'></td></tr></thead>");
@@ -90,6 +89,7 @@ public class ListDriver extends HttpServlet {
                                     + "<td class='docsCol'  driverId='"+entry.getKey()+"'><img src='img/docs.png'/></td></tr>");
                 }
                 out.println("</table></div>");
+                out.println("Итоговый баланс: "+wsql.getCurentGlobalBalance());
                 //wsql.addAccrual();
                 wsql.con.close();
                 

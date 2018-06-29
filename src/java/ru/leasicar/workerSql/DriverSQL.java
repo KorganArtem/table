@@ -126,12 +126,12 @@ public class DriverSQL {
     }
     ////////////////////////////////////////////////////////////////////////////
 
-    public Map listDriver() throws SQLException{
+    public Map listDriver(int showDeleted) throws SQLException{
         Statement st = con.createStatement();
         ResultSet rs = st.executeQuery("SELECT `drivers`.*, `cars`.`number`   FROM `drivers`  \n" +
                                         "LEFT JOIN `cars`\n" +
                                         "ON `cars`.`id`=`drivers`.`carId` \n" +
-                                        "WHERE `drivers`.`driver_deleted`=0");
+                                        "WHERE `drivers`.`driver_deleted`="+showDeleted);
         Map listDriver = new HashMap<String, HashMap>();
         while(rs.next()){
             Map<String, String> rowDriver = new HashMap();
@@ -363,5 +363,24 @@ public class DriverSQL {
         }
         else
             return false;
+    }
+
+    public String getCurentGlobalBalance() throws SQLException {
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery("SELECT sum(driver_current_debt) as balance FROM drivers where driver_deleted=0");
+        String forRet = "";
+        if(rs.next())
+            forRet=rs.getString("balance");
+        rs.close();
+        st.close();
+        return forRet;
+    }
+    public String getDriverName(int driverId) throws SQLException{
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery("SELECT driver_lastname, driver_firstname FROM drivers WHERE driver_id="+driverId);
+        String forRet = "";
+        if(rs.next())
+            forRet = rs.getString("driver_lastname")+" "+rs.getString("driver_firstname");
+        return forRet;
     }
 }

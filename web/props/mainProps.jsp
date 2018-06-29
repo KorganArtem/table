@@ -11,9 +11,9 @@
     <div id="tabs">
         <div>
            <ul class="tabsNav">
-            <li><a href="#tabs-1">Nunc tincidunt</a></li>
+            <li><a href="#tabs-1">Основные</a></li>
             <li><a href="#tabs-2">Proin dolor</a></li>
-            <li><a href="#tabs-3">Aenean lacinia</a></li>
+            <li><a href="#tabs-3">Пользователи</a></li>
           </ul> 
         </div>
     <div id="tabs-1">
