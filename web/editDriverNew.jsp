@@ -31,6 +31,7 @@
                         + "<select id='driver_schedule'>"+dsql.getOptions(dayOffCicle)+ "</select></div>";
     }
 %>
+    <div >
     <div id="form_container">
         <form id="addDriverFormN" class="appnitro"  method="post" >
             <div class="form_description">
@@ -205,12 +206,22 @@
             <div class='formItem' style="display: none;">
                 <input type='text' name="changeSchedule" id='changeSchedule' value="0"/>
                 <input type='text' name="driverId" id='driverId' value='<%= dataDriver.get("driver_id") %>' />
+                <input type='text' name="changeSchedule" id='changeCar' value="0"/>
             </div> 
 	</form>	
+    </div>
     </div>
     <img id="bottom" src="bottom.png" alt="">
     <script>
         var oldSchedule = $('#driver_schedule').val();
+        $('#driver_schedule').change(function(){
+            var schdule = $('#driver_schedule').val();
+            if(schdule!==oldSchedule)
+                $('#changeSchedule').val(1);
+            else
+                $('#changeSchedule').val(0);
+        });
+        var oldCar = $('#driver_schedule').val();
         $('#driver_schedule').change(function(){
             var schdule = $('#driver_schedule').val();
             if(schdule!==oldSchedule)

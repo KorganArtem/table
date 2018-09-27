@@ -88,6 +88,8 @@ public class DriverSQL {
         writeDriverAddres(address, driveID, 2);
         writeDriverPassport(driveID, driverData.get("passportNumber"),
                 driverData.get("passportDate"), driverData.get("passportFrom"));
+        //запись ста
+        changeCar(driveID, Integer.parseInt(driverData.get("car")), 1);
     }
     private void writeDriverAddres(Map<String, String> address, int driverId, int type) throws SQLException{
         String insertQuery = "INSERT INTO `driverAddress` SET `driverId`="+ driverId +", "
@@ -257,8 +259,11 @@ public class DriverSQL {
                 +"' WHERE driver_id="+driverId);
     }
     public void delDriver(String driverId) throws SQLException{
+        int carId = 0;
         Statement stDelDriver = con.createStatement();
         stDelDriver.execute("UPDATE drivers SET `driver_deleted`=1, `driverEndDate`=CURRENT_DATE() WHERE `driver_id`="+driverId);
+        //запись статуса машины
+        changeCar(Integer.parseInt(driverId), carId, 3);
         stDelDriver.close();
     }
     public String getOptions(int dayOff) throws SQLException {
@@ -301,7 +306,7 @@ public class DriverSQL {
                         + "`comment`='"+ driverData.get("comment") +"'  WHERE driver_id="+driverId;
         st.execute(updateQuery);
         if(carChanged)
-            changeCar(driverId, Integer.parseInt(driverData.get("car")), 0);
+            changeCar(driverId, Integer.parseInt(driverData.get("car")), 2);
         Map<String, String> address =new HashMap<>();
         address.put("country", driverData.get("country"));
         address.put("province", driverData.get("province"));
