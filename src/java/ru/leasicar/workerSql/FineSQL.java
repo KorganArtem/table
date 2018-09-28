@@ -68,4 +68,39 @@ public class FineSQL {
         }
         return fineList;
     }
+    public JsonArray getAllFineOG() throws SQLException{Statement fineListSt = con.createStatement();
+        ResultSet fineListRs = fineListSt.executeQuery("SELECT finecar.*, drivers.driver_lastname FROM drivers "
+                + "RIGHT JOIN (SELECT `offenses`.*, cars.number as carNumber FROM `offenses`  " +
+                "INNER JOIN cars \n" +
+                "ON offenses.carId=cars.id \n" +
+                "WHERE `gis_status`='nopayed' AND (bill_id like '188101%' OR bill_id like '188105%')) as finecar\n" +
+                "ON finecar.driverId=drivers.driver_id");
+        JsonArray fineList = new JsonArray();
+        while(fineListRs.next()){
+            JsonObject oneFine = new JsonObject();
+            oneFine.addProperty("carNumber", fineListRs.getString("carNumber"));
+            oneFine.addProperty("driver_lastname", fineListRs.getString("driver_lastname"));
+            oneFine.addProperty("bill_id", fineListRs.getString("bill_id"));
+            oneFine.addProperty("gis_status", fineListRs.getString("gis_status"));
+            oneFine.addProperty("pay_bill_date", fineListRs.getString("pay_bill_date"));
+            oneFine.addProperty("last_bill_date" , fineListRs.getString("last_bill_date"));
+            oneFine.addProperty("pay_bill_amount", fineListRs.getString("pay_bill_amount"));
+            oneFine.addProperty("gis_discount", fineListRs.getString("gis_discount"));
+            oneFine.addProperty("gis_discount_uptodate", fineListRs.getString("gis_discount_uptodate"));
+            oneFine.addProperty("pay_bill_amount_with_discount", fineListRs.getString("pay_bill_amount_with_discount"));
+            oneFine.addProperty("offense_location", fineListRs.getString("offense_location"));
+            oneFine.addProperty("offense_article", fineListRs.getString("offense_article"));
+            oneFine.addProperty("offense_date", fineListRs.getString("offense_date"));
+            oneFine.addProperty("offense_time", fineListRs.getString("offense_time"));
+            oneFine.addProperty("offense_article_number", fineListRs.getString("offense_article_number"));
+            oneFine.addProperty("carId", fineListRs.getString("carId"));
+            oneFine.addProperty("driverId", fineListRs.getString("driverId"));
+            
+            
+            
+            
+            fineList.add(oneFine);
+        }
+        return fineList;
+    }
 }

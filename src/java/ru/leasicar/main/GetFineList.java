@@ -39,7 +39,7 @@ public class GetFineList extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             FineSQL fsql = new FineSQL();
-            out.println(fsql.getAllFine());
+            out.println(fsql.getAllFineOG());
         }
     }
 

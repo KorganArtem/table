@@ -345,16 +345,22 @@ $('#fineList').click(function (){
                 { "label": "version",  "targets": 3 },
                 { "label": "version",  "targets": 3 },
                 { "label": "version",  "targets": 3 },
+                { "label": "version",  "targets": 3 },
+                { "label": "version",  "targets": 3 },
+                { "label": "version",  "targets": 3 },
                 { "label": "grade",    "targets": 4 }
             ],
             columns: [
                 { data: 'carNumber' },
-                { data: 'fineDate' },
-                { data: 'fineUis' },
-                { data: 'finePlace' },
-                { data: 'fineReason' },
-                { data: 'fineOffender' },
-                { data: 'fineSum' }
+                { data: 'offense_date' },
+                { data: 'bill_id' },
+                { data: 'offense_location' },
+                { data: 'offense_article_number' },
+                { data: 'driver_lastname' },
+                { data: 'pay_bill_amount' },
+                { data: 'pay_bill_amount_with_discount' },
+                { data: 'gis_discount_uptodate' },
+                { data: 'last_bill_date' }
             ],
             createdRow: function( row, data, dataIndex){
                 if( true ){ //data[2] ==  `someVal`
@@ -374,7 +380,7 @@ $('#fineList').click(function (){
 function workWithFine(){
     $('#tableFine tbody').on( 'click', 'tr', function (indexes) {
         
-        console.log(tableFine.row( this ).data().fineUis );
+        console.log(tableFine.row( this ).data().bill_id );
         if ( $(this).hasClass('selected') ) {
             $(this).removeClass('selected');
         }
