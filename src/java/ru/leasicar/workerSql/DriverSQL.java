@@ -259,12 +259,27 @@ public class DriverSQL {
                 +"' WHERE driver_id="+driverId);
     }
     public void delDriver(String driverId) throws SQLException{
-        int carId = 0;
         Statement stDelDriver = con.createStatement();
-        stDelDriver.execute("UPDATE drivers SET `driver_deleted`=1, `driverEndDate`=CURRENT_DATE() WHERE `driver_id`="+driverId);
         //запись статуса машины
-        changeCar(Integer.parseInt(driverId), carId, 3);
+        int carId = getCarId(driverId);
+        changeCar(Integer.parseInt(driverId), 0, 3);
+        changeCar(0, carId, 3);
+        stDelDriver.execute("UPDATE drivers SET `driver_deleted`=1, `driverEndDate`=CURRENT_DATE() WHERE `driver_id`="+driverId);
         stDelDriver.close();
+    }
+    private int getCarId(String  driverId) throws SQLException{
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery("SELECT `carId` FROM `drivers` WHERE `driver_id`="+driverId);
+        int carId = 0;
+        if(rs.next()){
+            carId = rs.getInt("carId");
+            rs.close();
+            st.close();
+            return carId;
+        }
+        else{
+            return carId;
+        }
     }
     public String getOptions(int dayOff) throws SQLException {
         String options = "";

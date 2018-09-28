@@ -50,7 +50,7 @@ String selectUser = usql.getUserForSelect();
             function getDriverReport(begin, end, operators){
                 $.ajax({
                     type: 'POST',
-                    url: '../AllPayReport',
+                    url: '/AllPayReport',
                     data: 'begin='+begin+'&end='+end+'&operatorId='+operators,
                     success: function(data){
                         $("#reportPlace").html(data);

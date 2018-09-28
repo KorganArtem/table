@@ -56,10 +56,7 @@
                   <div id='mainProp'>отчеты</div>
                   <ul>
                     <li>
-                      <div id="cashPayReport">Наличные</div>
-                    </li>
-                    <li>
-                      <div id="allPayReport">Все платежи</div>
+                      <div id="allPayReport"><a href="reports/allPayReport.jsp" target="_blank">Платежи</a></div>
                     </li>
                   </ul>
                 </li>
