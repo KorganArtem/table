@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -74,13 +74,13 @@ public class FineSQL {
                 "INNER JOIN cars \n" +
                 "ON offenses.carId=cars.id \n" +
                 "WHERE `gis_status`='nopayed' AND (bill_id like '188101%' OR bill_id like '188105%')) as finecar\n" +
-                "ON finecar.driverId=drivers.driver_id");
+                "ON finecar.driverId=drivers.driver_id");   //
         JsonArray fineList = new JsonArray();
         while(fineListRs.next()){
             JsonObject oneFine = new JsonObject();
             oneFine.addProperty("carNumber", fineListRs.getString("carNumber"));
             oneFine.addProperty("driver_lastname", fineListRs.getString("driver_lastname"));
-            oneFine.addProperty("bill_id", fineListRs.getString("bill_id"));
+            oneFine.addProperty("bill_id", "<div class='billid' id='"+fineListRs.getString("bill_id")+"'>"+fineListRs.getString("bill_id")+"</div>");
             oneFine.addProperty("gis_status", fineListRs.getString("gis_status"));
             oneFine.addProperty("pay_bill_date", fineListRs.getString("pay_bill_date"));
             oneFine.addProperty("last_bill_date" , fineListRs.getString("last_bill_date"));
@@ -102,5 +102,35 @@ public class FineSQL {
             fineList.add(oneFine);
         }
         return fineList;
+    }
+    public JsonObject getOneFine(String bill_id) throws SQLException{
+        Statement fineSt = con.createStatement();
+        ResultSet fineRs = fineSt.executeQuery("SELECT finecar.*, drivers.driver_lastname FROM drivers "
+                + "RIGHT JOIN (SELECT `offenses`.*, cars.number as carNumber FROM `offenses`  " +
+                "INNER JOIN cars \n" +
+                "ON offenses.carId=cars.id \n" +
+                "WHERE bill_id='"+bill_id+"') as finecar\n" +
+                "ON finecar.driverId=drivers.driver_id");
+        JsonObject oneFine = new JsonObject();
+        if(fineRs.next()){
+            oneFine.addProperty("carNumber", fineRs.getString("carNumber"));
+            oneFine.addProperty("driver_lastname", fineRs.getString("driver_lastname"));
+            oneFine.addProperty("bill_id", fineRs.getString("bill_id"));
+            oneFine.addProperty("gis_status", fineRs.getString("gis_status"));
+            oneFine.addProperty("pay_bill_date", fineRs.getString("pay_bill_date"));
+            oneFine.addProperty("last_bill_date" , fineRs.getString("last_bill_date"));
+            oneFine.addProperty("pay_bill_amount", fineRs.getString("pay_bill_amount"));
+            oneFine.addProperty("gis_discount", fineRs.getString("gis_discount"));
+            oneFine.addProperty("gis_discount_uptodate", fineRs.getString("gis_discount_uptodate"));
+            oneFine.addProperty("pay_bill_amount_with_discount", fineRs.getString("pay_bill_amount_with_discount"));
+            oneFine.addProperty("offense_location", fineRs.getString("offense_location"));
+            oneFine.addProperty("offense_article", fineRs.getString("offense_article"));
+            oneFine.addProperty("offense_date", fineRs.getString("offense_date"));
+            oneFine.addProperty("offense_time", fineRs.getString("offense_time"));
+            oneFine.addProperty("offense_article_number", fineRs.getString("offense_article_number"));
+            oneFine.addProperty("carId", fineRs.getString("carId"));
+            oneFine.addProperty("driverId", fineRs.getString("driverId"));
+        }
+        return oneFine;
     }
 }

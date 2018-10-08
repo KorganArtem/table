@@ -403,4 +403,16 @@ public class DriverSQL {
             forRet = rs.getString("driver_lastname")+" "+rs.getString("driver_firstname");
         return forRet;
     }
+    public String listDriverForSelect() throws SQLException{
+        String driverList = "";
+        Statement listDriverSt = con.createStatement();
+        ResultSet listDriverRs = listDriverSt.executeQuery("SELECT * FROM drivers");
+        while(listDriverRs.next()){
+            driverList = driverList +"<option value='"+
+                    listDriverRs.getString("driver_id")+"'>"
+                    +listDriverRs.getString("driver_lastname")+" "+listDriverRs.getString("driver_firstname")+"</option>";
+        
+        }
+        return driverList;
+    }
 }

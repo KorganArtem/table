@@ -363,7 +363,7 @@ $('#fineList').click(function (){
                 { data: 'last_bill_date' }
             ],
             createdRow: function( row, data, dataIndex){
-                if( true ){ //data[2] ==  `someVal`
+                if( data ){ //data[2] ==  `someVal`
                     $(row).addClass('redClass');
                 }
             },
@@ -378,9 +378,12 @@ $('#fineList').click(function (){
     });
 });
 function workWithFine(){
+//    $(".billid").click(function(){
+//        $("#"+this.id).html($("#"+this.id).html()+"<br>sfsdf");
+//    });
     $('#tableFine tbody').on( 'click', 'tr', function (indexes) {
         
-        console.log(tableFine.row( this ).data().bill_id );
+        var bill_id = tableFine.row( this );
         if ( $(this).hasClass('selected') ) {
             $(this).removeClass('selected');
         }
@@ -388,7 +391,22 @@ function workWithFine(){
             tableFine.$('tr.selected').removeClass('selected');
             $(this).addClass('selected');
         }
+//        tableFine.row( this ).data().bill_id="sdf";
+//        console.log(bill_id.data().bill_id);
+        
+        editFineShow(bill_id);
     } );
+}
+function editFineShow(bill_id){
+    $.ajax({
+        type: 'POST',
+        url: 'fineEdit.jsp',
+        data: 'bill_id='+bill_id,
+        success: function(data){
+            $('#modal_form').html(data);
+            openModWind(470, 400);
+        }
+    });
 }
 ////////////////////////////////////////////////////////////////////////////////
 /////                             Show add car form                        /////

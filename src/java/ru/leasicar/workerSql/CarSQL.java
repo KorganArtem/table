@@ -181,7 +181,7 @@ public class CarSQL {
         Statement st = con.createStatement();
         ResultSet rs = st.executeQuery("SELECT * FROM `cars` WHERE `id` not in (SELECT `carId` FROM `drivers` WHERE `driver_deleted`=0)");
         while(rs.next()){
-            carData = carData +"<option value='"+rs.getString("id")+"'>"+rs.getString("model")+"("+rs.getString("number")+")</option>";
+            carData = carData +"<option value='"+rs.getString("id")+"'>"+rs.getString("number")+"</option>";
         }
         return carData;
     }
