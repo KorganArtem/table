@@ -73,7 +73,7 @@ public class FineSQL {
                 + "RIGHT JOIN (SELECT `offenses`.*, cars.number as carNumber FROM `offenses`  " +
                 "INNER JOIN cars \n" +
                 "ON offenses.carId=cars.id \n" +
-                "WHERE `gis_status`='nopayed' AND (bill_id like '188101%' OR bill_id like '188105%')) as finecar\n" +
+                "WHERE `gis_status`='nopayed' AND (bill_id like '188101%' OR bill_id like '188105%' OR bill_id like '035%')) as finecar\n" +
                 "ON finecar.driverId=drivers.driver_id");   //
         JsonArray fineList = new JsonArray();
         while(fineListRs.next()){

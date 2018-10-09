@@ -37,10 +37,12 @@ public class authorithation extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             AccessControl ac = new AccessControl();
             if(ac.checkUser(request.getParameter("login"), request.getParameter("pass"), request.getSession().getId())){
-                out.println(1);
+                response.sendRedirect("index.jsp");
             }
-            else
-                out.println(2);
+            else{
+                response.sendRedirect("auth.jsp");
+                request.getRequestDispatcher("auth.jsp");
+            }
         } catch (ClassNotFoundException ex) {
             System.out.println("Error in authorization!!! "+request.getSession().getId()+" "+request.getParameter("login")+"  "+ex.getMessage());
         } catch (SQLException ex) {
